@@ -2,10 +2,15 @@
 var crypto = require('crypto');
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema.Types;
+var Promise = require('bluebird');
+var validator = require('validator');
+Promise.promisifyAll(mongoose);
+
 
 var schema = new mongoose.Schema({
     email: {
-        type: String
+        type: String,
+        validate: [ validator.isEmail, 'invalid email' ]
     },
     password: {
         type: String

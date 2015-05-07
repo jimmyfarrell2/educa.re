@@ -1,12 +1,12 @@
 var router = require('express').Router(),
     Promise = require('bluebird'),
-    mongoose = require('mongoose');
-    Document = Promise.promisifyAll(mongoose.model('Document'));
-    User = Promise.promisifyAll(mongoose.model('User'));
+    mongoose = require('mongoose'),
+    Document = mongoose.model('Document'),
+    User = mongoose.model('User');
 
 router.post('/', function(req, res, next){
 
-    User.create(req.body.user)
+    User.createAsync(req.body)
        .then(function(user){
            res.json(user);
        })
@@ -16,7 +16,7 @@ router.post('/', function(req, res, next){
 
 });
 
-//??
+
 router.get('/', function(req, res, next){
 
     User.find()
@@ -24,16 +24,13 @@ router.get('/', function(req, res, next){
         .exec()
         .then(function(suc){
             res.send(suc);
-        })
-        .catch(function(err){
-           return next(err);
         });
 
 });
 
 router.get('/:userId', function(req, res, next){
 
-    User.findOne(req.params.userId)
+    User.findOneAsync(req.params.userId)
         .then(function(user){
             res.json(user);
         })
@@ -51,7 +48,7 @@ router.use('/:userId', function(req, res, next){
 
 router.put('/:userId', function(req, res, next){
 
-    User.findByIdAndUpdate({_id: req.params.userId}, req.body)
+    User.findByIdAndUpdateAsync({_id: req.params.userId}, req.body)
         .then(function(user){
             res.json(user);
         })
@@ -61,3 +58,4 @@ router.put('/:userId', function(req, res, next){
 
 });
 
+module.exports = router;

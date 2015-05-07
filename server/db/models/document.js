@@ -4,16 +4,18 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema.Types;
 var Promise = require('bluebird');
 var git = Promise.promisifyAll(require('gift'));
+Promise.promisifyAll(mongoose);
 
 
 var schema = new mongoose.Schema({
-    title: String,
+    title: {type: String, default:'untitled'},
     public: {type: Boolean, default: false},
     readAccess: [{type: Schema.ObjectId, ref: 'User'}],
     editAccess: [{type: Schema.ObjectId, ref: 'User'}],
     author: {type: Schema.ObjectId, ref: 'User'},
     references: [String],
-    pathToRepo: String
+    pathToRepo: String,
+    currentVersion: String
 });
 
 
@@ -27,9 +29,6 @@ schema.methods.getCurrentVersion = function(){
         .then(function(commit){
             return commit;
         })
-        .catch(function(err){
-            return err;
-        });
 
 };
 
@@ -39,9 +38,6 @@ schema.methods.getHistory = function(num){
         .then(function(commits){
             return commits;
         })
-        .catch(function(err){
-            return err;
-        });
 
 };
 
