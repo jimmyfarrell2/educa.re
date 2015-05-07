@@ -1,10 +1,16 @@
 'use strict';
 var crypto = require('crypto');
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema.Types;
+var Promise = require('bluebird');
+var validator = require('validator');
+Promise.promisifyAll(mongoose);
+
 
 var schema = new mongoose.Schema({
     email: {
-        type: String
+        type: String,
+        validate: [ validator.isEmail, 'invalid email' ]
     },
     password: {
         type: String
@@ -23,7 +29,13 @@ var schema = new mongoose.Schema({
     },
     google: {
         id: String
-    }
+    },
+    name: {
+        first: String,
+        last: String
+    },
+    documents: [{type: Schema.ObjectId, ref: 'Document'}],
+    bookmarks: [String]
 });
 
 // generateSalt, encryptPassword and the pre 'save' and 'correctPassword' operations
