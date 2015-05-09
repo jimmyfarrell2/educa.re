@@ -7,6 +7,7 @@ var router = require('express').Router(),
     mongoose = require('mongoose'),
     Document = Promise.promisifyAll(mongoose.model('Document')),
     User = Promise.promisifyAll(mongoose.model('User')),
+    diff = require('diff'),
     cp = Promise.promisifyAll(require("child_process"));
 
 //set a repo for the user
