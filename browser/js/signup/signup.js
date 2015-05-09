@@ -32,7 +32,7 @@ app.controller('SignUpCtrl', function ($scope, UserFactory, AuthService, $state)
 app.factory('UserFactory', function($http, $q) {
     return {
         createNewUser : function(newUser) {
-            return $http.post('/api/user/signup', newUser)
+            return $http.post('/api/user', newUser)
                 .then(function(response) {
                     return response.body;
                 })
