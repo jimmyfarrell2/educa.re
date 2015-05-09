@@ -7,6 +7,7 @@ var router = require('express').Router(),
     mongoose = require('mongoose'),
     Document = Promise.promisifyAll(mongoose.model('Document')),
     User = Promise.promisifyAll(mongoose.model('User')),
+    diff = require('diff'),
     cp = Promise.promisifyAll(require("child_process"));
 
 //set a repo for the user
@@ -63,7 +64,8 @@ router.put('/', function(req, res, next){
 
 });
 
-router.post('/branch', function(req, res, next){
+///creating user's branch
+rrouter.post('/branch', function(req, res, next){
 
     var originalAuthor = req.body.document.author;
     var repo;
@@ -71,6 +73,7 @@ router.post('/branch', function(req, res, next){
     req.body.document.author = req.user._id;
     req.body.document.readAccess = [];
     req.body.document.editAccess = [];
+    req.body.document.branchedFrom = originalAuthor;
    
     Document.createAsync(req.body.document)
         .then(function(doc) {
@@ -91,6 +94,40 @@ router.post('/branch', function(req, res, next){
         });
 });
 
+//create a pullRequest to the document's original author
+router.put('/pullRequest', function(req, res, next){
+
+    var pullRequest = {
+        proposedVersion: req.body.document.currentVersion,
+        author: req.user._id,
+        date: Date.now(),
+        message: req.body.message
+    };
+
+    Document.findOneAsync({pathToRepo: req.body.document.pathToRepo, author: req.body.document.branchedFrom})
+        .then(function(doc){
+            doc.pullRequests.push(pullRequest);
+            return doc.saveAsync();
+        })
+        .catch(function(err){
+            return next(err);
+        });
+
+});
+
+//merge another user's proposed changes
+router.put('/merge', function(req, res, next){
+    var repo =  Promise.promisifyAll(git(req.body.document.pathToRepo));
+
+    repo.checkoutAsync(req.user._id)
+        .then(function(){
+            return cp.execAsync('git diff ' + req.user._id + '..' + req.body.pullRequest.author);
+        })
+        .then(function(diff){
+            //something?!?!?
+        });
+
+});
 
 function createRepo(request) {
 

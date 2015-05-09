@@ -15,7 +15,14 @@ var schema = new mongoose.Schema({
     author: {type: Schema.ObjectId, ref: 'User'},
     references: [String],
     pathToRepo: String,
-    currentVersion: String
+    currentVersion: String,
+    branchedFrom: {type: Schema.ObjectId, ref: 'User'},
+    pullRequests: [{
+        proposedVersion: String,
+        author: {type: Schema.ObjectId, ref: 'User'},
+        date: Date,
+        message: String
+    }]
 });
 
 
