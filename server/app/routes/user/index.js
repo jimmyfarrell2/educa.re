@@ -3,8 +3,9 @@ var router = require('express').Router(),
     mongoose = require('mongoose'),
     Document = mongoose.model('Document'),
     User = mongoose.model('User'),
-    _ = require("lodash");
-
+    _ = require("lodash"),
+    path = require('path'),
+    mkdirp = require('mkdirp');
 
 router.post('/', function(req, res, next){
 
@@ -23,7 +24,10 @@ router.post('/', function(req, res, next){
         if(err) return next(err);
         req.logIn(user, function(err){
             if(err) return next(err);
-            res.status(200).send({ user: _.omit(user.toJSON(), ['password', 'salt']) });
+            mkdirp(path.join(__dirname, '/../../../../documents/' + user._id), function(err) {
+                if(err) return next(err);
+                res.status(200).send({ user: _.omit(user.toJSON(), ['password', 'salt']) });
+            })
         });
     });
 
