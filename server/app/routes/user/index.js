@@ -5,15 +5,27 @@ var router = require('express').Router(),
     User = mongoose.model('User'),
     _ = require("lodash");
 
+
 router.post('/', function(req, res, next){
 
-    User.createAsync(req.body)
-       .then(function(user){
-           res.json(user);
-       })
-       .catch(function(err){
-           return next(err);
-       });
+    var newUser = req.body;
+    var user = null;
+
+    if (newUser.password !== newUser.passwordConfirm) {
+        var error = new Error('Passwords do not match');
+        error.status = 401;
+        return next(error);
+    }
+
+    delete newUser.passwordConfirm;
+
+    User.create(newUser, function(err, user){
+        if(err) return next(err);
+        req.logIn(user, function(err){
+            if(err) return next(err);
+            res.status(200).send({ user: _.omit(user.toJSON(), ['password', 'salt']) });
+        });
+    });
 
 });
 
@@ -29,26 +41,7 @@ router.get('/', function(req, res, next){
 
 });
 
-router.post('/signup', function(req, res, next) {
-    var newUser = req.body;
 
-    if (newUser.password !== newUser.passwordConfirm) {
-        var error = new Error('Passwords do not match');
-        error.status = 401;
-        return next(error);
-    }
-
-    delete newUser.passwordConfirm;
-    
-    User.create(newUser, function(err, returnedUser) {
-        if (err) return next(err);
-        req.logIn(returnedUser, function (err) {
-            if (err) return next(err);     
-            res.status(200).send({ user: _.omit(returnedUser.toJSON(), ['password', 'salt']) });
-        });
-
-    });
-});
 
 router.get('/:userId', function(req, res, next){
 
