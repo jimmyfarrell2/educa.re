@@ -21,9 +21,7 @@ router.get('/:docId', function(req, res, next){
         .then(function(doc){
             res.json(doc);
         })
-        .catch(function(err){
-            return next(err);
-        })
+        .catch(next);
 
 });
 
@@ -32,9 +30,7 @@ router.get('/user/:userId', function(req, res, next){
        .then(function(docs){
            res.json(docs);
        })
-       .catch(function(err){
-           return next(err);
-       })
+       .catch(next);
 });
 
 //get all commits
@@ -50,9 +46,7 @@ router.get('/commits/:docId', function(req, res, next){
         .then(function(commits){
             res.json(commits);
         })
-        .catch(function(err){
-            return next(err);
-        })
+       .catch(next);
 
 });
 
@@ -69,9 +63,7 @@ router.get('/:docId/commit/:commitId', function(req, res, next){
         .then(function(commit){
             res.sendFile(repo.path + '/contents.html')
         })
-        .catch(function(err){
-            return next(err);
-        })
+       .catch(next);
 
 });
 
@@ -100,12 +92,9 @@ router.put('/reset', function(req, res, next){
         .then(function(){
             res.json(doc);
         })
-        .catch(function(err){
-            return next(err);
-        });
+        .catch(next);
 
 });
-
 
 
 
@@ -119,9 +108,7 @@ router.post('/', function(req, res, next){
         .then(function(doc){
             res.send(doc);
         })
-        .catch(function(err){
-            return next(err);
-        });
+        .catch(next);
 
 });
 
@@ -146,11 +133,7 @@ router.put('/', function(req, res, next){
         .then(function(doc){
             res.json(doc);
         })
-        .catch(function(err){
-            return next(err);
-        });
-
-
+        .catch(next);
 });
 
 ///creating user's branch
@@ -178,9 +161,7 @@ router.post('/branch', function(req, res, next){
         .then(function(){
             res.sendStatus(200);
         })
-        .catch(function(err){
-            return next(err);
-        });
+        .catch(next);
 });
 
 //create a pullRequest to the document's original author
@@ -198,9 +179,7 @@ router.put('/pullRequest', function(req, res, next){
             doc.pullRequests.push(pullRequest);
             return doc.saveAsync();
         })
-        .catch(function(err){
-            return next(err);
-        });
+        .catch(next);
 
 });
 
@@ -226,21 +205,17 @@ function createRepo(request) {
 
     return Document.createAsync(request.body.document)
         .then(function(_doc) {
-            // console.log("got here1");
             doc = _doc;
             return User.findByIdAndUpdateAsync(request.user._id, {$push: {'documents': doc._id}});
         })
         .then(function() {
-            // console.log("got here2");
             docPath = path.join(request.userPath, '/' + doc._id);
             return mkdirp(docPath);
         })
         .then(function(){
-            // console.log("got here3");
             return fs.writeFileAsync(docPath + '/contents.html', doc.currentVersion);
         })
         .then(function(){
-            // console.log("got here4");
             return git.initAsync(docPath);
         })
         .then(function(){
@@ -251,11 +226,9 @@ function createRepo(request) {
             return repo.commitAsync('Initial commit');
         })
         .then(function(){
-            // console.log("got here5");
             return cp.execAsync("git branch -m master " + request.user._id, {cwd: docPath});
         })
         .then(function() {
-            // console.log("Branch", cp.execAsync("git branch ", {cwd: docPath}))
             doc.pathToRepo = docPath;
             return doc.saveAsync();
         })

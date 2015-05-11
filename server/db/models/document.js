@@ -1,7 +1,7 @@
 'use strict';
 
 var mongoose = require('mongoose');
-var Schema = mongoose.Schema.Types;
+var Types = mongoose.Schema.Types;
 var Promise = require('bluebird');
 var git = Promise.promisifyAll(require('gift'));
 Promise.promisifyAll(mongoose);
@@ -17,16 +17,16 @@ var schema = new mongoose.Schema({
         default: false
     },
     author: {
-        type: Schema.ObjectId, ref: 'User'
+        type: Types.ObjectId, ref: 'User'
     },
     branchedFrom: {
-        type: Schema.ObjectId, ref: 'User'
+        type: Types.ObjectId, ref: 'User'
     },
     readAccess: [{
-        type: Schema.ObjectId, ref: 'User'
+        type: Types.ObjectId, ref: 'User'
     }],
     editAccess: [{
-        type: Schema.ObjectId, ref: 'User'
+        type: Types.ObjectId, ref: 'User'
     }],
     references: [String],
     pathToRepo: String,
@@ -37,7 +37,7 @@ var schema = new mongoose.Schema({
     pullRequests: [{
         proposedVersion: String,
         author: {
-            type: Schema.ObjectId, ref: 'User'
+            type: Types.ObjectId, ref: 'User'
         },
         date: Date,
         message: String
