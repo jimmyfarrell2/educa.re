@@ -16,20 +16,23 @@ var schema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    author: {
+        type: Schema.ObjectId, ref: 'User'
+    },
+    branchedFrom: {
+        type: Schema.ObjectId, ref: 'User'
+    },
     readAccess: [{
         type: Schema.ObjectId, ref: 'User'
     }],
     editAccess: [{
         type: Schema.ObjectId, ref: 'User'
     }],
-    author: {
-        type: Schema.ObjectId, ref: 'User'
-    },
     references: [String],
     pathToRepo: String,
-    currentVersion: String,
-    branchedFrom: {
-        type: Schema.ObjectId, ref: 'User'
+    currentVersion: {
+        type: String,
+        default: ''
     },
     pullRequests: [{
         proposedVersion: String,
