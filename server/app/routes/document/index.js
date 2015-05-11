@@ -16,6 +16,26 @@ router.use('/', function(req, res, next){
     next();
 });
 
+router.get('/:docId', function(req, res, next){
+    Document.findByIdAsync(req.params.docId)
+        .then(function(doc){
+            res.json(doc);
+        })
+        .catch(function(err){
+            return next(err);
+        })
+
+});
+
+router.get('/:userId', function(req, res, next){
+   Document.findAsync({author: req.params.userId})
+       .then(function(docs){
+           res.json(docs);
+       })
+       .catch(function(err){
+           return next(err);
+       })
+});
 
 //create client's first folder
 router.post('/', function(req, res, next){
@@ -38,12 +58,12 @@ router.put('/', function(req, res, next){
 
     var repo = Promise.promisifyAll(git(req.body.document.pathToRepo));
 
-    repo.checkoutAsync(req.body.author)
+    repo.checkoutAsync(req.body.document.author)
         .then(function(){
-            return fs.writeFileAsync(req.docPath + '/contents.md', req.body.newContent);
+            return fs.writeFileAsync(req.docPath + '/contents.html', req.body.newContent);
         })
         .then(function(){
-            return repo.addAsync('contents.md');
+            return repo.addAsync('contents.html');
         })
         .then(function(){
             return repo.commitAsync(req.body.message);
@@ -65,7 +85,7 @@ router.put('/', function(req, res, next){
 });
 
 ///creating user's branch
-rrouter.post('/branch', function(req, res, next){
+router.post('/branch', function(req, res, next){
 
     var originalAuthor = req.body.document.author;
     var repo;
@@ -133,6 +153,7 @@ function createRepo(request) {
 
     var doc;
     var docPath = '';
+    var repo = '';
 
     return Document.createAsync(request.body.document)
         .then(function(_doc) {
@@ -147,11 +168,18 @@ function createRepo(request) {
         })
         .then(function(){
             // console.log("got here3");
-            return fs.writeFileAsync(docPath + '/contents.md', doc.currentVersion);
+            return fs.writeFileAsync(docPath + '/contents.html', doc.currentVersion);
         })
         .then(function(){
             // console.log("got here4");
             return git.initAsync(docPath);
+        })
+        .then(function(){
+            repo = Promise.promisifyAll(git(docPath));
+            return repo.addAsync('contents.html');
+        })
+        .then(function(){
+            return repo.commitAsync('Initial commit');
         })
         .then(function(){
             // console.log("got here5");
