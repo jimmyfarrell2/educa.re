@@ -27,7 +27,7 @@ router.get('/:docId', function(req, res, next){
 
 });
 
-router.get('/:userId', function(req, res, next){
+router.get('/user/:userId', function(req, res, next){
    Document.findAsync({author: req.params.userId})
        .then(function(docs){
            res.json(docs);
@@ -37,6 +37,78 @@ router.get('/:userId', function(req, res, next){
        })
 });
 
+//get all commits
+router.get('/commits/:docId', function(req, res, next){
+    var repo;
+
+    Document.findByIdAsync(req.params.docId)
+        .then(function(doc){
+            doc.author = "5550f5108ca00ba60fe2d275";//change this!
+            repo = Promise.promisifyAll(git(doc.pathToRepo));
+            return repo.commitsAsync(doc.author);
+        })
+        .then(function(commits){
+            res.json(commits);
+        })
+        .catch(function(err){
+            return next(err);
+        })
+
+});
+
+//get a particular commit
+router.get('/:docId/commit/:commitId', function(req, res, next){
+   var repo;
+
+    Document.findByIdAsync(req.params.docId)
+        .then(function(doc){
+            doc.author = "5550f5108ca00ba60fe2d275";//change this!
+            repo = Promise.promisifyAll(git(doc.pathToRepo));
+            return repo.checkoutAsync(req.params.commitId)
+        })
+        .then(function(commit){
+            res.sendFile(repo.path + '/contents.html')
+        })
+        .catch(function(err){
+            return next(err);
+        })
+
+});
+
+
+//reset to a previous version
+router.put('/reset', function(req, res, next){
+    var repo;
+    var doc;
+
+    Document.findByIdAsync(req.body.documentId)
+        .then(function(_doc){
+            doc = _doc;
+            repo = Promise.promisifyAll(git(doc.pathToRepo));
+            return cp.execAsync('git revert ' + req.body.commitId, {cwd: doc.pathToRepo})
+        })
+        .then(function() {
+            return repo.commitAsync();
+        })
+        .then(function(){
+            return fs.readFileAsync(repo.path + '/contents.html');
+        })
+        .then(function(file){
+            doc.currentVersion = file.toString();
+            return doc.saveAsync();
+        })
+        .then(function(){
+            res.json(doc);
+        })
+        .catch(function(err){
+            return next(err);
+        });
+
+});
+
+
+
+
 //create client's first folder
 router.post('/', function(req, res, next){
 
@@ -44,8 +116,8 @@ router.post('/', function(req, res, next){
         .then(function() {
             return createRepo(req);
         })
-        .then(function(){
-            res.send(200);
+        .then(function(doc){
+            res.send(doc);
         })
         .catch(function(err){
             return next(err);
@@ -55,12 +127,12 @@ router.post('/', function(req, res, next){
 
 //update a user's file and commit
 router.put('/', function(req, res, next){
-
+    console.log(req.body)
     var repo = Promise.promisifyAll(git(req.body.document.pathToRepo));
 
     repo.checkoutAsync(req.body.document.author)
         .then(function(){
-            return fs.writeFileAsync(req.docPath + '/contents.html', req.body.newContent);
+            return fs.writeFileAsync(req.body.document.pathToRepo + '/contents.html', req.body.newContent);
         })
         .then(function(){
             return repo.addAsync('contents.html');
@@ -71,11 +143,8 @@ router.put('/', function(req, res, next){
         .then(function(){
             return Document.findByIdAndUpdateAsync(req.body.document._id, {currentVersion: req.body.newContent});
         })
-        .then(function(){
-            return repo.commitsAsync();
-        })
-        .then(function(commits){
-            res.json(commits);
+        .then(function(doc){
+            res.json(doc);
         })
         .catch(function(err){
             return next(err);
@@ -141,7 +210,7 @@ router.put('/merge', function(req, res, next){
 
     repo.checkoutAsync(req.user._id)
         .then(function(){
-            return cp.execAsync('git diff ' + req.user._id + '..' + req.body.pullRequest.author);
+            return cp.execAsync('git diff ' + req.user._id + '..' + req.body.pullRequest.author, {cwd: docPath});
         })
         .then(function(diff){
             //something?!?!?
@@ -189,6 +258,9 @@ function createRepo(request) {
             // console.log("Branch", cp.execAsync("git branch ", {cwd: docPath}))
             doc.pathToRepo = docPath;
             return doc.saveAsync();
+        })
+        .then(function(){
+            return doc;
         });
 
 }
