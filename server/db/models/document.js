@@ -8,18 +8,34 @@ Promise.promisifyAll(mongoose);
 
 
 var schema = new mongoose.Schema({
-    title: {type: String, default:'untitled'},
-    public: {type: Boolean, default: false},
-    readAccess: [{type: Schema.ObjectId, ref: 'User'}],
-    editAccess: [{type: Schema.ObjectId, ref: 'User'}],
-    author: {type: Schema.ObjectId, ref: 'User'},
+    title: {
+        type: String,
+        default: 'untitled'
+    },
+    public: {
+        type: Boolean,
+        default: false
+    },
+    readAccess: [{
+        type: Schema.ObjectId, ref: 'User'
+    }],
+    editAccess: [{
+        type: Schema.ObjectId, ref: 'User'
+    }],
+    author: {
+        type: Schema.ObjectId, ref: 'User'
+    },
     references: [String],
     pathToRepo: String,
     currentVersion: String,
-    branchedFrom: {type: Schema.ObjectId, ref: 'User'},
+    branchedFrom: {
+        type: Schema.ObjectId, ref: 'User'
+    },
     pullRequests: [{
         proposedVersion: String,
-        author: {type: Schema.ObjectId, ref: 'User'},
+        author: {
+            type: Schema.ObjectId, ref: 'User'
+        },
         date: Date,
         message: String
     }]
