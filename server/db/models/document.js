@@ -49,18 +49,18 @@ schema.virtual('repo').get(function(){
     return Promise.promisifyAll(git(this.pathToRepo));
 });
 
-schema.methods.getCurrentVersion = function(){
+//schema.methods.getCurrentVersion = function(){
 
-    return this.repo.current_commitAsync()
-        .then(function(commit){
-            return commit;
-        })
+    //return this.repo.current_commitAsync()
+        //.then(function(commit){
+            //return commit;
+        //})
 
-};
+//};
 
 schema.methods.getHistory = function(num){
 
-    return this.repo.commitsAsync('master', num)
+    return this.repo.commitsAsync(this.author, num)
         .then(function(commits){
             return commits;
         })
