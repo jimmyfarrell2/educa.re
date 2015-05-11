@@ -37,7 +37,7 @@ var schema = new mongoose.Schema({
         last: String
     },
     documents: [{type: Schema.ObjectId, ref: 'Document'}],
-    bookmarks: [String]
+    bookmarks: [{type: Schema.ObjectId, ref: "Document"}]
 });
 
 // generateSalt, encryptPassword and the pre 'save' and 'correctPassword' operations
