@@ -4,6 +4,12 @@ var clearDB = require('mocha-mongoose')(dbURI);
 var sinon = require('sinon');
 var expect = require('chai').expect;
 var mongoose = require('mongoose');
+var Promise = require('bluebird');
+var mkdirp = Promise.promisify(require('mkdirp'));
+var path = require('path');
+var git = Promise.promisifyAll(require('gift'));
+var cp = Promise.promisifyAll(require("child_process"));
+var fs = Promise.promisifyAll(require('fs'));
 
 require('../../../server/db/models/document');
 require('../../../server/db/models/user');
@@ -306,6 +312,121 @@ describe('Document model', function () {
                     })
 
             });
+
+        });
+
+    });
+
+    describe('repo virtual', function() {
+
+        it('returns a promise for a git repo object', function(done) {
+
+            var documentInfo = {
+                title: 'About Educa.re'
+            };
+
+            createDocument(documentInfo)
+                .then(function(document) {
+                    expect(document.repo).to.be.an('object');
+                    expect(document.repo.constructor.name).to.be.equal('Repo');
+                    done();
+                })
+
+        });
+
+    });
+
+    describe('getHistory method', function() {
+
+        var document;
+        var tempPath = path.join(__dirname, 'tempFolder');
+
+        before(function(done) {
+
+            var userInfo = {
+                email: 'jimmy@fullstack.com',
+                password: 'UkulelesUnite'
+            };
+
+            var documentInfo = {
+                pathToRepo: tempPath
+            };
+
+            var user;
+
+            mkdirp(tempPath)
+                .then(function(){
+                    return Promise.all([createUser(userInfo), git.initAsync(tempPath)]);
+                })
+                .then(function(promiseResults){
+                    user = promiseResults[0];
+                    documentInfo.author = user._id;
+                })
+                .then(function() {
+                    return git.initAsync(tempPath);
+                })
+                .then(function() {
+                    var repo = git(tempPath);
+                    return Promise.all([
+                        createDocument(documentInfo),
+                        fs.writeFileAsync(tempPath + '/contents.md', 'Broccoli vs Gandhi')
+                    ]);
+                })
+                .then(function(promiseResults) {
+                    document = promiseResults[0];
+                    return document.repo.addAsync('contents.md');
+                })
+                .then(function(){
+                    return document.repo.commitAsync('This is the first commit');
+                })
+                .then(function() {
+                    cp.execAsync('git branch -m master ' + user._id, {cwd: tempPath});
+                })
+                .then(function() {
+                    return fs.writeFileAsync(tempPath + '/contents.md', 'Carrots vs Gandhi');
+                })
+                .then(function() {
+                    return document.repo.addAsync('contents.md');
+                })
+                .then(function(){
+                    return document.repo.commitAsync('This is the second commit');
+                })
+                .then(function() {
+                    fs.writeFileAsync(tempPath + '/contents.md', 'Peas vs Gandhi');
+                })
+                .then(function() {
+                    return document.repo.addAsync('contents.md');
+                })
+                .then(function(){
+                    document.repo.commitAsync('This is the third commit');
+                    done();
+                })
+
+        });
+
+        after(function(done) {
+            cp.execAsync('rm -r ' + tempPath);
+            done();
+        });
+
+        it('returns an array of the repo\'s commit history for the user\'s branch', function(done) {
+
+            document.getHistory()
+                .then(function(commits) {
+                    expect(commits).to.be.an('array');
+                    expect(commits[0].constructor.name).to.be.equal('Commit');
+                    done();
+                });
+
+        });
+
+        it('takes an argument of the number of commits to return', function(done) {
+
+            document.getHistory(2)
+                .then(function(commits) {
+                    expect(commits.length).to.be.equal(2);
+                    done();
+                });
 
         });
 
