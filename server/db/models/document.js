@@ -8,18 +8,37 @@ Promise.promisifyAll(mongoose);
 
 
 var schema = new mongoose.Schema({
-    title: {type: String, default:'untitled'},
-    public: {type: Boolean, default: false},
-    readAccess: [{type: Schema.ObjectId, ref: 'User'}],
-    editAccess: [{type: Schema.ObjectId, ref: 'User'}],
-    author: {type: Schema.ObjectId, ref: 'User'},
+    title: {
+        type: String,
+        default: 'untitled'
+    },
+    public: {
+        type: Boolean,
+        default: false
+    },
+    author: {
+        type: Schema.ObjectId, ref: 'User'
+    },
+    branchedFrom: {
+        type: Schema.ObjectId, ref: 'User'
+    },
+    readAccess: [{
+        type: Schema.ObjectId, ref: 'User'
+    }],
+    editAccess: [{
+        type: Schema.ObjectId, ref: 'User'
+    }],
     references: [String],
     pathToRepo: String,
-    currentVersion: String,
-    branchedFrom: {type: Schema.ObjectId, ref: 'User'},
+    currentVersion: {
+        type: String,
+        default: ''
+    },
     pullRequests: [{
         proposedVersion: String,
-        author: {type: Schema.ObjectId, ref: 'User'},
+        author: {
+            type: Schema.ObjectId, ref: 'User'
+        },
         date: Date,
         message: String
     }]
@@ -30,18 +49,18 @@ schema.virtual('repo').get(function(){
     return Promise.promisifyAll(git(this.pathToRepo));
 });
 
-schema.methods.getCurrentVersion = function(){
+//schema.methods.getCurrentVersion = function(){
 
-    return this.repo.current_commitAsync()
-        .then(function(commit){
-            return commit;
-        })
+    //return this.repo.current_commitAsync()
+        //.then(function(commit){
+            //return commit;
+        //})
 
-};
+//};
 
 schema.methods.getHistory = function(num){
 
-    return this.repo.commitsAsync('master', num)
+    return this.repo.commitsAsync(this.author, num)
         .then(function(commits){
             return commits;
         })
