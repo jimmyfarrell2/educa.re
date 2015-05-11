@@ -32,14 +32,6 @@ describe('Document model', function () {
         expect(User).to.be.a('function');
     });
 
-    var createDocument = function(documentInfo) {
-        return Document.createAsync(documentInfo);
-    };
-
-    var createUser = function(userInfo) {
-        return User.createAsync(userInfo);
-    };
-
     describe('title property', function() {
 
         it('is a string', function(done) {
@@ -48,7 +40,7 @@ describe('Document model', function () {
                 title: 'About Educa.re'
             };
 
-            createDocument(documentInfo)
+            Document.createAsync(documentInfo)
                 .then(function(document) {
                     expect(document.title).to.be.a('string');
                     expect(document.title).to.be.equal('About Educa.re');
@@ -59,7 +51,7 @@ describe('Document model', function () {
 
         it('defaults to \'untitled\'', function(done) {
 
-            createDocument()
+            Document.createAsync({})
                 .then(function(document) {
                     expect(document.title).to.be.equal('untitled');
                     done();
@@ -77,7 +69,7 @@ describe('Document model', function () {
                 public: true,
             };
 
-            createDocument(documentInfo)
+            Document.createAsync(documentInfo)
                 .then(function(document) {
                     expect(document.public).to.be.equal(true);
                     done();
@@ -87,7 +79,7 @@ describe('Document model', function () {
 
         it('defaults to false', function(done) {
 
-            createDocument()
+            Document.createAsync({})
                 .then(function(document) {
                     expect(document.public).to.be.equal(false);
                     done();
@@ -108,12 +100,12 @@ describe('Document model', function () {
 
             var document;
 
-            createUser(userInfo)
+            User.createAsync(userInfo)
                 .then(function(user) {
                     var documentInfo = {};
                     documentInfo.readAccess = [user._id];
                     documentInfo.editAccess = [user._id];
-                    return createDocument(documentInfo);
+                    return Document.createAsync(documentInfo);
                 })
                 .then(function(_document) {
                     document = _document;
@@ -150,12 +142,12 @@ describe('Document model', function () {
 
             var document;
 
-            Promise.all([createUser(user1Info), createUser(user2Info)])
+            Promise.all([User.createAsync(user1Info), User.createAsync(user2Info)])
                 .then(function(usersInfo) {
                     var documentInfo = {};
                     documentInfo.author = [usersInfo[0]._id];
                     documentInfo.branchedFrom = [usersInfo[1]._id];
-                    return createDocument(documentInfo);
+                    return Document.createAsync(documentInfo);
                 })
                 .then(function(_document) {
                     document = _document;
@@ -182,7 +174,7 @@ describe('Document model', function () {
                 references: ['http://en.wikipedia.org/wiki/Broccoli', 'http://en.wikipedia.org/wiki/Mahatma_Gandhi']
             };
 
-            createDocument(documentInfo)
+            Document.createAsync(documentInfo)
                 .then(function(document) {
                     expect(document.references).to.be.an('array');
                     expect(document.references[0]).to.be.equal('http://en.wikipedia.org/wiki/Broccoli');
@@ -202,7 +194,7 @@ describe('Document model', function () {
                 pathToRepo: 'some/really/cool/path'
             };
 
-            createDocument(documentInfo)
+            Document.createAsync(documentInfo)
                 .then(function(document) {
                     expect(document.pathToRepo).to.be.equal('some/really/cool/path');
                     done();
@@ -220,7 +212,7 @@ describe('Document model', function () {
                 currentVersion: 'This is some interesting content about broccoli and Gandhi'
             };
 
-            createDocument(documentInfo)
+            Document.createAsync(documentInfo)
                 .then(function(document) {
                     expect(document.currentVersion).to.be.equal('This is some interesting content about broccoli and Gandhi');
                     done();
@@ -230,7 +222,7 @@ describe('Document model', function () {
 
         it('defaults to an empty string', function(done) {
 
-            createDocument()
+            Document.createAsync({})
                 .then(function(document) {
                     expect(document.currentVersion).to.be.equal('');
                     done();
@@ -257,7 +249,7 @@ describe('Document model', function () {
 
         it('is an array', function(done) {
 
-            createDocument(documentInfo)
+            Document.createAsync(documentInfo)
                 .then(function(document) {
                     expect(document.pullRequests).to.be.an('array');
                     done();
@@ -269,7 +261,7 @@ describe('Document model', function () {
 
             it('are strings', function(done) {
 
-                createDocument(documentInfo)
+                Document.createAsync(documentInfo)
                     .then(function(document) {
                         expect(document.pullRequests[0].proposedVersion).to.be.equal('Gandhi is not broccoli.');
                         expect(document.pullRequests[0].message).to.be.equal('I think this change to your document is better.');
@@ -284,10 +276,10 @@ describe('Document model', function () {
 
             it('is a User model reference', function(done) {
 
-                createUser(userInfo)
+                User.createAsync(userInfo)
                     .then(function(user) {
                         documentInfo.pullRequests[0].author = user._id;
-                        return createDocument(documentInfo);
+                        return Document.createAsync(documentInfo);
                     })
                     .then(function(document) {
                         return User.findByIdAsync(document.pullRequests[0].author);
@@ -305,7 +297,7 @@ describe('Document model', function () {
 
             it('is a date', function(done) {
 
-                createDocument(documentInfo)
+                Document.createAsync(documentInfo)
                     .then(function(document) {
                         expect(document.pullRequests[0].date).to.be.a('date');
                         done();
@@ -325,7 +317,7 @@ describe('Document model', function () {
                 title: 'About Educa.re'
             };
 
-            createDocument(documentInfo)
+            Document.createAsync(documentInfo)
                 .then(function(document) {
                     expect(document.repo).to.be.an('object');
                     expect(document.repo.constructor.name).to.be.equal('Repo');
@@ -356,7 +348,7 @@ describe('Document model', function () {
 
             mkdirp(tempPath)
                 .then(function(){
-                    return Promise.all([createUser(userInfo), git.initAsync(tempPath)]);
+                    return Promise.all([User.createAsync(userInfo), git.initAsync(tempPath)]);
                 })
                 .then(function(promiseResults){
                     user = promiseResults[0];
@@ -368,7 +360,7 @@ describe('Document model', function () {
                 .then(function() {
                     var repo = git(tempPath);
                     return Promise.all([
-                        createDocument(documentInfo),
+                        Document.createAsync(documentInfo),
                         fs.writeFileAsync(tempPath + '/contents.md', 'Broccoli vs Gandhi')
                     ]);
                 })

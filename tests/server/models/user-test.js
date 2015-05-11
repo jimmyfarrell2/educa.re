@@ -26,10 +26,6 @@ describe('User model', function () {
         expect(User).to.be.a('function');
     });
 
-    var createUser = function(userInfo) {
-        return User.createAsync(userInfo);
-    };
-
     describe('email property', function() {
 
         it('is a string of valid email format', function(done) {
@@ -44,12 +40,12 @@ describe('User model', function () {
                 password: 'GuysThisIsCray'
             };
 
-            createUser(user1Info)
+            User.createAsync(user1Info)
                 .then(function(user1) {
                     expect(typeof user1.email).to.be.a('string');
                 })
                 .then(function() {
-                    return createUser(user2Info);
+                    return User.createAsync(user2Info);
                 })
                 .catch(function(err) {
                     expect(err.errors.email.message).to.be.equal('invalid email');
@@ -64,7 +60,7 @@ describe('User model', function () {
                 password: 'RIPGlobalPulse'
             };
 
-            createUser(userInfo)
+            User.createAsync(userInfo)
                 .catch(function(err) {
                     expect(err.errors.email.message).to.be.equal('Path `email` is required.');
                     done();
@@ -83,7 +79,7 @@ describe('User model', function () {
                 password: 'WhatIsThisPeasantry'
             };
 
-            createUser(userInfo)
+            User.createAsync(userInfo)
                 .then(function(user) {
                     expect(typeof user.password).to.be.a('string');
                     done();
@@ -97,7 +93,7 @@ describe('User model', function () {
                 email: 'jimmy@fullstack.com'
             };
 
-            createUser(userInfo)
+            User.createAsync(userInfo)
                 .catch(function(err) {
                     expect(err.errors.password.message).to.be.equal('Path `password` is required.');
                     done();
@@ -228,10 +224,6 @@ describe('User model', function () {
 
     describe('documents property', function() {
 
-        var createDocument = function(documentInfo) {
-            return Document.createAsync(documentInfo);
-        };
-
         it('is an array of Document model references', function(done) {
 
             var documentInfo = {
@@ -243,10 +235,10 @@ describe('User model', function () {
                 password: 'UkraineRulez'
             };
 
-            createDocument(documentInfo)
+            Document.createAsync(documentInfo)
                 .then(function(document) {
                     userInfo.documents = [document._id];
-                    return createUser(userInfo);
+                    return User.createAsync(userInfo);
                 })
                 .then(function(user) {
                     expect(user.documents).to.be.an('array');
@@ -272,7 +264,7 @@ describe('User model', function () {
                 bookmarks: ['http://educa.re/someReallyCoolStuff', 'http://educa.re/someOtherReallyCoolStuff']
             };
 
-            createUser(userInfo)
+            User.createAsync(userInfo)
                 .then(function(user) {
                     expect(user.bookmarks).to.be.an('array');
                     expect(user.bookmarks[0]).to.be.equal('http://educa.re/someReallyCoolStuff');
@@ -297,7 +289,7 @@ describe('User model', function () {
                 }
             };
 
-            createUser(userInfo)
+            User.createAsync(userInfo)
                 .then(function(user) {
                     expect(user.name.full).to.be.equal('Nastia Sergiienko');
                     done();
