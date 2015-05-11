@@ -10,10 +10,12 @@ Promise.promisifyAll(mongoose);
 var schema = new mongoose.Schema({
     email: {
         type: String,
+        required: true,
         validate: [ validator.isEmail, 'invalid email' ]
     },
     password: {
-        type: String
+        type: String,
+        required: true
     },
     salt: {
         type: String
@@ -67,6 +69,10 @@ schema.statics.encryptPassword = encryptPassword;
 
 schema.method('correctPassword', function (candidatePassword) {
     return encryptPassword(candidatePassword, this.salt) === this.password;
+});
+
+schema.virtual('name.full').get(function() {
+    return this.name.first + ' ' + this.name.last;
 });
 
 mongoose.model('User', schema);
