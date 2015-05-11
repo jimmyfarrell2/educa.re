@@ -12,6 +12,9 @@ app.config(function ($stateProvider) {
                     return {};
                 }
                 else return DocumentFactory.getDocument($stateParams.docId);
+            },
+            user: function(AuthService){
+                return AuthService.getLoggedInUser()
             }
         }
     });
@@ -19,25 +22,26 @@ app.config(function ($stateProvider) {
 });
 
 
-app.controller('EditorController', function($scope, DocumentFactory, $stateParams, document){
+app.controller('EditorController', function($scope, DocumentFactory, $stateParams, document, user){
 
-    $scope.content = 'hi';
-    $scope.message = '';
+    $scope.message = 'a message';
+
+    console.log(user);
+
+
 
     $scope.docInfo = {
-        newContent: $scope.content,
+        newContent: document.currentVersion,
         message: $scope.message,
         document: document
     }
-
-
-
     $scope.createUserFolder = function(){
-      DocumentFactory.createDocument().then(function(response){
+        DocumentFactory.createDocument().then(function(response){
           console.log('created', response);
       });
     };
 
+    document.author = user._id;
     $scope.saveUserDocument = function(docInfo){
         DocumentFactory.saveDocument(docInfo).then(function(response){
             console.log('saved', response);
@@ -55,7 +59,7 @@ app.factory('DocumentFactory', function($http){
             });
         },
         saveDocument: function(doc){
-            return $http.put('api/document/').then(function(response){
+            return $http.put('api/document/', doc).then(function(response){
                 return response.data;
             });
         },
