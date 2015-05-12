@@ -25,23 +25,38 @@ app.config(function ($stateProvider) {
 app.controller('EditorController', function($scope, DocumentFactory, $stateParams, document, user){
 
     $scope.message = 'a message';
+    $scope.pullRequests = document.pullRequests;
 
-    console.log(user);
+    $scope.branchDocument = function(){
+        console.log("document", document);
+        DocumentFactory.branchOtherDocument(document).then(function(doc){
+            console.log(doc);
+        });
+    };
 
-
+    $scope.mergeDocument = function(pullRequest){
+        DocumentFactory.mergeDocument(document, pullRequest).then(function(diff){
+            console.log(diff);
+        });
+    }
 
     $scope.docInfo = {
-        newContent: document.currentVersion,
         message: $scope.message,
         document: document
     }
+
     $scope.createUserFolder = function(){
         DocumentFactory.createDocument().then(function(response){
           console.log('created', response);
       });
     };
 
-    document.author = user._id;
+    $scope.makePullRequest = function(){
+        DocumentFactory.makePullRequest(document, 'this is a message!').then(function(doc){
+            console.log(doc);
+        });
+    };
+
     $scope.saveUserDocument = function(docInfo){
         DocumentFactory.saveDocument(docInfo).then(function(response){
             console.log('saved', response);
@@ -69,7 +84,25 @@ app.factory('DocumentFactory', function($http){
             })
         },
         getUserDocuments: function(userId){
-            return $http.get('api/document' + userId).then(function(response){
+            return $http.get('api/document/' + userId).then(function(response){
+                return response.data;
+            })
+        },
+        branchOtherDocument: function(doc){
+            console.log(doc);
+            return $http.post('api/document/branch', doc).then(function(response){
+                return response.data;
+            })
+        },
+        makePullRequest: function(doc, message){
+            var data = {document: doc, message: message};
+            return $http.put('api/document/pullRequest', data).then(function(response){
+                return response.data;
+            })
+        },
+        mergeDocument: function(doc, pullRequest){
+            var data = {document: doc, pullRequest: pullRequest}
+            return $http.put('api/document/merge', data).then(function(response){
                 return response.data;
             })
         }
