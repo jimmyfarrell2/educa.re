@@ -41,7 +41,8 @@ var schema = new mongoose.Schema({
         },
         date: Date,
         message: String
-    }]
+    }],
+    dateCreated: Date
 });
 
 
