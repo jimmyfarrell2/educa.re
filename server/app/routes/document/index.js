@@ -85,10 +85,14 @@ router.put('/reset', function(req, res, next){
         .then(function(_doc){
             doc = _doc;
             repo = Promise.promisifyAll(git(doc.pathToRepo));
-            return cp.execAsync('git revert ' + req.body.commitId, {cwd: doc.pathToRepo})
+            return repo.checkoutAsync(req.body.commitId);
+            //return cp.execAsync('git revert ' + req.body.commitId, {cwd: doc.pathToRepo})
         })
-        .then(function() {
-            return repo.commitAsync();
+        //.then(function(){
+        //    repo.addAsync('contents.html');
+        //})
+        .then(function(){
+            return repo.commitAsync(req.body.message);
         })
         .then(function(){
             return fs.readFileAsync(repo.path + '/contents.html');
@@ -103,6 +107,28 @@ router.put('/reset', function(req, res, next){
         .catch(function(err){
             return next(err);
         });
+
+
+    //For a HARD reset:
+    //Document.findByIdAsync(req.body.documentId)
+    //    .then(function(_doc){
+    //        doc = _doc;
+    //        repo = Promise.promisifyAll(git(doc.pathToRepo));
+    //        return cp.execAsync('git reset --hard ' + req.body.commitId, {cwd: doc.pathToRepo})
+    //    })
+    //    .then(function(){
+    //        return fs.readFileAsync(repo.path + '/contents.html');
+    //    })
+    //    .then(function(file){
+    //        doc.currentVersion = file.toString();
+    //        return doc.saveAsync();
+    //    })
+    //    .then(function(){
+    //        res.json(doc);
+    //    })
+    //    .catch(function(err){
+    //        return next(err);
+    //    });
 
 });
 
