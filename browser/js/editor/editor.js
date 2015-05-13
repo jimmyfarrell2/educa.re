@@ -69,40 +69,39 @@ app.factory('DocumentFactory', function($http){
 
     return {
         createDocument: function(){
-            return $http.post('api/document/').then(function(response){
+            return $http.post('api/documents/').then(function(response){
                 return response.data;
             });
         },
-        saveDocument: function(doc){
-            return $http.put('api/document/', doc).then(function(response){
+        saveDocument: function(docInfo){
+            return $http.put('api/documents/' + docInfo.document._id, docInfo).then(function(response){
                 return response.data;
             });
         },
         getDocument: function(docId){
-            return $http.get('api/document/' + docId).then(function(response){
+            return $http.get('api/documents/' + docId).then(function(response){
                 return response.data;
             })
         },
         getUserDocuments: function(userId){
-            return $http.get('api/document/' + userId).then(function(response){
+            return $http.get('api/user/' + userId + '/documents').then(function(response){
                 return response.data;
             })
         },
         branchOtherDocument: function(doc){
-            console.log(doc);
-            return $http.post('api/document/branch', doc).then(function(response){
+            return $http.post('api/collaborate/branch', doc).then(function(response){
                 return response.data;
             })
         },
         makePullRequest: function(doc, message){
             var data = {document: doc, message: message};
-            return $http.put('api/document/pullRequest', data).then(function(response){
+            return $http.post('api/collaborate/pullRequest', data).then(function(response){
                 return response.data;
             })
         },
         mergeDocument: function(doc, pullRequest){
             var data = {document: doc, pullRequest: pullRequest}
-            return $http.put('api/document/merge', data).then(function(response){
+            return $http.put('api/collaborate/merge', data).then(function(response){
                 return response.data;
             })
         }

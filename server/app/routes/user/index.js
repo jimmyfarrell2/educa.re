@@ -33,7 +33,6 @@ router.post('/', function(req, res, next){
 
 });
 
-
 router.get('/', function(req, res, next){
 
     User.find()
@@ -44,8 +43,6 @@ router.get('/', function(req, res, next){
         });
 
 });
-
-
 
 router.get('/:userId', function(req, res, next){
 
@@ -59,10 +56,22 @@ router.get('/:userId', function(req, res, next){
 
 });
 
+// Get all documents for a user
+router.get('/:userId/documents', function(req, res, next){
+
+   Document.findAsync({author: req.params.userId})
+       .then(function(docs){
+           res.json(docs);
+       })
+       .catch(next);
+
+});
 
 router.use('/:userId', function(req, res, next){
-    if(req.user._id == req.params.userId) next();
+
+    if (req.user._id == req.params.userId) next();
     else next(new Error("You are not allowed."));
+
 });
 
 router.put('/:userId', function(req, res, next){
