@@ -105,6 +105,11 @@ app.factory('DocumentFactory', function($http){
             return $http.put('api/document/merge', data).then(function(response){
                 return response.data;
             })
+        },
+        getAllDocuments: function(){
+            return $http.get('/api/document/').then(function(response){
+                return response.data;
+            })
         }
     }
 
