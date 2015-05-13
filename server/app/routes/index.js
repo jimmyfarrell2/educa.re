@@ -6,10 +6,14 @@ router.use('/tutorial', require('./tutorial'));
 
 router.use('/members', require('./members'));
 
-router.use('/document', require('./document'));
+router.use('/documents', require('./documents'));
+
+router.use('/commits', require('./commits'));
+
+router.use('/collaborate', require('./collaborate'));
 
 router.use('/user', require('./user'));
-console.log('something')
+
 // Make sure this is after all of
 // the registered routes!
 router.use(function (req, res) {
