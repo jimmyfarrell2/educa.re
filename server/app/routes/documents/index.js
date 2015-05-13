@@ -56,7 +56,7 @@ router.put('/:docId', function(req, res, next){
     var doc;
 
     Document.findByIdAndUpdateAsync(req.params.docId, {currentVersion: req.body.document.currentVersion})
-        .then(function(doc) {
+        .then(function(_doc) {
             doc = _doc;
             return doc.repo.checkoutAsync(req.body.document.author);
         })
@@ -122,15 +122,15 @@ function createRepo(request) {
             return git.initAsync(docPath);
         })
         .then(function() {
+            doc.pathToRepo = docPath;
+            doc.author = request.user._id;
+            return doc.saveAsync();
+        })
+        .then(function() {
             return doc.addAndCommit('First save');
         })
         .then(function(){
             return cp.execAsync("git branch -m master " + request.user._id, {cwd: docPath});
-        })
-        .then(function() {
-            doc.pathToRepo = docPath;
-            doc.author = request.user._id;
-            return doc.saveAsync();
         })
         .then(function(){
             return doc;

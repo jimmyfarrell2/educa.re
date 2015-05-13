@@ -4,7 +4,7 @@ var router = require('express').Router(),
     git = Promise.promisifyAll(require('gift')),
     path = require('path'),
     mongoose = require('mongoose'),
-    Document = Promise.promisifyAll(mongoose.model('Document')),
+    Document = Promise.promisifyAll(mongoose.model('Document'));
 
 //get all commits for a document
 router.get('/:docId', function(req, res, next){

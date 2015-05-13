@@ -62,12 +62,13 @@ schema.methods.getHistory = function(num){
 };
 
 schema.methods.addAndCommit = function(message) {
+    var self = this;
 
     if (!message) message = 'Unnamed save';
 
-    return this.repo.addAsync('contents.html')
+    return self.repo.addAsync('contents.html')
         .then(function(){
-            return this.repo.commitAsync(message);
+            return self.repo.commitAsync(message);
         });
 
 };
