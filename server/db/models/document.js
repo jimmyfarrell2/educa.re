@@ -42,7 +42,9 @@ var schema = new mongoose.Schema({
         date: Date,
         message: String
     }],
-    dateCreated: Date
+    dateCreated: Date,
+    categories: [],
+    tags: []
 });
 
 
@@ -50,21 +52,23 @@ schema.virtual('repo').get(function(){
     return Promise.promisifyAll(git(this.pathToRepo));
 });
 
-//schema.methods.getCurrentVersion = function(){
-
-    //return this.repo.current_commitAsync()
-        //.then(function(commit){
-            //return commit;
-        //})
-
-//};
-
 schema.methods.getHistory = function(num){
 
     return this.repo.commitsAsync(this.author, num)
         .then(function(commits){
             return commits;
-        })
+        });
+
+};
+
+schema.methods.addAndCommit = function(message) {
+
+    if (!message) message = 'Unnamed save';
+
+    return this.repo.addAsync('contents.html')
+        .then(function(){
+            return this.repo.commitAsync(message);
+        });
 
 };
 
