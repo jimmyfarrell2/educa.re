@@ -21,6 +21,7 @@ router.post('/branch', function(req, res, next){
     req.body.readAccess = [];
     req.body.editAccess = [];
     req.body.branchedFrom = originalAuthor;
+    req.body.pullRequests = [];
     delete req.body._id;
 
     Document.createAsync(req.body)
@@ -73,8 +74,12 @@ router.put('/merge', function(req, res, next){
 
     repo.checkoutAsync(req.user._id)
         .then(function(){
-            var markdownDiff = diff.diffLines(req.body.pullRequest.proposedVersion, req.body.document.currentVersion);
-            res.json(markdownDiff);
+            var markdownDiff = diff.diffLines(req.body.document.currentVersion, req.body.pullRequest.proposedVersion);
+            var xmlFormatted = diff.convertChangesToXML(markdownDiff);
+
+            console.log('markdown diff', markdownDiff)
+            console.log('xmlFormatted', xmlFormatted);
+            res.json(xmlFormatted);
         });
         //.then(function(){
         //    return cp.execAsync('git diff ' + req.user._id + '..' + req.body.pullRequest.author, {cwd: req.body.document.pathToRepo});
