@@ -30,10 +30,16 @@ app.config(function ($stateProvider) {
 
 app.controller('EditorController', function($scope, DocumentFactory, $stateParams, document, user, commits, $window){
 
-    var converter = $window.markdownit();
+    var converter = $window.markdownit({html: true, typographer: true});
+    console.log(converter);
 
+    //can't call this every time
     $scope.convertToHtml = function(){
-        if(document.currentVersion) document.currentVersion = converter.render(document.currentVersion);
+        //if(document.currentVersion) {
+        //    document.currentVersion = converter.render(document.currentVersion);
+        //    $scope.docInfo.content = document.currentVersion;
+        //}
+
     }
 
     $scope.docInfo = {
@@ -64,17 +70,20 @@ app.controller('EditorController', function($scope, DocumentFactory, $stateParam
 
     $scope.branchDocument = function(){
         flush();
-        DocumentFactory.branchOtherDocument(document).then(function(doc){
+        DocumentFactory.branchOtherDocument($scope.docInfo.document).then(function(doc){
             $scope.docInfo.content = converter.render(doc.currentVersion);
         });
     };
 
     $scope.getDiff = function(pullRequest){
-        console.log(pullRequest);
         flush();
         console.log($scope.docInfo.document);
         DocumentFactory.mergeDocument($scope.docInfo.document, pullRequest).then(function(diff){
-            console.log(diff)
+            var xmlParsed = converter.render(diff);
+            diff = diff.replace(/</g, '@~%').replace(/>/g, '%~@');
+            console.log(converter.render(xmlParsed));
+                //.replace(/@~%/g, '<').replace(/%~@/g, '>'));
+                //.replace(/&lt;/g, "<").replace(/&gt;/g, ">"));
             //$scope.docInfo.content = converter.render(diff);
         });
     }
