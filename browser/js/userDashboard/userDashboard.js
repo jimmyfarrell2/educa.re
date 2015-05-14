@@ -18,7 +18,7 @@ app.config(function ($stateProvider) {
 });
 
 
-app.controller('UserDashboardController', function($scope, UserDashboardFactory, $stateParams, userDocuments, user){
+app.controller('UserDashboardController', function($scope, $stateParams, userDocuments, user){
 
     $scope.userDocuments = userDocuments;
     $scope.user = user;
