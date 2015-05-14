@@ -99,7 +99,7 @@ var seedDocuments = function () {
             var jimmyId = jimmy._id;
             var documents = [
                 {
-                    title: 'sonia@fsa.com',
+                    title: chance.sentence({words: 4}),
                     public: false,
                     author: soniaId,
                     currentVersion: docTextGenerator(),
@@ -108,7 +108,7 @@ var seedDocuments = function () {
                     tags: [chance.word(), chance.word(), chance.word(), chance.word(), chance.word()]
                 },
                 {
-                    title: 'sonia@fsa.com',
+                    title: chance.sentence({words: 4}),
                     public: false,
                     author: soniaId,
                     editAccess: [nastiaId],
@@ -119,7 +119,7 @@ var seedDocuments = function () {
                     tags: [chance.word(), chance.word(), chance.word()]
                 },
                 {
-                    title: 'sonia@fsa.com',
+                    title: chance.sentence({words: 4}),
                     author: soniaId,
                     editAccess: [nastiaId],
                     readAccess: [nastiaId, davidId, jimmyId],
@@ -129,7 +129,7 @@ var seedDocuments = function () {
                     tags: [chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word()]
                 },
                 {
-                    title: 'nastia@fsa.com',
+                    title: chance.sentence({words: 4}),
                     public: false,
                     author: nastiaId,
                     currentVersion: docTextGenerator(),
@@ -138,7 +138,7 @@ var seedDocuments = function () {
                     tags: [chance.word(), chance.word(), chance.word(), chance.word(), chance.word()]
                 },
                 {
-                    title: 'nastia@fsa.com',
+                    title: chance.sentence({words: 4}),
                     public: false,
                     author: nastiaId,
                     editAccess: [soniaId],
@@ -149,7 +149,7 @@ var seedDocuments = function () {
                     tags: [chance.word(), chance.word(), chance.word()]
                 },
                 {
-                    title: 'nastia@fsa.com',
+                    title: chance.sentence({words: 4}),
                     author: nastiaId,
                     editAccess: [soniaId],
                     readAccess: [soniaId, davidId, jimmyId],
@@ -159,7 +159,7 @@ var seedDocuments = function () {
                     tags: [chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word()]
                 },
                 {
-                    title: 'david@fsa.com',
+                    title: chance.sentence({words: 4}),
                     public: false,
                     author: davidId,
                     currentVersion: docTextGenerator(),
@@ -168,7 +168,7 @@ var seedDocuments = function () {
                     tags: [chance.word(), chance.word(), chance.word(), chance.word(), chance.word()]
                 },
                 {
-                    title: 'david@fsa.com',
+                    title: chance.sentence({words: 4}),
                     public: false,
                     author: davidId,
                     editAccess: [jimmyId],
@@ -179,7 +179,7 @@ var seedDocuments = function () {
                     tags: [chance.word(), chance.word(), chance.word()]
                 },
                 {
-                    title: 'david@fsa.com',
+                    title: chance.sentence({words: 4}),
                     author: davidId,
                     editAccess: [jimmyId],
                     readAccess: [jimmyId, soniaId, nastiaId],
@@ -189,7 +189,7 @@ var seedDocuments = function () {
                     tags: [chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word()]
                 },
                 {
-                    title: 'jimmy@fsa.com',
+                    title: chance.sentence({words: 4}),
                     public: false,
                     author: jimmyId,
                     currentVersion: docTextGenerator(),
@@ -198,7 +198,7 @@ var seedDocuments = function () {
                     tags: [chance.word(), chance.word(), chance.word(), chance.word(), chance.word()]
                 },
                 {
-                    title: 'jimmy@fsa.com',
+                    title: chance.sentence({words: 4}),
                     public: false,
                     author: jimmyId,
                     editAccess: [davidId],
@@ -209,7 +209,7 @@ var seedDocuments = function () {
                     tags: [chance.word(), chance.word(), chance.word()]
                 },
                 {
-                    title: 'jimmy@fsa.com',
+                    title: chance.sentence({words: 4}),
                     author: jimmyId,
                     editAccess: [davidId],
                     readAccess: [davidId, soniaId, nastiaId],
