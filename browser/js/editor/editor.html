@@ -1,4 +1,3 @@
-<div>
 
 <button ng-click = "toggle()">Information</button>
 <div pageslide ps-open="checked" ps-squeeze="true">
@@ -13,7 +12,7 @@
 
 
 
-<medium-editor ng-model="docInfo.document.currentVersion"  options='{"placeholder": "Start writing", "buttons": ["bold", "italic", "underline", "anchor", "header1", "header2", "quote", "orderedlist", "unorderedlist"]}'></medium-editor>
+<medium-editor ng-model="docInfo.content"  options='{"placeholder": "Start writing", "buttons": ["bold", "italic", "underline", "anchor", "header1", "header2", "quote", "orderedlist", "unorderedlist"]}'></medium-editor><br/>
 
 
 <button ng-click="createUserFolder()">Create doc</button>
@@ -22,7 +21,7 @@
 <button ng-click="makePullRequest()">Suggest changes</button>
 
 <ul>
-    <li  ng-repeat="pullRequest in pullRequests" ng-click="mergeDocument(pullRequest)">{{pullRequest}}</li>
+    <li  ng-repeat="pullRequest in pullRequests" ng-click="getDiff(pullRequest)">{{pullRequest}}</li>
 </ul>
 
 </div>
