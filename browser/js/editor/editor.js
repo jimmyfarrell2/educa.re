@@ -15,6 +15,9 @@ app.config(function ($stateProvider) {
             },
             user: function(AuthService){
                 return AuthService.getLoggedInUser()
+            },
+            commits: function(DocumentFactory, $stateParams){
+                return DocumentFactory.commitHistory($stateParams.docId);
             }
         }
     });
@@ -22,10 +25,17 @@ app.config(function ($stateProvider) {
 });
 
 
-app.controller('EditorController', function($scope, DocumentFactory, $stateParams, document, user){
+app.controller('EditorController', function($scope, DocumentFactory, $stateParams, document, user, commits){
+
+    $scope.checked = false; // This will be binded using the ps-open attribute
+                $scope.toggle = function(){
+                    $scope.checked = !$scope.checked
+                };
 
     $scope.message = 'a message';
     $scope.pullRequests = document.pullRequests;
+    $scope.commits = commits;
+    $scope.document = document;
 
     $scope.branchDocument = function(){
         console.log("document", document);
@@ -107,6 +117,11 @@ app.factory('DocumentFactory', function($http){
         },
         getAllDocuments: function(){
             return $http.get('/api/document/').then(function(response){
+                return response.data;
+            })
+        },
+        commitHistory: function(docId){
+            return $http.get('/api/commits/' + docId).then(function(response){
                 return response.data;
             })
         }
