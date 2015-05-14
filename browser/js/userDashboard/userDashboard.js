@@ -18,10 +18,13 @@ app.config(function ($stateProvider) {
 });
 
 
-app.controller('UserDashboardController', function($scope, $stateParams, userDocuments, user){
+app.controller('UserDashboardController', function($scope, $stateParams, userDocuments, user, $state){
 
     $scope.userDocuments = userDocuments;
     $scope.user = user;
+    $scope.goToEdit = function(documentId){
+        $state.go('editor', {docId: documentId});
+    }
 
 
 });
