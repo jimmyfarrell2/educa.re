@@ -22,8 +22,16 @@ Refer to the q documentation for why and how q.invoke is used.
 var mongoose = require('mongoose');
 var connectToDb = require('./server/db');
 var User = mongoose.model('User');
+var Document = mongoose.model('Document');
 var q = require('q');
+var Promise = require('bluebird');
 var chalk = require('chalk');
+var chance = new require('chance')();
+var mkdirp = Promise.promisify(require('mkdirp'));
+var cp = Promise.promisifyAll(require('child_process'));
+var git = Promise.promisifyAll(require('gift'));
+var fs = Promise.promisifyAll(require('fs'));
+var path = require('path');
 
 var getCurrentUserData = function () {
     return q.ninvoke(User, 'find', {});
@@ -33,12 +41,36 @@ var seedUsers = function () {
 
     var users = [
         {
-            email: 'testing@fsa.com',
-            password: 'password'
+            email: 'sonia@fsa.com',
+            password: 'sonia',
+            name: {
+                first: 'Sonia',
+                last: 'Trehan'
+            }
         },
         {
-            email: 'obama@gmail.com',
-            password: 'potus'
+            email: 'nastia@fsa.com',
+            password: 'nastia',
+            name: {
+                first: 'Nastia',
+                last: 'Sergiienko'
+            }
+        },
+        {
+            email: 'david@fsa.com',
+            password: 'david',
+            name: {
+                first: 'David',
+                last: 'Phelan'
+            }
+        },
+        {
+            email: 'jimmy@fsa.com',
+            password: 'jimmy',
+            name: {
+                first: 'Jimmy',
+                last: 'Farrell'
+            }
         }
     ];
 
@@ -46,19 +78,212 @@ var seedUsers = function () {
 
 };
 
-connectToDb.then(function () {
-    getCurrentUserData().then(function (users) {
-        if (users.length === 0) {
-            return seedUsers();
-        } else {
-            console.log(chalk.magenta('Seems to already be user data, exiting!'));
-            process.kill(0);
-        }
-    }).then(function () {
+var seedDocuments = function () {
+
+    var docTextGenerator = function() {
+        return '<h1>' + chance.sentence({words: 8}) + '</h1><p>' + chance.paragraph() + '</p><h2>' + chance.sentence({words: 5}) + '</h2><p>' + chance.paragraph() + '</p><p>' + chance.paragraph() + '</p><h2>' + chance.sentence({words: 5}) + '</h2><p>' + chance.paragraph() + '</p><p>' + chance.paragraph() + '</p>';
+    };
+
+    var usersFindArray = [
+        User.findOneAsync({email: 'sonia@fsa.com'}),
+        User.findOneAsync({email: 'nastia@fsa.com'}),
+        User.findOneAsync({email: 'david@fsa.com'}),
+        User.findOneAsync({email: 'jimmy@fsa.com'})
+    ];
+
+    return q.all(usersFindArray)
+        .spread(function(sonia, nastia, david, jimmy) {
+            var soniaId = sonia._id;
+            var nastiaId = nastia._id;
+            var davidId = david._id;
+            var jimmyId = jimmy._id;
+            var documents = [
+                {
+                    title: chance.sentence({words: 4}),
+                    public: false,
+                    author: soniaId,
+                    currentVersion: docTextGenerator(),
+                    dateCreated: chance.date(),
+                    categories: ['Technology', 'Health/Wellness', 'Science'],
+                    tags: [chance.word(), chance.word(), chance.word(), chance.word(), chance.word()]
+                },
+                {
+                    title: chance.sentence({words: 4}),
+                    public: false,
+                    author: soniaId,
+                    editAccess: [nastiaId],
+                    readAccess: [nastiaId, davidId, jimmyId],
+                    currentVersion: docTextGenerator(),
+                    dateCreated: chance.date(),
+                    categories: ['Education'],
+                    tags: [chance.word(), chance.word(), chance.word()]
+                },
+                {
+                    title: chance.sentence({words: 4}),
+                    author: soniaId,
+                    editAccess: [nastiaId],
+                    readAccess: [nastiaId, davidId, jimmyId],
+                    currentVersion: docTextGenerator(),
+                    dateCreated: chance.date(),
+                    categories: ['Business', 'Technology'],
+                    tags: [chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word()]
+                },
+                {
+                    title: chance.sentence({words: 4}),
+                    public: false,
+                    author: nastiaId,
+                    currentVersion: docTextGenerator(),
+                    dateCreated: chance.date(),
+                    categories: ['Technology', 'Health/Wellness', 'Science'],
+                    tags: [chance.word(), chance.word(), chance.word(), chance.word(), chance.word()]
+                },
+                {
+                    title: chance.sentence({words: 4}),
+                    public: false,
+                    author: nastiaId,
+                    editAccess: [soniaId],
+                    readAccess: [soniaId, davidId, jimmyId],
+                    currentVersion: docTextGenerator(),
+                    dateCreated: chance.date(),
+                    categories: ['Education'],
+                    tags: [chance.word(), chance.word(), chance.word()]
+                },
+                {
+                    title: chance.sentence({words: 4}),
+                    author: nastiaId,
+                    editAccess: [soniaId],
+                    readAccess: [soniaId, davidId, jimmyId],
+                    currentVersion: docTextGenerator(),
+                    dateCreated: chance.date(),
+                    categories: ['Business', 'Technology'],
+                    tags: [chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word()]
+                },
+                {
+                    title: chance.sentence({words: 4}),
+                    public: false,
+                    author: davidId,
+                    currentVersion: docTextGenerator(),
+                    dateCreated: chance.date(),
+                    categories: ['Technology', 'Health/Wellness', 'Science'],
+                    tags: [chance.word(), chance.word(), chance.word(), chance.word(), chance.word()]
+                },
+                {
+                    title: chance.sentence({words: 4}),
+                    public: false,
+                    author: davidId,
+                    editAccess: [jimmyId],
+                    readAccess: [jimmyId, soniaId, nastiaId],
+                    currentVersion: docTextGenerator(),
+                    dateCreated: chance.date(),
+                    categories: ['Education'],
+                    tags: [chance.word(), chance.word(), chance.word()]
+                },
+                {
+                    title: chance.sentence({words: 4}),
+                    author: davidId,
+                    editAccess: [jimmyId],
+                    readAccess: [jimmyId, soniaId, nastiaId],
+                    currentVersion: docTextGenerator(),
+                    dateCreated: chance.date(),
+                    categories: ['Business', 'Technology'],
+                    tags: [chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word()]
+                },
+                {
+                    title: chance.sentence({words: 4}),
+                    public: false,
+                    author: jimmyId,
+                    currentVersion: docTextGenerator(),
+                    dateCreated: chance.date(),
+                    categories: ['Technology', 'Health/Wellness', 'Science'],
+                    tags: [chance.word(), chance.word(), chance.word(), chance.word(), chance.word()]
+                },
+                {
+                    title: chance.sentence({words: 4}),
+                    public: false,
+                    author: jimmyId,
+                    editAccess: [davidId],
+                    readAccess: [davidId, soniaId, nastiaId],
+                    currentVersion: docTextGenerator(),
+                    dateCreated: chance.date(),
+                    categories: ['Education'],
+                    tags: [chance.word(), chance.word(), chance.word()]
+                },
+                {
+                    title: chance.sentence({words: 4}),
+                    author: jimmyId,
+                    editAccess: [davidId],
+                    readAccess: [davidId, soniaId, nastiaId],
+                    currentVersion: docTextGenerator(),
+                    dateCreated: chance.date(),
+                    categories: ['Business', 'Technology'],
+                    tags: [chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word()]
+                }
+            ];
+
+            return q.invoke(Document, 'create', documents);
+        })
+        .catch(function (err) {
+            console.error(err);
+            process.kill(1);
+        });
+
+};
+
+connectToDb
+    .then(function () {
+        return q.all([User.removeAsync({}), Document.removeAsync({})]);
+    })
+    .then(function() {
+        return cp.execAsync('rm -rf documents', {cwd: __dirname});
+    })
+    .then(function() {
+        return mkdirp(__dirname + '/documents');
+    })
+    .then(function () {
+        return seedUsers();
+    })
+    .then(function() {
+        return seedDocuments();
+    })
+    .then(function() {
+        return Document.findAsync({});
+    })
+    .then(function(docs) {
+
+        var createRepoArray = [];
+
+        docs.forEach(function(doc) {
+            var docPath = path.join(__dirname, 'documents', doc.author.toString(), doc._id.toString());
+            createRepoArray.push(mkdirp(docPath)
+                .then(function() {
+                    return fs.writeFileAsync(docPath + '/contents.html', doc.currentVersion);
+                })
+                .then(function(){
+                    return git.initAsync(docPath);
+                })
+                .then(function() {
+                    doc.pathToRepo = docPath;
+                    return doc.saveAsync();
+                })
+                .then(function() {
+                    return doc.addAndCommit('First save');
+                })
+                .then(function(){
+                    return cp.execAsync("git branch -m master " + doc.author, {cwd: docPath});
+                })
+                .catch(function(err) {
+                    console.log(err);
+                }));
+        });
+
+        return q.all(createRepoArray);
+
+    })
+    .then(function () {
         console.log(chalk.green('Seed successful!'));
         process.kill(0);
-    }).catch(function (err) {
+    })
+    .catch(function (err) {
         console.error(err);
         process.kill(1);
     });
-});
