@@ -2,7 +2,6 @@
 
 app.config(function ($stateProvider) {
 
-    // Register our *about* state.
     $stateProvider.state('search', {
         url: '/search/:query',
         controller: 'SearchController',
@@ -31,9 +30,9 @@ app.filter('byQuery', function(){
     return function(documents, criteria, query){
         if (criteria === 'category'){
             return documents.filter(function(element){
-                return _.includes(element.categories, query);
-            });
-        };
+                return _.includes(element.categories, query)
+            })
+        }
         else return _.where(documents, {criteria: query});
     };            
 });
