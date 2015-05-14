@@ -231,38 +231,31 @@ var seedDocuments = function () {
 
 connectToDb
     .then(function () {
-        console.log('1');
         return q.all([User.removeAsync({}), Document.removeAsync({})]);
     })
     .then(function() {
-        console.log('3');
         return cp.execAsync('rm -rf documents', {cwd: __dirname});
     })
     .then(function() {
         return mkdirp(__dirname + '/documents');
     })
     .then(function () {
-        console.log('4');
         return seedUsers();
     })
     .then(function() {
-        console.log('5');
         return seedDocuments();
     })
     .then(function() {
-        console.log('6');
         return Document.findAsync({});
     })
     .then(function(docs) {
 
-        console.log('7');
         var createRepoArray = [];
 
         docs.forEach(function(doc) {
             var docPath = path.join(__dirname, 'documents', doc.author.toString(), doc._id.toString());
             createRepoArray.push(mkdirp(docPath)
                 .then(function() {
-                    console.log('in here')
                     return fs.writeFileAsync(docPath + '/contents.html', doc.currentVersion);
                 })
                 .then(function(){
