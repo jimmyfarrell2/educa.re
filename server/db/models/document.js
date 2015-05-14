@@ -66,7 +66,7 @@ schema.methods.addAndCommit = function(message) {
 
     if (!message) message = 'Unnamed save';
 
-    return self.repo.addAsync('contents.html')
+    return self.repo.addAsync('contents.md')
         .then(function(){
             return self.repo.commitAsync(message);
         });

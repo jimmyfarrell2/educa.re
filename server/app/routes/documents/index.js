@@ -8,7 +8,8 @@ var router = require('express').Router(),
     Document = Promise.promisifyAll(mongoose.model('Document')),
     User = Promise.promisifyAll(mongoose.model('User')),
     diff = require('htmldiff/src/htmldiff.js'),
-    cp = Promise.promisifyAll(require("child_process"));
+    cp = Promise.promisifyAll(require("child_process")),
+    md = require('markdown-it')();
 
 //set a repo for the user
 router.use('/', function(req, res, next){
@@ -61,7 +62,7 @@ router.put('/:docId', function(req, res, next){
             return doc.repo.checkoutAsync(req.body.document.author);
         })
         .then(function(){
-            return fs.writeFileAsync(req.body.document.pathToRepo + '/contents.html', req.body.document.currentVersion);
+            return fs.writeFileAsync(req.body.document.pathToRepo + '/contents.md', req.body.document.currentVersion);
         })
         .then(function(){
             return doc.addAndCommit(req.body.message);
@@ -87,7 +88,7 @@ router.put('/:docId/reset', function(req, res, next){
             return doc.repo.commitAsync('Restore previous version');
         })
         .then(function(){
-            return fs.readFileAsync(repo.path + '/contents.html');
+            return fs.readFileAsync(repo.path + '/contents.md');
         })
         .then(function(file){
             doc.currentVersion = file.toString();
@@ -116,7 +117,7 @@ function createRepo(request) {
             return mkdirp(docPath);
         })
         .then(function(){
-            return fs.writeFileAsync(docPath + '/contents.html', doc.currentVersion);
+            return fs.writeFileAsync(docPath + '/contents.md', doc.currentVersion);
         })
         .then(function(){
             return git.initAsync(docPath);

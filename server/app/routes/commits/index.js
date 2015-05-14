@@ -28,7 +28,7 @@ router.get('/:docId/commit/:commitId', function(req, res, next){
             return doc.repo.checkoutAsync(req.params.commitId)
         })
         .then(function(commit){
-            res.sendFile(repo.path + '/contents.html')
+            res.sendFile(repo.path + '/contents.md')
         })
        .catch(next);
 

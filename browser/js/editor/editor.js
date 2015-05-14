@@ -8,7 +8,7 @@ app.config(function ($stateProvider) {
         templateUrl: 'js/editor/editor.html',
         resolve: {
             document: function(DocumentFactory, $stateParams){
-                if($stateParams.docId == 'new') {
+                if($stateParams.docId === 'new') {
                     return {};
                 }
                 else return DocumentFactory.getDocument($stateParams.docId);
@@ -17,7 +17,10 @@ app.config(function ($stateProvider) {
                 return AuthService.getLoggedInUser()
             },
             commits: function(DocumentFactory, $stateParams){
-                return DocumentFactory.commitHistory($stateParams.docId);
+                if($stateParams.docId === 'new'){
+                    return {};
+                }
+                else return DocumentFactory.commitHistory($stateParams.docId);
             }
         }
     });
@@ -25,35 +28,57 @@ app.config(function ($stateProvider) {
 });
 
 
-app.controller('EditorController', function($scope, DocumentFactory, $stateParams, document, user, commits){
+app.controller('EditorController', function($scope, DocumentFactory, $stateParams, document, user, commits, $window){
+
+    var converter = $window.markdownit();
+
+    $scope.convertToHtml = function(){
+        if(document.currentVersion) document.currentVersion = converter.render(document.currentVersion);
+    }
+
+    $scope.docInfo = {
+        message: $scope.message,
+        document: document,
+        content: document.currentVersion
+    }
+
+    function flush(){
+        $scope.docInfo.document.currentVersion = $scope.docInfo.content;
+        $scope.docInfo.content = '';
+        $scope.docInfo.document.currentVersion = toMarkdown($scope.docInfo.document.currentVersion);
+    }
+
+    $scope.convertToHtml();
+
 
     $scope.checked = false; // This will be binded using the ps-open attribute
-                $scope.toggle = function(){
-                    $scope.checked = !$scope.checked
-                };
+    $scope.toggle = function(){
+        $scope.checked = !$scope.checked
+    };
 
     $scope.message = 'a message';
     $scope.pullRequests = document.pullRequests;
     $scope.commits = commits;
     $scope.document = document;
 
+
     $scope.branchDocument = function(){
-        console.log("document", document);
+        flush();
         DocumentFactory.branchOtherDocument(document).then(function(doc){
-            console.log(doc);
+            $scope.docInfo.content = converter.render(doc.currentVersion);
         });
     };
 
-    $scope.mergeDocument = function(pullRequest){
-        DocumentFactory.mergeDocument(document, pullRequest).then(function(diff){
-            console.log(diff);
+    $scope.getDiff = function(pullRequest){
+        console.log(pullRequest);
+        flush();
+        console.log($scope.docInfo.document);
+        DocumentFactory.mergeDocument($scope.docInfo.document, pullRequest).then(function(diff){
+            console.log(diff)
+            //$scope.docInfo.content = converter.render(diff);
         });
     }
 
-    $scope.docInfo = {
-        message: $scope.message,
-        document: document
-    }
 
     $scope.createUserFolder = function(){
         DocumentFactory.createDocument().then(function(response){
@@ -68,10 +93,14 @@ app.controller('EditorController', function($scope, DocumentFactory, $stateParam
     };
 
     $scope.saveUserDocument = function(docInfo){
-        DocumentFactory.saveDocument(docInfo).then(function(response){
-            console.log('saved', response);
-        })
+        flush();
+        DocumentFactory.saveDocument(docInfo).then(function(document){
+            $scope.docInfo.content = converter.render(document.currentVersion);
+        });
     };
+
+
+
 
 });
 

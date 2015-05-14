@@ -256,7 +256,8 @@ connectToDb
             var docPath = path.join(__dirname, 'documents', doc.author.toString(), doc._id.toString());
             createRepoArray.push(mkdirp(docPath)
                 .then(function() {
-                    return fs.writeFileAsync(docPath + '/contents.html', doc.currentVersion);
+                    return fs.writeFileAsync(docPath + '/contents.md' +
+                        '', doc.currentVersion);
                 })
                 .then(function(){
                     return git.initAsync(docPath);

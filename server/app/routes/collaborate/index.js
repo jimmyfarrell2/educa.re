@@ -7,7 +7,7 @@ var router = require('express').Router(),
     mongoose = require('mongoose'),
     Document = Promise.promisifyAll(mongoose.model('Document')),
     User = Promise.promisifyAll(mongoose.model('User')),
-    diff = require('htmldiff/src/htmldiff.js'),
+    diff = require('diff'),
     cp = Promise.promisifyAll(require("child_process"));
 
 ///creating user's branch
@@ -73,8 +73,8 @@ router.put('/merge', function(req, res, next){
 
     repo.checkoutAsync(req.user._id)
         .then(function(){
-            var diffToHtml = diff(req.body.pullRequest.proposedVersion, req.body.document.currentVersion);
-            res.json(diffToHtml);
+            var markdownDiff = diff.diffLines(req.body.pullRequest.proposedVersion, req.body.document.currentVersion);
+            res.json(markdownDiff);
         });
         //.then(function(){
         //    return cp.execAsync('git diff ' + req.user._id + '..' + req.body.pullRequest.author, {cwd: req.body.document.pathToRepo});
