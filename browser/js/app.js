@@ -3,7 +3,8 @@ var app = angular.module('FullstackGeneratedApp', [
     'ui.router',
     'fsaPreBuilt',
     'angular-medium-editor',
-    'pageslide-directive'
+    'pageslide-directive',
+    'ui.bootstrap'
 ]);
 
 app.config(function ($urlRouterProvider, $locationProvider) {

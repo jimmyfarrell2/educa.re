@@ -1,6 +1,5 @@
 app.config(function ($stateProvider) {
 
-    // Register our *about* state.
     $stateProvider.state('documentDashboard', {
         url: '/document-dashboard/:docId',
         controller: 'DocumentDashboardController',
@@ -26,4 +25,12 @@ app.controller('DocumentDashboardController', function($scope, DocumentFactory, 
     $scope.document = document;
     $scope.user = user;
 
-})
+  $scope.tabs = [
+    { title:'Dynamic Title 1', content:'Dynamic content 1' },
+    { title:'Dynamic Title 2', content:'Dynamic content 2', disabled: true }
+  ];
+
+  $scope.alertMe = function() {
+    
+  };
+});

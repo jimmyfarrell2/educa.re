@@ -1,30 +1,19 @@
-<section>
-		<ul class= "tabs" ng-init="tab = 1">
-			<li ng-class="{active:tab===1}"> 
-				<a href ng-click="tab = 1">Drafts</a>	
-			</li>
-			<li ng-class="{active:tab===2}"> 
-				<a href ng-click="tab = 2">Collaborators</a> 
-			</li>
-			<li ng-class="{active:tab===3}"> 
-				<a href ng-click="tab = 3">Suggested Edits</a> 
-			</li>
-			<br><br>
-			<div ng-show="tab === 1">
-			<ul> 
-				<li ng-repeat="commit in commits">{{commit.date}} {{commit.message}}</li>
-			</ul>
-			</div>
-			<div ng-show="tab === 2">
-			<ul> 
-				<li ng-repeat="collaborator in document.editAccess">{{collaborator}}</li>
-			</ul>
-			</div>
-			<div ng-show="tab === 3">
-			<ul> 
-				<li ng-repeat="pullRequest in document.pullRequests">{{pullRequest.author}} {{pullRequest.message}}</li>
-			</ul>
-			</div>
-		</ul>		
-	</section>		
-</body>
+<div>
+   <tabset justified="true">
+      <tab heading="Drafts">
+         <ul>
+            <li ng-repeat="commit in commits">{{commit.date}} {{commit.message}}</li>
+         </ul>
+      </tab>
+      <tab heading="Collaborators">
+         <ul>
+            <li ng-repeat="collaborator in document.editAccess">{{collaborator}}</li>
+         </ul>
+      </tab>
+      <tab heading="Suggested Edits">
+         <ul>
+            <li ng-repeat="pullRequest in document.pullRequests">{{pullRequest.author}} {{pullRequest.message}}</li>
+         </ul>
+      </tab>
+   </tabset>
+</div>

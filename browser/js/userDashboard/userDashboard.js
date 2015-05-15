@@ -25,7 +25,5 @@ app.controller('UserDashboardController', function($scope, $stateParams, userDoc
     $scope.goToEdit = function(documentId){
         $state.go('editor', {docId: documentId});
     }
-
-
 });
 
