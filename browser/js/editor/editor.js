@@ -7,19 +7,13 @@ app.config(function ($stateProvider) {
         templateUrl: 'js/editor/editor.html',
         resolve: {
             document: function(DocumentFactory, $stateParams){
-                if($stateParams.docId === 'new') {
-                    return {};
-                }
-                else return DocumentFactory.getDocument($stateParams.docId);
+                return DocumentFactory.getDocument($stateParams.docId);
             },
             user: function(AuthService){
                 return AuthService.getLoggedInUser()
             },
             commits: function(DocumentFactory, $stateParams){
-                if($stateParams.docId === 'new'){
-                    return {};
-                }
-                else return DocumentFactory.commitHistory($stateParams.docId);
+                return DocumentFactory.commitHistory($stateParams.docId);
             }
         }
     });
@@ -28,7 +22,12 @@ app.config(function ($stateProvider) {
 
 
 app.controller('EditorController', function($scope, DocumentFactory, $stateParams, document, user, commits, $window){
-    var converter = $window.markdownit();
+
+    var converter = $window.markdownit({html: true});
+
+    function sanitize(content){
+        return content.replace(/<\/?(ins|del)>/g, '');
+    }
 
     $scope.markdownOptions = {
         extensions: {
@@ -37,6 +36,7 @@ app.controller('EditorController', function($scope, DocumentFactory, $stateParam
             })
         }
     };
+
 
     $scope.contentToHtml = converter.render(document.currentVersion);
 
@@ -66,8 +66,11 @@ app.controller('EditorController', function($scope, DocumentFactory, $stateParam
 
     $scope.getDiff = function(pullRequest){
         DocumentFactory.mergeDocument($scope.docInfo.document, pullRequest).then(function(diff){
+            diff = diff.replace(/>#/g, ">\n#");
+            console.log('diff raw', diff);
+            $scope.contentToHtml = converter.render(diff);
 
-            console.log(converter.render(diff).replace(/&lt;/g, "<").replace(/&gt;/g, ">"));
+            //console.log('diff converted to html', converter.render(diff));
                 //
             //$scope.docInfo.content = converter.render(diff);
         });
@@ -87,6 +90,7 @@ app.controller('EditorController', function($scope, DocumentFactory, $stateParam
     };
 
     $scope.saveUserDocument = function(docInfo){
+        docInfo.document.currentVersion = sanitize(docInfo.document.currentVersion);
         DocumentFactory.saveDocument(docInfo).then(function(document){
 
         });
