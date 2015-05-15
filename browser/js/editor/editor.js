@@ -47,7 +47,9 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
     }
 
 
-
+    $scope.seeDashboard = function(){
+        $state.go("documentDashboard", {docId: document._id});
+    }
     $scope.checked = false; // This will be binded using the ps-open attribute
     $scope.toggle = function(){
         $scope.checked = !$scope.checked

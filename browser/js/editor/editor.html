@@ -5,9 +5,9 @@
         <div id="sidebar-wrapper" ng-show="checked">
             <ul class="sidebar-nav">
                 <li class="sidebar-brand">Information</li>
-                <li><a href="#">Suggested Edits {{document.pullRequests.length}}</a></li>
-                <li><a href="#">Collaborators {{document.editAccess.length}}</a></li>
-                <li><a href="#">Drafts {{commits.length}}</a></li>
+                <li><a href="#" ng-click="seeDashboard()">Suggested Edits {{document.pullRequests.length}}</a></li>
+                <li><a href="#" ng-click="seeDashboard()">Collaborators {{document.editAccess.length}}</a></li>
+                <li><a href="#" ng-click="seeDashboard()">Drafts {{commits.length}}</a></li>
                 <li><a href="#" ng-click="createUserFolder()">New Document</a></li>
             </ul>
         </div>
