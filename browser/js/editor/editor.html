@@ -8,6 +8,7 @@
                 <li><a href="#">Suggested Edits {{document.pullRequests.length}}</a></li>
                 <li><a href="#">Collaborators {{document.editAccess.length}}</a></li>
                 <li><a href="#">Drafts {{commits.length}}</a></li>
+                <li><a href="#" ng-click="createUserFolder()">New Document</a></li>
             </ul>
         </div>
 </div>
@@ -18,10 +19,10 @@
 
 
 
-<button ng-click="createUserFolder()">Create doc</button>
-<button ng-click="saveUserDocument(docInfo)">Save doc</button>
-<button ng-click="branchDocument()">Branch doc</button>
-<button ng-click="makePullRequest()">Suggest changes</button>
+
+<button ng-click="saveUserDocument(docInfo)" ng-show="isUser">Save doc</button>
+<button ng-click="branchDocument()" ng-show="isNotUser">Branch doc</button>
+<button ng-click="makePullRequest()" ng-show="isBranched">Suggest changes</button>
 
 <ul>
     <li  ng-repeat="pullRequest in pullRequests" ng-click="getDiff(pullRequest)">{{pullRequest}}</li>

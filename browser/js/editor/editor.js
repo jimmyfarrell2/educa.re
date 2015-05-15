@@ -21,7 +21,7 @@ app.config(function ($stateProvider) {
 });
 
 
-app.controller('EditorController', function($scope, DocumentFactory, $stateParams, document, user, commits, $window){
+app.controller('EditorController', function($scope, DocumentFactory, $state, document, user, commits, $window){
 
     var converter = $window.markdownit({html: true});
 
@@ -53,6 +53,11 @@ app.controller('EditorController', function($scope, DocumentFactory, $stateParam
         $scope.checked = !$scope.checked
     };
 
+    $scope.isNotUser = user._id !== document.author;
+    $scope.isUser = !$scope.isNotUser;
+    $scope.isBranched = document.branchedFrom;
+    console.log(document.branchedFrom)
+
     $scope.message = 'a message';
     $scope.pullRequests = document.pullRequests;
     $scope.commits = commits;
@@ -61,25 +66,22 @@ app.controller('EditorController', function($scope, DocumentFactory, $stateParam
 
     $scope.branchDocument = function(){
         DocumentFactory.branchOtherDocument($scope.docInfo.document).then(function(doc){
+            $state.go('editor', {docId: doc._id});
         });
     };
 
     $scope.getDiff = function(pullRequest){
         DocumentFactory.mergeDocument($scope.docInfo.document, pullRequest).then(function(diff){
             diff = diff.replace(/>#/g, ">\n#");
-            console.log('diff raw', diff);
             $scope.contentToHtml = converter.render(diff);
-
-            //console.log('diff converted to html', converter.render(diff));
-                //
-            //$scope.docInfo.content = converter.render(diff);
         });
     }
 
 
     $scope.createUserFolder = function(){
-        DocumentFactory.createDocument().then(function(response){
-          console.log('created', response);
+        DocumentFactory.createDocument().then(function(doc){
+            $state.go('editor', {docId: doc._id})
+          console.log('created', doc);
       });
     };
 
