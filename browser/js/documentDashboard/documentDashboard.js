@@ -20,7 +20,7 @@ app.config(function ($stateProvider) {
 });
 
 
-app.controller('DocumentDashboardController', function($scope, DocumentFactory, user, document, commits){
+app.controller('DocumentDashboardController', function($scope, $log, $modal, DocumentFactory, user, document, commits, $state){
     $scope.commits = commits;
     $scope.document = document;
     $scope.user = user;
@@ -32,5 +32,61 @@ app.controller('DocumentDashboardController', function($scope, DocumentFactory, 
 
   $scope.alertMe = function() {
     
+  };
+
+  $scope.items = ['item1', 'item2', 'item3'];
+
+  $scope.animationsEnabled = true;
+
+  $scope.open = function (size, document, index, pullRequest) {
+
+    var modalInstance = $modal.open({
+      animation: $scope.animationsEnabled,
+      templateUrl: 'myModalContent.html',
+      controller: 'ModalInstanceCtrl',
+      size: size,
+      resolve: {
+        content: function(){
+            return pullRequest.proposedVersion;
+        },
+        document: function(){
+            return document;
+        },
+        index: function(){
+            return index;
+        },
+        pullRequest: function(){
+            return pullRequest;
+        }
+      }
+    });
+
+    modalInstance.result.then(function (selectedItem) {
+      $scope.selected = selectedItem;
+    });
+  };
+
+  $scope.toggleAnimation = function () {
+    $scope.animationsEnabled = !$scope.animationsEnabled;
+  };
+});
+
+
+app.controller('ModalInstanceCtrl', function ($scope, $modalInstance, content, $state, document, index, pullRequest) {
+    $scope.content = content;
+    $scope.index = index;
+    $scope.pullRequest = pullRequest;
+
+  $scope.mergeChanges = function(){
+    $state.go('editor', {docId:document._id});
+    $scope.ok();
+    }
+
+  $scope.ok = function () {
+    $modalInstance.close($scope.selected);
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
   };
 });

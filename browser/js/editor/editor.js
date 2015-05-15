@@ -13,7 +13,7 @@ app.config(function($stateProvider) {
             },
             commits: function(DocumentFactory, $stateParams) {
                 return DocumentFactory.commitHistory($stateParams.docId);
-            }
+            }    
         }
     });
 
