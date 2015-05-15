@@ -37,194 +37,174 @@ var getCurrentUserData = function () {
     return q.ninvoke(User, 'find', {});
 };
 
-var seedUsers = function () {
+var seedUsersAndDocuments = function () {
 
-    var users = [
-        {
-            email: 'sonia@fsa.com',
-            password: 'sonia',
-            name: {
-                first: 'Sonia',
-                last: 'Trehan'
-            }
-        },
-        {
-            email: 'nastia@fsa.com',
-            password: 'nastia',
-            name: {
-                first: 'Nastia',
-                last: 'Sergiienko'
-            }
-        },
-        {
-            email: 'david@fsa.com',
-            password: 'david',
-            name: {
-                first: 'David',
-                last: 'Phelan'
-            }
-        },
-        {
+    var sonia = new User({
+        email: 'sonia@fsa.com',
+        password: 'sonia',
+        name: {
+            first: 'Sonia',
+            last: 'Trehan'
+        }
+    });
+    var nastia = new User({
+        email: 'nastia@fsa.com',
+        password: 'nastia',
+        name: {
+            first: 'Nastia',
+            last: 'Sergiienko'
+        }
+    });
+    var david = new User({
+        email: 'david@fsa.com',
+        password: 'david',
+        name: {
+            first: 'David',
+            last: 'Phelan'
+        }
+    });
+    var jimmy = new User({
             email: 'jimmy@fsa.com',
             password: 'jimmy',
             name: {
                 first: 'Jimmy',
                 last: 'Farrell'
             }
+    });
+
+    var docTextGenerator = function() {
+        return '# ' + chance.sentence({words: 8}) + '\n\n' + chance.paragraph() + '\n\n## ' + chance.sentence({words: 5}) + '\n\n' + chance.paragraph() + '\n\n' + chance.paragraph() + '\n\n# ' + chance.sentence({words: 5}) + '\n\n' + chance.paragraph() + '\n\n' + chance.paragraph();
+    };
+
+    var documents = [
+        {
+            title: chance.sentence({words: 4}),
+            public: false,
+            author: sonia._id,
+            currentVersion: docTextGenerator(),
+            dateCreated: chance.date(),
+            categories: ['Technology', 'Health/Wellness', 'Science'],
+            tags: [chance.word(), chance.word(), chance.word(), chance.word(), chance.word()]
+        },
+        {
+            title: chance.sentence({words: 4}),
+            public: false,
+            author: sonia._id,
+            editAccess: [nastia._id],
+            readAccess: [nastia._id, david._id, jimmy._id],
+            currentVersion: docTextGenerator(),
+            dateCreated: chance.date(),
+            categories: ['Education'],
+            tags: [chance.word(), chance.word(), chance.word()]
+        },
+        {
+            title: chance.sentence({words: 4}),
+            author: sonia._id,
+            editAccess: [nastia._id],
+            readAccess: [nastia._id, david._id, jimmy._id],
+            currentVersion: docTextGenerator(),
+            dateCreated: chance.date(),
+            categories: ['Business', 'Technology'],
+            tags: [chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word()]
+        },
+        {
+            title: chance.sentence({words: 4}),
+            public: false,
+            author: nastia._id,
+            currentVersion: docTextGenerator(),
+            dateCreated: chance.date(),
+            categories: ['Technology', 'Health/Wellness', 'Science'],
+            tags: [chance.word(), chance.word(), chance.word(), chance.word(), chance.word()]
+        },
+        {
+            title: chance.sentence({words: 4}),
+            public: false,
+            author: nastia._id,
+            editAccess: [sonia._id],
+            readAccess: [sonia._id, david._id, jimmy._id],
+            currentVersion: docTextGenerator(),
+            dateCreated: chance.date(),
+            categories: ['Education'],
+            tags: [chance.word(), chance.word(), chance.word()]
+        },
+        {
+            title: chance.sentence({words: 4}),
+            author: nastia._id,
+            editAccess: [sonia._id],
+            readAccess: [sonia._id, david._id, jimmy._id],
+            currentVersion: docTextGenerator(),
+            dateCreated: chance.date(),
+            categories: ['Business', 'Technology'],
+            tags: [chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word()]
+        },
+        {
+            title: chance.sentence({words: 4}),
+            public: false,
+            author: david._id,
+            currentVersion: docTextGenerator(),
+            dateCreated: chance.date(),
+            categories: ['Technology', 'Health/Wellness', 'Science'],
+            tags: [chance.word(), chance.word(), chance.word(), chance.word(), chance.word()]
+        },
+        {
+            title: chance.sentence({words: 4}),
+            public: false,
+            author: david._id,
+            editAccess: [jimmy._id],
+            readAccess: [jimmy._id, sonia._id, nastia._id],
+            currentVersion: docTextGenerator(),
+            dateCreated: chance.date(),
+            categories: ['Education'],
+            tags: [chance.word(), chance.word(), chance.word()]
+        },
+        {
+            title: chance.sentence({words: 4}),
+            author: david._id,
+            editAccess: [jimmy._id],
+            readAccess: [jimmy._id, sonia._id, nastia._id],
+            currentVersion: docTextGenerator(),
+            dateCreated: chance.date(),
+            categories: ['Business', 'Technology'],
+            tags: [chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word()]
+        },
+        {
+            title: chance.sentence({words: 4}),
+            public: false,
+            author: jimmy._id,
+            currentVersion: docTextGenerator(),
+            dateCreated: chance.date(),
+            categories: ['Technology', 'Health/Wellness', 'Science'],
+            tags: [chance.word(), chance.word(), chance.word(), chance.word(), chance.word()]
+        },
+        {
+            title: chance.sentence({words: 4}),
+            public: false,
+            author: jimmy._id,
+            editAccess: [david._id],
+            readAccess: [david._id, sonia._id, nastia._id],
+            currentVersion: docTextGenerator(),
+            dateCreated: chance.date(),
+            categories: ['Education'],
+            tags: [chance.word(), chance.word(), chance.word()]
+        },
+        {
+            title: chance.sentence({words: 4}),
+            author: jimmy._id,
+            editAccess: [david._id],
+            readAccess: [david._id, sonia._id, nastia._id],
+            currentVersion: docTextGenerator(),
+            dateCreated: chance.date(),
+            categories: ['Business', 'Technology'],
+            tags: [chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word()]
         }
     ];
 
-    return q.invoke(User, 'create', users);
-
-};
-
-var seedDocuments = function () {
-
-    var docTextGenerator = function() {
-        return '<h1>' + chance.sentence({words: 8}) + '</h1><p>' + chance.paragraph() + '</p><h2>' + chance.sentence({words: 5}) + '</h2><p>' + chance.paragraph() + '</p><p>' + chance.paragraph() + '</p><h2>' + chance.sentence({words: 5}) + '</h2><p>' + chance.paragraph() + '</p><p>' + chance.paragraph() + '</p>';
-    };
-
-    var usersFindArray = [
-        User.findOneAsync({email: 'sonia@fsa.com'}),
-        User.findOneAsync({email: 'nastia@fsa.com'}),
-        User.findOneAsync({email: 'david@fsa.com'}),
-        User.findOneAsync({email: 'jimmy@fsa.com'})
-    ];
-
-    return q.all(usersFindArray)
-        .spread(function(sonia, nastia, david, jimmy) {
-            var soniaId = sonia._id;
-            var nastiaId = nastia._id;
-            var davidId = david._id;
-            var jimmyId = jimmy._id;
-            var documents = [
-                {
-                    title: chance.sentence({words: 4}),
-                    public: false,
-                    author: soniaId,
-                    currentVersion: docTextGenerator(),
-                    dateCreated: chance.date(),
-                    categories: ['Technology', 'Health/Wellness', 'Science'],
-                    tags: [chance.word(), chance.word(), chance.word(), chance.word(), chance.word()]
-                },
-                {
-                    title: chance.sentence({words: 4}),
-                    public: false,
-                    author: soniaId,
-                    editAccess: [nastiaId],
-                    readAccess: [nastiaId, davidId, jimmyId],
-                    currentVersion: docTextGenerator(),
-                    dateCreated: chance.date(),
-                    categories: ['Education'],
-                    tags: [chance.word(), chance.word(), chance.word()]
-                },
-                {
-                    title: chance.sentence({words: 4}),
-                    author: soniaId,
-                    editAccess: [nastiaId],
-                    readAccess: [nastiaId, davidId, jimmyId],
-                    currentVersion: docTextGenerator(),
-                    dateCreated: chance.date(),
-                    categories: ['Business', 'Technology'],
-                    tags: [chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word()]
-                },
-                {
-                    title: chance.sentence({words: 4}),
-                    public: false,
-                    author: nastiaId,
-                    currentVersion: docTextGenerator(),
-                    dateCreated: chance.date(),
-                    categories: ['Technology', 'Health/Wellness', 'Science'],
-                    tags: [chance.word(), chance.word(), chance.word(), chance.word(), chance.word()]
-                },
-                {
-                    title: chance.sentence({words: 4}),
-                    public: false,
-                    author: nastiaId,
-                    editAccess: [soniaId],
-                    readAccess: [soniaId, davidId, jimmyId],
-                    currentVersion: docTextGenerator(),
-                    dateCreated: chance.date(),
-                    categories: ['Education'],
-                    tags: [chance.word(), chance.word(), chance.word()]
-                },
-                {
-                    title: chance.sentence({words: 4}),
-                    author: nastiaId,
-                    editAccess: [soniaId],
-                    readAccess: [soniaId, davidId, jimmyId],
-                    currentVersion: docTextGenerator(),
-                    dateCreated: chance.date(),
-                    categories: ['Business', 'Technology'],
-                    tags: [chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word()]
-                },
-                {
-                    title: chance.sentence({words: 4}),
-                    public: false,
-                    author: davidId,
-                    currentVersion: docTextGenerator(),
-                    dateCreated: chance.date(),
-                    categories: ['Technology', 'Health/Wellness', 'Science'],
-                    tags: [chance.word(), chance.word(), chance.word(), chance.word(), chance.word()]
-                },
-                {
-                    title: chance.sentence({words: 4}),
-                    public: false,
-                    author: davidId,
-                    editAccess: [jimmyId],
-                    readAccess: [jimmyId, soniaId, nastiaId],
-                    currentVersion: docTextGenerator(),
-                    dateCreated: chance.date(),
-                    categories: ['Education'],
-                    tags: [chance.word(), chance.word(), chance.word()]
-                },
-                {
-                    title: chance.sentence({words: 4}),
-                    author: davidId,
-                    editAccess: [jimmyId],
-                    readAccess: [jimmyId, soniaId, nastiaId],
-                    currentVersion: docTextGenerator(),
-                    dateCreated: chance.date(),
-                    categories: ['Business', 'Technology'],
-                    tags: [chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word()]
-                },
-                {
-                    title: chance.sentence({words: 4}),
-                    public: false,
-                    author: jimmyId,
-                    currentVersion: docTextGenerator(),
-                    dateCreated: chance.date(),
-                    categories: ['Technology', 'Health/Wellness', 'Science'],
-                    tags: [chance.word(), chance.word(), chance.word(), chance.word(), chance.word()]
-                },
-                {
-                    title: chance.sentence({words: 4}),
-                    public: false,
-                    author: jimmyId,
-                    editAccess: [davidId],
-                    readAccess: [davidId, soniaId, nastiaId],
-                    currentVersion: docTextGenerator(),
-                    dateCreated: chance.date(),
-                    categories: ['Education'],
-                    tags: [chance.word(), chance.word(), chance.word()]
-                },
-                {
-                    title: chance.sentence({words: 4}),
-                    author: jimmyId,
-                    editAccess: [davidId],
-                    readAccess: [davidId, soniaId, nastiaId],
-                    currentVersion: docTextGenerator(),
-                    dateCreated: chance.date(),
-                    categories: ['Business', 'Technology'],
-                    tags: [chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word()]
-                }
-            ];
-
+    return q.all([sonia.saveAsync(), nastia.saveAsync(), david.saveAsync(), jimmy.saveAsync()])
+        .then(function() {
             return q.invoke(Document, 'create', documents);
         })
-        .catch(function (err) {
-            console.error(err);
-            process.kill(1);
+        .catch(function(err) {
+            console.log(err);
         });
 
 };
@@ -240,10 +220,7 @@ connectToDb
         return mkdirp(__dirname + '/documents');
     })
     .then(function () {
-        return seedUsers();
-    })
-    .then(function() {
-        return seedDocuments();
+        return seedUsersAndDocuments();
     })
     .then(function() {
         return Document.findAsync({});
