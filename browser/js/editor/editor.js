@@ -4,7 +4,6 @@ app.config(function ($stateProvider) {
     $stateProvider.state('editor', {
         url: '/editor/:docId',
         controller: 'EditorController',
-        controllerAs: 'EditCtrl',
         templateUrl: 'js/editor/editor.html',
         resolve: {
             document: function(DocumentFactory, $stateParams){
@@ -29,32 +28,24 @@ app.config(function ($stateProvider) {
 
 
 app.controller('EditorController', function($scope, DocumentFactory, $stateParams, document, user, commits, $window){
+    var converter = $window.markdownit();
 
-    var converter = $window.markdownit({html: true, typographer: true});
-    console.log(converter);
+    $scope.markdownOptions = {
+        extensions: {
+            "markdown": new MeMarkdown(function(md){
+                document.currentVersion = md;
+            })
+        }
+    };
 
-    //can't call this every time
-    $scope.convertToHtml = function(){
-        //if(document.currentVersion) {
-        //    document.currentVersion = converter.render(document.currentVersion);
-        //    $scope.docInfo.content = document.currentVersion;
-        //}
+    $scope.contentToHtml = converter.render(document.currentVersion);
 
-    }
 
     $scope.docInfo = {
         message: $scope.message,
-        document: document,
-        content: document.currentVersion
+        document: document
     }
 
-    function flush(){
-        $scope.docInfo.document.currentVersion = $scope.docInfo.content;
-        $scope.docInfo.content = '';
-        $scope.docInfo.document.currentVersion = toMarkdown($scope.docInfo.document.currentVersion);
-    }
-
-    $scope.convertToHtml();
 
 
     $scope.checked = false; // This will be binded using the ps-open attribute
@@ -69,21 +60,15 @@ app.controller('EditorController', function($scope, DocumentFactory, $stateParam
 
 
     $scope.branchDocument = function(){
-        flush();
         DocumentFactory.branchOtherDocument($scope.docInfo.document).then(function(doc){
-            $scope.docInfo.content = converter.render(doc.currentVersion);
         });
     };
 
     $scope.getDiff = function(pullRequest){
-        flush();
-        console.log($scope.docInfo.document);
         DocumentFactory.mergeDocument($scope.docInfo.document, pullRequest).then(function(diff){
-            var xmlParsed = converter.render(diff);
-            diff = diff.replace(/</g, '@~%').replace(/>/g, '%~@');
-            console.log(converter.render(xmlParsed));
-                //.replace(/@~%/g, '<').replace(/%~@/g, '>'));
-                //.replace(/&lt;/g, "<").replace(/&gt;/g, ">"));
+
+            console.log(converter.render(diff).replace(/&lt;/g, "<").replace(/&gt;/g, ">"));
+                //
             //$scope.docInfo.content = converter.render(diff);
         });
     }
@@ -102,13 +87,10 @@ app.controller('EditorController', function($scope, DocumentFactory, $stateParam
     };
 
     $scope.saveUserDocument = function(docInfo){
-        flush();
         DocumentFactory.saveDocument(docInfo).then(function(document){
-            $scope.docInfo.content = converter.render(document.currentVersion);
+
         });
     };
-
-
 
 
 });
