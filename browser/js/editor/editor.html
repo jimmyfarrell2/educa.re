@@ -1,17 +1,16 @@
 
+<div>
 <button ng-click = "toggle()">Information</button>
-<div pageslide ps-open="checked" ps-squeeze="true">
-<div id="sidebar">
-                       <h2 ng-click="">Suggested Edits {{document.pullRequests.length}}</h2>
-                       <h2>Collaborators {{document.editAccess.length}}</h2>
-                        <h2>Drafts {{commits.length}}</h2>
-                       
-                   </div>
 
+        <div id="sidebar-wrapper" ng-show="checked">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">Information</li>
+                <li><a href="#">Suggested Edits {{document.pullRequests.length}}</a></li>
+                <li><a href="#">Collaborators {{document.editAccess.length}}</a></li>
+                <li><a href="#">Drafts {{commits.length}}</a></li>
+            </ul>
+        </div>
 </div>
-
-
-
 <medium-editor ng-model="docInfo.content"  options='{"placeholder": "Start writing", "buttons": ["bold", "italic", "underline", "anchor", "header1", "header2", "quote", "orderedlist", "unorderedlist"]}'></medium-editor><br/>
 
 
@@ -24,4 +23,4 @@
     <li  ng-repeat="pullRequest in pullRequests" ng-click="getDiff(pullRequest)">{{pullRequest}}</li>
 </ul>
 
-</div>
+
