@@ -12,7 +12,7 @@
       </tab>
       <tab heading="Suggested Edits">
          <ul>
-            <li ng-repeat="pullRequest in document.pullRequests" ng-click="open('lg')">{{pullRequest.author}} {{pullRequest.message}}</li>
+            <li ng-repeat="pullRequest in document.pullRequests" ng-click="open('lg', document, $index, pullRequest)">{{pullRequest.author}} {{pullRequest.message}}</li>
          </ul>
       </tab>
    </tabset>
@@ -20,10 +20,11 @@
 
 <script type="text/ng-template" id="myModalContent.html">
         <div class="modal-body">
-          
+          {{content}}
         </div>
         <div class="modal-footer">
             <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-primary" ng-click="mergeChanges()">Merge</button>
             <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
         </div>
     </script>
