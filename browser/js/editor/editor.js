@@ -1,7 +1,7 @@
 app.config(function($stateProvider) {
 
     $stateProvider.state('editor', {
-        url: '/editor/:docId',
+        url: '/editor/:docId/:pullReq',
         controller: 'EditorController',
         templateUrl: 'js/editor/editor.html',
         resolve: {
@@ -20,11 +20,22 @@ app.config(function($stateProvider) {
 });
 
 
-app.controller('EditorController', function($scope, DocumentFactory, $state, document, user, commits, $window) {
+app.controller('EditorController', function($scope, DocumentFactory, $state, document, user, commits, $window, $stateParams) {
 
     var converter = $window.markdownit({
         html: true
     });
+
+    if($stateParams.pullReq) {
+        DocumentFactory.mergeDocument(document, document.pullRequests[$stateParams.pullReq]).then(function(diff){
+            $scope.contentToHtml = converter.render(diff);
+        });
+    }
+    else {
+        console.log('in here')
+        $scope.contentToHtml = converter.render(document.currentVersion);
+    };
+
 
     function sanitize(content) {
         return content.replace(/<\/?(ins|del)>/g, '');
@@ -37,9 +48,6 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
             })
         }
     };
-
-
-    $scope.contentToHtml = converter.render(document.currentVersion);
 
 
     $scope.docInfo = {
@@ -77,13 +85,13 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
         });
     };
 
-    $scope.getDiff = function(pullRequest) {
-        DocumentFactory.mergeDocument($scope.docInfo.document, pullRequest).then(function(diff) {
-            diff = diff.replace(/>#/g, ">\n#");
-            $scope.contentToHtml = converter.render(diff);
-        });
-    }
-
+    //$scope.getDiff = function(pullRequest) {
+    //    DocumentFactory.mergeDocument($scope.docInfo.document, pullRequest).then(function(diff) {
+    //        diff = diff.replace(/>#/g, ">\n#");
+    //        $scope.contentToHtml = converter.render(diff);
+    //    });
+    //}
+    //
 
     $scope.createUserFolder = function() {
         DocumentFactory.createDocument().then(function(doc) {
@@ -151,15 +159,15 @@ app.factory('DocumentFactory', function($http) {
                 return response.data;
             })
         },
-        mergeDocument: function(doc, pullRequest) {
-            var data = {
-                document: doc,
-                pullRequest: pullRequest
-            }
-            return $http.put('api/collaborate/merge', data).then(function(response) {
-                return response.data;
-            })
-        },
+        //mergeDocument: function(doc, pullRequest) {
+        //    var data = {
+        //        document: doc,
+        //        pullRequest: pullRequest
+        //    }
+        //    return $http.put('api/collaborate/merge', data).then(function(response) {
+        //        return response.data;
+        //    })
+        //},
         getAllDocuments: function() {
             return $http.get('/api/document/').then(function(response) {
                 return response.data;

@@ -78,7 +78,7 @@ app.controller('ModalInstanceCtrl', function ($scope, $modalInstance, content, $
     $scope.pullRequest = pullRequest;
 
   $scope.mergeChanges = function(){
-    $state.go('editor', {docId:document._id});
+    $state.go('editor', {docId:document._id, pullReq: index});
     $scope.ok();
     }
 
