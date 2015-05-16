@@ -13,7 +13,7 @@ var router = require('express').Router(),
 ///creating user's branch
 router.post('/branch', function(req, res, next){
 
-    var originalAuthor = req.body.author;
+    var originalAuthor = req.body.author._id;
     var currentBranch;
     var doc;
 
@@ -58,7 +58,7 @@ router.post('/pullRequest', function(req, res, next){
         message: req.body.message
     };
 
-    Document.findOneAsync({pathToRepo: req.body.document.pathToRepo, author: req.body.document.branchedFrom})
+    Document.findOneAsync({pathToRepo: req.body.document.pathToRepo, author: req.body.document.branchedFrom._id})
         .then(function(doc){
             doc.pullRequests.push(pullRequest);
             return doc.saveAsync();

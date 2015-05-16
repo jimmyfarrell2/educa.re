@@ -22,9 +22,6 @@ app.config(function($stateProvider) {
 
 app.controller('EditorController', function($scope, DocumentFactory, $state, document, user, commits, $window, $stateParams) {
 
-
-
-
     var converter = $window.markdownit({
         html: true
     });
@@ -72,7 +69,7 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
         $scope.checked = !$scope.checked
     };
 
-    $scope.isNotUser = user._id !== document.author;
+    $scope.isNotUser = user._id !== document.author._id;
     $scope.isUser = !$scope.isNotUser;
     $scope.isBranched = document.branchedFrom;
     console.log(document.branchedFrom)
