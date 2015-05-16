@@ -14,8 +14,9 @@
 </div>
 
 {{document.currentVersion}}
-<medium-editor class="editor" ng-model="contentToHtml"  options='{"placeholder": "Start writing", "buttons": ["bold", "italic", "underline", "anchor", "header1", "header2", "quote", "orderedlist", "unorderedlist"]}' bind-options="markdownOptions"></medium-editor><br/>
-
+<div class="editorWrapper">
+    <medium-editor class="editor" ng-model="contentToHtml"  options='{"placeholder": "Start writing", "buttons": ["bold", "italic", "underline", "anchor", "header1", "header2", "quote", "orderedlist", "unorderedlist"]}' bind-options="markdownOptions"></medium-editor><br/>
+</div>
 
 
 
