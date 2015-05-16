@@ -149,6 +149,11 @@
 
 }
 
-medium-editor {
-    background-color: black;
-}
+    ins {
+        background-color: #c5e1a5;
+        text-decoration: none;
+    }
+    del {
+        background-color: #ffcdd2;
+        text-decoration: none;
+    }
