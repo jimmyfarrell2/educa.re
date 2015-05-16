@@ -1,7 +1,7 @@
 <nav class="navbar navbar-static-top">
-    <div class="container">
+    <div class="container navigation">
         <div class="navbar-header">
-            <fullstack-logo></fullstack-logo>
+            <img class='logo' src="https://cdn4.iconfinder.com/data/icons/ballicons-2-free/100/pencil-32.png"></img>
         </div>
         <ul class="nav navbar-nav">
             <li ng-repeat="item in items" ng-show="!item.auth || isLoggedIn()">
@@ -10,8 +10,8 @@
         </ul>
         <button ng-show="!user" ui-sref="login" class="btn login-button">Login</button>
         <div ng-show="user" class="welcome">
-            <span>Welcome, {{ user.email }}!</span>
-            <a ng-click="logout()">Logout</a>
+            <span>Welcome, {{ user.name.first }}!</span>
+            <a class="btn login-button" ng-click="logout()">Logout</a>
         </div>
     </div>
 </nav>

@@ -1,49 +1,115 @@
+$blue-color: #23D2F2;
+$red-color: #FE4641;
+
+
 navbar {
 
   display: block;
-  background: #a1a1a1;
+  position: fixed;
+  top: 0;
+  background:#FFF;
+  border-bottom: 1px solid #CCC;
+  width: 100%;
+  z-index: 1000;
 
-  fullstack-logo {
-    padding-top: 10px;
-    margin-right: 20px;
-    width: 30px;
+  .navbar {
+    margin-bottom: 0px;
+  }
+
+  .logo {
+    margin-top: 20%;
+    margin-right: 8px;
+    transition: margin 0.2s;
+    transform: translate3d(0,0,0);
+    i.fa {
+      font-size: 35px;
+      color: $blue-color;
+    }
   }
 
   a {
-    color: white;
+    color: #0C0C0C;
     &:hover {
-      color: white;
+      color: $blue-color;
     }
   }
 
   .nav > li > a {
     cursor: pointer;
     &.active {
-      color: #f30046;
+      color: $blue-color;
     }
     &:hover {
       transition: color 0.2s;
     }
     &:focus {
-      color: #f30046;
+      color: $blue-color;
       background: transparent;
     }
   }
 
+  .navbar-nav > li > a {
+    transition: padding 0.2s;
+  }
+
+  .nav > li > a:hover, .nav > li > a:focus {
+    background: transparent;
+  }
+
   .login-button {
     float: right;
+    background: $red-color;
     margin-top: 8px;
+    margin-right: 8px;
+    transition: margin 0.2s;
+    color:#FFF;
   }
 
   .welcome {
     float: right;
-    margin-top: 12px;
+    margin-top: 0px;
+    margin-right: 0px;
+    transform: translate3d(0,0,0);
+
     span {
-      color: white;
+      color: #0c0c0c;
+      position: relative;
+      top: 16px;
+      padding-right: 8px;
+      transition: top 0.2s;
+      transform: translate3d(0,0,0);
     }
     a {
-      color: #f30046;
+      color: #FFF;
       cursor: pointer;
+    }
+  }
+
+  &.nav-top-level {
+    border-bottom: 1px solid #FFF;
+    background: transparent;
+
+    .logo {
+      margin-top: 50%;
+    }
+
+    a {
+      color: #000;
+    }
+    .welcome {
+      span {
+        top: 32px;
+        color: #000;
+      }
+    }
+
+    .navbar-nav > li > a {
+      padding: 30px 15px;
+    }
+
+
+    .login-button {
+      margin-top: 23px;
     }
   }
 
