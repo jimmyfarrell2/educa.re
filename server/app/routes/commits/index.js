@@ -22,13 +22,14 @@ router.get('/:docId', function(req, res, next){
 
 //get a particular commit for a document
 router.get('/:docId/commit/:commitId', function(req, res, next){
-
+    var doc;
     Document.findByIdAsync(req.params.docId)
-        .then(function(doc){
+        .then(function(_doc){
+            doc = _doc;
             return doc.repo.checkoutAsync(req.params.commitId)
         })
         .then(function(commit){
-            res.sendFile(repo.path + '/contents.md')
+            res.sendFile(doc.repo.path + '/contents.md')
         })
        .catch(next);
 

@@ -21,7 +21,10 @@ app.config(function ($stateProvider) {
 
 
 app.controller('DocumentDashboardController', function($scope, $log, $modal, DocumentFactory, user, document, commits, $state){
+
+
     $scope.commits = commits;
+    console.log($scope.commits);
     $scope.document = document;
     $scope.user = user;
 
