@@ -22,11 +22,15 @@ app.config(function($stateProvider) {
 
 app.controller('EditorController', function($scope, DocumentFactory, $state, document, user, commits, $window, $stateParams) {
 
+
+
+
     var converter = $window.markdownit({
         html: true
     });
 
-    if($stateParams.pullReq) {
+    if(document.currentVersion === "") $scope.contentToHtml = "<h1>Title</h1><br/><p>Start your story...</p>";
+    else if($stateParams.pullReq) {
         DocumentFactory.mergeDocument(document, document.pullRequests[$stateParams.pullReq]).then(function(diff){
             $scope.contentToHtml = converter.render(diff);
         });
@@ -40,6 +44,8 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
     function sanitize(content) {
         return content.replace(/<\/?(ins|del)>/g, '');
     }
+
+
 
     $scope.markdownOptions = {
         extensions: {

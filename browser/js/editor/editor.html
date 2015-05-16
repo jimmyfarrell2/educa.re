@@ -12,17 +12,22 @@
 </div>
 
 
-<div class="editorWrapper">
-    <medium-editor class="editor" ng-model="contentToHtml"  options='{"placeholder": "Start writing", "buttons": ["bold", "italic", "underline", "anchor", "header1", "header2", "quote", "orderedlist", "unorderedlist"]}' bind-options="markdownOptions"></medium-editor><br/>
+<div class="container editorWrapper">
+    <div medium-editor class="editor" ng-model="contentToHtml"  options='{"buttons": ["bold", "italic", "underline", "anchor", "header1", "header2", "quote", "orderedlist", "unorderedlist"]}' bind-options="markdownOptions">
+        <h1>Title</h1>
+    </div><br/>
+
+    <div class="buttonWrapper">
+        <button class= "btn" ng-click = "toggle()"><i class="fa fa-info fa-fw"></i></button>
+        <button class= "btn" ng-click="saveUserDocument(docInfo)" ng-show="isUser"><i class="fa fa-floppy-o fa-fw"></i></button>
+        <button ng-click="branchDocument()" ng-show="isNotUser">Branch doc</button>
+        <button ng-click="makePullRequest()" ng-show="isBranched">Suggest changes</button>
+    </div>
 </div>
 
 
 
-<button ng-click = "toggle()">Information</button>
-<button ng-click="saveUserDocument(docInfo)" ng-show="isUser">Save doc</button>
-<button ng-click="branchDocument()" ng-show="isNotUser">Branch doc</button>
-<button ng-click="makePullRequest()" ng-show="isBranched">Suggest changes</button>
-<button ng-click="goToUserProfile()">User Profile</button>
+
 <ul>
     <li  ng-repeat="pullRequest in pullRequests" ng-click="getDiff(pullRequest)">{{pullRequest}}</li>
 </ul>
