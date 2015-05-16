@@ -107,6 +107,10 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
         });
     };
 
+    $scope.goToUserProfile = function(){
+        $state.go('userProfile', {userId: user._id});
+    }
+
 
 });
 
