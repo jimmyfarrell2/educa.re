@@ -29,12 +29,12 @@ router.get('/', function(req, res, next){
 
 router.get('/:docId', function(req, res, next){
 
-    Document.findByIdAsync(req.params.docId)
+    Document.findById(req.params.docId)
+    .populate("author branchedFrom readAccess editAccess pullRequests.author")
+    .exec()
         .then(function(doc){
             res.json(doc);
         })
-        .catch(next);
-
 });
 
 //create client's first folder
@@ -59,7 +59,7 @@ router.put('/:docId', function(req, res, next){
     Document.findByIdAndUpdateAsync(req.params.docId, {currentVersion: req.body.document.currentVersion})
         .then(function(_doc) {
             doc = _doc;
-            return doc.repo.checkoutAsync(req.body.document.author);
+            return doc.repo.checkoutAsync(req.body.document.author._id);
         })
         .then(function(){
             return fs.writeFileAsync(req.body.document.pathToRepo + '/contents.md', req.body.document.currentVersion);
