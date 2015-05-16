@@ -9,8 +9,7 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) 
 
             scope.items = [
                 { label: 'Home', state: 'home' },
-                { label: 'About', state: 'about' },
-                { label: 'Tutorial', state: 'tutorial' },
+                { label: 'My Profile', state: 'userProfile', auth: true },
                 { label: 'Members Only', state: 'membersOnly', auth: true }
             ];
 
@@ -46,4 +45,23 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) 
 
     };
 
+});
+
+app.controller('windowCtrl', function($scope, $window, $rootScope) {
+    $scope.topLevel = true;
+    $scope.validState = true;
+
+    $(window).on('scroll', function() {
+        if ($window.scrollY > 30) {
+            $scope.topLevel = false;
+        } else {
+            $scope.topLevel = true;
+        }
+        $scope.$digest();
+    });
+
+    $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+        console.log(toState);
+        $scope.validState = toState.name === "home" || toState.name === "editor";
+    });
 });
