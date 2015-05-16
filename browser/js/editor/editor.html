@@ -23,7 +23,7 @@
 <button ng-click="saveUserDocument(docInfo)" ng-show="isUser">Save doc</button>
 <button ng-click="branchDocument()" ng-show="isNotUser">Branch doc</button>
 <button ng-click="makePullRequest()" ng-show="isBranched">Suggest changes</button>
-
+<button ng-click="goToUserProfile()">User Profile</button>
 <ul>
     <li  ng-repeat="pullRequest in pullRequests" ng-click="getDiff(pullRequest)">{{pullRequest}}</li>
 </ul>
