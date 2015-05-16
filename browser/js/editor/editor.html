@@ -1,7 +1,5 @@
 
 <div>
-<button ng-click = "toggle()">Information</button>
-
         <div id="sidebar-wrapper" ng-show="checked">
             <ul class="sidebar-nav">
                 <li class="sidebar-brand">Information</li>
@@ -13,13 +11,12 @@
         </div>
 </div>
 
-{{document.currentVersion}}
 <medium-editor class="editor" ng-model="contentToHtml"  options='{"placeholder": "Start writing", "buttons": ["bold", "italic", "underline", "anchor", "header1", "header2", "quote", "orderedlist", "unorderedlist"]}' bind-options="markdownOptions"></medium-editor><br/>
 
 
 
 
-
+<button ng-click = "toggle()">Information</button>
 <button ng-click="saveUserDocument(docInfo)" ng-show="isUser">Save doc</button>
 <button ng-click="branchDocument()" ng-show="isNotUser">Branch doc</button>
 <button ng-click="makePullRequest()" ng-show="isBranched">Suggest changes</button>
