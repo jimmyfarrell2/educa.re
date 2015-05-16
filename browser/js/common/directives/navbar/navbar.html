@@ -1,7 +1,7 @@
 <nav class="navbar navbar-static-top">
     <div class="container navigation">
         <div class="navbar-header">
-            <img class='logo' src="https://cdn4.iconfinder.com/data/icons/ballicons-2-free/100/pencil-32.png"></img>
+            <img ui-sref="home" class='logo' src="https://cdn4.iconfinder.com/data/icons/ballicons-2-free/100/pencil-32.png"></img>
         </div>
         <ul class="nav navbar-nav">
             <li ng-repeat="item in items" ng-show="!item.auth || isLoggedIn()">

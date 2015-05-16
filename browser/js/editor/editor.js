@@ -165,15 +165,15 @@ app.factory('DocumentFactory', function($http) {
                 return response.data;
             })
         },
-        //mergeDocument: function(doc, pullRequest) {
-        //    var data = {
-        //        document: doc,
-        //        pullRequest: pullRequest
-        //    }
-        //    return $http.put('api/collaborate/merge', data).then(function(response) {
-        //        return response.data;
-        //    })
-        //},
+        mergeDocument: function(doc, pullRequest) {
+           var data = {
+               document: doc,
+               pullRequest: pullRequest
+           }
+           return $http.put('api/collaborate/merge', data).then(function(response) {
+               return response.data;
+           })
+        },
         getAllDocuments: function() {
             return $http.get('/api/document/').then(function(response) {
                 return response.data;
