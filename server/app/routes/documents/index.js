@@ -56,8 +56,12 @@ router.put('/:docId', function(req, res, next){
 
     var doc;
     var io = require('../../../io')();
+
     if(req.body.merge) {
-        io.emit('successfulMerge', {author: req.user._id});
+        alertBranchesOfChange(req)
+            .then(function(docs){
+                io.emit('successfulMerge');
+            });
     }
 
     Document.findByIdAndUpdateAsync(req.params.docId, {currentVersion: req.body.document.currentVersion})
@@ -75,6 +79,16 @@ router.put('/:docId', function(req, res, next){
             res.json(doc);
         })
         .catch(next);
+
+});
+
+//is this redundant/inelegant?
+router.put('/:docId/removeNotification', function(req, res, next){
+
+    Document.findByIdAndUpdateAsync(req.params.docId, {changedSinceBranch: false})
+        .then(function(doc){
+            res.json(doc);
+        });
 
 });
 
@@ -104,6 +118,7 @@ router.put('/:docId/reset', function(req, res, next){
         .catch(next);
 
 });
+
 
 router.param('docId', function(req, res, next) {
 
@@ -151,6 +166,19 @@ function createRepo(request) {
         })
         .then(function(){
             return doc;
+        });
+
+}
+
+function alertBranchesOfChange(request){
+    var docsToSave = [];
+
+    return Document.findAsync({branchedFrom: request.user._id})
+        .then(function(docs){
+            return Promise.map(docs, function(doc){
+                doc.changedSinceBranch = true;
+                return doc.saveAsync();
+            });
         });
 
 }

@@ -43,6 +43,9 @@ var schema = new mongoose.Schema({
         message: String
     }],
     dateCreated: Date,
+    changedSinceBranch: {
+        type: Boolean, default: false
+    },
     categories: [],
     tags: []
 });

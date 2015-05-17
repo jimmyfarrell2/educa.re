@@ -15,6 +15,12 @@ app.factory('UserFactory', function($http, $q) {
                 return response.data;
             });
         },
+
+        removeNotifications: function(docId) {
+            return $http.put('/api/documents/' + docId + '/removeNotification').then(function (response) {
+                return response.data;
+            })
+        },
         getUser: function(userId){
             return $http.get('/api/user/'+ userId).then(function(response){
                 return response.data;
