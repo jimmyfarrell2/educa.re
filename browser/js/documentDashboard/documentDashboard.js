@@ -34,7 +34,7 @@ app.controller('DocumentDashboardController', function($scope, $log, $modal, Doc
   ];
 
   $scope.alertMe = function() {
-    
+
   };
 
   $scope.items = ['item1', 'item2', 'item3'];
