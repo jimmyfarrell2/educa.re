@@ -55,6 +55,10 @@ router.post('/', function(req, res, next){
 router.put('/:docId', function(req, res, next){
 
     var doc;
+    var io = require('../../../io')();
+    if(req.body.merge) {
+        io.emit('successfulMerge', {author: req.user._id});
+    }
 
     Document.findByIdAndUpdateAsync(req.params.docId, {currentVersion: req.body.document.currentVersion})
         .then(function(_doc) {
