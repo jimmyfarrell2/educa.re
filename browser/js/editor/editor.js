@@ -22,6 +22,10 @@ app.config(function($stateProvider) {
 
 app.controller('EditorController', function($scope, DocumentFactory, $state, document, user, commits, $window, $stateParams) {
 
+    $scope.addOrDelete = function(){
+        console.log('hi');
+    }
+
     var converter = $window.markdownit({
         html: true
     });
