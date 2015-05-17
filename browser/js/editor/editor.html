@@ -11,11 +11,13 @@
         </div>
 </div>
 
+{{count}}
 
 <div class="container editorWrapper">
-    <div medium-editor class="editor" ng-model="contentToHtml"  options='{"buttons": ["bold", "italic", "underline", "anchor", "header1", "header2", "quote", "orderedlist", "unorderedlist"]}' bind-options="markdownOptions">
-        <h1>Title</h1>
+
+    <div medium-editor add-or-delete class="editor" ng-model="contentToHtml"  options='{"buttons": ["bold", "italic", "underline", "anchor", "header1", "header2", "quote", "orderedlist", "unorderedlist"]}' bind-options="markdownOptions">
     </div><br/>
+
 
     <div class="buttonWrapper">
         <button class= "btn" ng-click = "toggle()"><i class="fa fa-info fa-fw"></i></button>
