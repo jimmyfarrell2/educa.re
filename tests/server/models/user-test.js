@@ -4,6 +4,7 @@ var clearDB = require('mocha-mongoose')(dbURI);
 var sinon = require('sinon');
 var expect = require('chai').expect;
 var mongoose = require('mongoose');
+var q = require('q');
 
 require('../../../server/db/models/user');
 require('../../../server/db/models/document');
@@ -248,7 +249,8 @@ describe('User model', function () {
                     expect(document).to.exist;
                     expect(document.title).to.be.equal('About Educa.re');
                     done();
-                });
+                })
+                .catch(done);
 
         });
 
@@ -256,21 +258,34 @@ describe('User model', function () {
 
     describe('bookmarks property', function() {
 
-        it('is an array of strings', function(done) {
+        it('is an array of Document model references', function(done) {
+
+            var document1 = new Document({
+                title: 'About Educa.re'
+            });
+
+            var document2 = new Document({
+                title: 'Nunya Business!'
+            });
 
             var userInfo = {
                 email: 'nastia@fullstack.com',
                 password: 'UkraineRulez',
-                bookmarks: ['http://educa.re/someReallyCoolStuff', 'http://educa.re/someOtherReallyCoolStuff']
+                bookmarks: [document1._id, document2._id]
             };
 
-            User.createAsync(userInfo)
+            q.all([document1.saveAsync(), document2.saveAsync()])
+                .then(function() {
+                    return User.createAsync(userInfo)
+                })
                 .then(function(user) {
+                    console.log(user.bookmarks[0])
                     expect(user.bookmarks).to.be.an('array');
-                    expect(user.bookmarks[0]).to.be.equal('http://educa.re/someReallyCoolStuff');
-                    expect(user.bookmarks[1]).to.be.equal('http://educa.re/someOtherReallyCoolStuff');
+                    expect(user.bookmarks[0]).to.be.equal(document1._id);
+                    expect(user.bookmarks[1]).to.be.equal(document2._id);
                     done();
-                });
+                })
+                .catch(done);
 
         });
 
@@ -294,6 +309,7 @@ describe('User model', function () {
                     expect(user.name.full).to.be.equal('Nastia Sergiienko');
                     done();
                 })
+                .catch(done);
 
         });
 
