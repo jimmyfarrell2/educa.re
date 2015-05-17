@@ -2,7 +2,7 @@
 <ul>
     <li ng-repeat="doc in documents" ui-sref="editor({docId: doc._id})">
         {{doc.title}}
-        <span ng-show="doc.hasChanged">This file has changed on the author's disk</span>
+        <span class="successAlert" ng-show="doc.hasChanged">This file has changed on the author's disk</span>
     </li>
 </ul>
 
