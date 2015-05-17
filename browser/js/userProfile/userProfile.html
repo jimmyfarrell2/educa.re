@@ -1,52 +1,72 @@
+
 <ui-view>
-    <br>
     <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
-      <div id="userProfile" class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="panel panel-default">
-              <div class="panel-body">
-                <div class="row">
-                  <div class="col-md-12 lead">My Profile<hr></div>
+    <link href='http://fonts.googleapis.com/css?family=Dancing+Script:400,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=PT+Sans+Narrow|Dancing+Script:400,700' rel='stylesheet' type='text/css'>
+    <div class="row">
+    <div class="col-sm-10">
+       <h1 class="userName">{{ user.name.first }} {{ user.name.last }}</h1>
+       <div class="row">
+          <div class="col-xs-8 col-sm-6">
+             <div class="row">
+                <img class="img-responsive center-block" ng-src="https://placekitten.com/g/400/500"
+                   alt="Responsive image">
+             </div>
+             <div class="row">
+                <h1>I would love to hear from you:</h1>
+                <div class="social__container">
+                   <div class="social__item">
+                      <a target="_blank" href="" class="social__icon--linkedin"><i class="icon--linkedin"></i></a>
+                   </div>
+                   <div class="social__item">
+                      <a target="_blank" href="" class="social__icon--twitter"><i class="icon--twitter"></i></a>
+                   </div>
+                   <div class="social__item">
+                      <a target="_blank" href="" class="social__icon--googleplus"><i class="icon--googleplus"></i></a>
+                   </div>
+                   <div class="social__item">
+                      <a target="_blank" href="http://facebook.com" class="social__icon--facebook"><i class="icon--facebook"></i></a>
+                   </div>
+                   <div class="social__item">
+                      <a target="_blank" href="http://instagram.com" class="social__icon--instagram"><i class="icon--instagram"></i></a>
+                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-md-4 text-center">
-                    <img class="img-circle avatar avatar-original" style="-webkit-user-select:none;
-                    display:block; margin:auto;" src="http://robohash.org/sitsequiquia.png?size=120x120">
-                  </div>
-                  <div class="col-md-8">
-                    <div class="row">
-                      <div class="col-md-12">
-                        <h1 class="only-bottom-margin">{{user.name.first}} {{user.name.last}}</h1>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <span class="text-muted">Email:</span>{{user.email}}<br>
-                        <span class="text-muted">Birth date:</span> 01.01.2015<br>
-                        <span class="text-muted">About Me:</span> I am awesome!! <br><br>
-                        <small class="text-muted">Created: 01.01.2015</small>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="activity-mini">
-                          <i class="glyphicon glyphicon-comment text-muted"></i> 500
-                        </div>
-                        <div class="activity-mini">
-                          <i class="glyphicon glyphicon-thumbs-up text-muted"></i> 1500
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-12">
-                    <hr><button class="btn btn-default pull-right"><i class="glyphicon glyphicon-pencil"></i> Edit</button>
-                  </div>
-                </div>
-              </div>
-            </div>
+             </div>
           </div>
-        </div>
-      </div>
- </ui-view>
-<button ui-sref="userProfile.userDocuments">See all documents</button>
+          <div class="col-xs-4 col-sm-6">
+             <h2> My Story: </h2>
+             <p class="aboutMe">
+                Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac
+                turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec
+                eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend
+                leon.
+                Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac
+                turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec
+                eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend
+                leon.
+                <!--   <!   {{user.aboutMe}} -->
+             </p>
+             <h2> My Intrests: </h2>
+             <p class="aboutMe">
+                Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac
+                turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec
+                eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend
+                leon.
+                <!--   <!   {{user.myInterests}} -->
+             </p>
+             <h2> Member since: </h2>
+             <p class="dateCreated"> 01.01.2015 </p>
+
+             <div class="row">
+
+
+
+                <div class="viewMyDocs">
+                   <button class="documentList" ui-sref="userProfile.userDocuments">View My Work</button>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+    </div>
+</ui-view>

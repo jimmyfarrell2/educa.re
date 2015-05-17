@@ -1,5 +1,149 @@
-.col-md-12 .lead{
+.col-sm-10 {
+	margin-left: 10%;
 	text-align: center;
-	font-family: 'Lobster', cursive;
-	letter-spacing: 1px;
+
+}
+
+.userName {
+	text-align: center;
+	font-family: "Lobster";
+	margin: 3%;
+}
+
+img {
+	margin: 3%;
+	border-radius: 10%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+@import url(http://weloveiconfonts.com/api/?family=entypo);
+
+$icon-list: (
+    twitter "\F309" #32b9e7,
+    facebook "\F30C" #4b70ab,
+    googleplus "\F30F" #fa5432,
+  
+    linkedin "\F318" #0087be,
+    
+    instagram "\F32D" #6291b2,
+    );
+
+@each $icon, $unicode, $icon-background in $icon-list {
+  
+    .icon--#{$icon} {
+        &::before {
+            content: $unicode;
+        }
+    }
+
+    .social__icon--#{$icon} {
+      background-color: $icon-background;
+      
+        &:hover {
+          background-color: mix(black, $icon-background, 15%);
+        }
+      
+    }
+
+}
+
+.social__item {
+    display: inline-block;
+    margin-right: 0.1em;
+    opacity: 0.7;
+}
+
+.icon {
+	font-family: 'entypo';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+}
+
+[class^="icon--"] {
+	@extend .icon;
+}
+
+.social__icon {
+  font-size: 1.4em;
+  color: white;
+  text-decoration: none;
+  border-radius:100%;
+  width: 2.2em;
+  height: 2.2em;
+  text-align: center;
+  
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+[class^="social__icon"] {
+	@extend .social__icon;
+}
+
+.social__container {
+	padding: 1em;
+	font-size: 1.5em;
+}
+
+h2 {
+	font-family: 'Dancing script', cursive;
+	font-size: 1.8em;
+	text-align: left;
+} 
+.aboutMe {
+	text-align: left;
+	font-family: 'PT Sans Narrow', sans-serif;
+	font-size: 1.3em;
+	margin: 3%;
+}
+
+p, .dateCreated {
+	text-align: left;
+	font-family: 'PT Sans Narrow', sans-serif;
+	font-size: 1em;
+}
+
+.documentList {
+
+
+  border: 1px solid #d8d8d8;
+  background:none;
+  border-radius: 45%;
+  padding: 20px;
+  width: 30%;
+  cursor: pointer;
+  outline: none;
+
+
+	margin-top: 5%;
+	font-size: 1.4em;
+	color: #757575;
+
+
+	text-align: center;
+	outline: none;
+	background-color: #e0f2f1;
+	opacity: 0.7;
+}
+
+.documentList:hover {
+  transform: rotate(180deg);
+  background-color: #d8d8d8;
+}
+
+h1 {
+	text-align: center;
+	font-family: 'Dancing script', cursive;
+	font-size: 1.8em;
 }
