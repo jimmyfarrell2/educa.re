@@ -13,7 +13,7 @@ app.config(function($stateProvider) {
             },
             commits: function(DocumentFactory, $stateParams) {
                 return DocumentFactory.commitHistory($stateParams.docId);
-            }    
+            }
         }
     });
 
@@ -136,6 +136,7 @@ app.factory('DocumentFactory', function($http) {
         },
         getDocument: function(docId) {
             return $http.get('api/documents/' + docId).then(function(response) {
+                console.log('document', response.data)
                 return response.data;
             })
         },
@@ -168,12 +169,12 @@ app.factory('DocumentFactory', function($http) {
            })
         },
         getAllDocuments: function() {
-            return $http.get('/api/document/').then(function(response) {
+            return $http.get('/api/documents/').then(function(response) {
                 return response.data;
             })
         },
         commitHistory: function(docId) {
-            return $http.get('/api/commits/' + docId).then(function(response) {
+            return $http.get('/api/documents/' + docId + '/commits').then(function(response) {
                 return response.data;
             })
         }

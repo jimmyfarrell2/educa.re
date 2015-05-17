@@ -7,30 +7,24 @@ var router = require('express').Router(),
     Document = Promise.promisifyAll(mongoose.model('Document'));
 
 //get all commits for a document
-router.get('/:docId', function(req, res, next){
+router.get('/', function(req, res, next){
 
-    Document.findByIdAsync(req.params.docId)
-        .then(function(doc){
-            return doc.repo.commitsAsync(doc.author);
-        })
-        .then(function(commits){
-            res.json(commits);
-        })
-       .catch(next);
+        req.doc.repo.commitsAsync(req.doc.author)
+            .then(function(commits){
+                res.json(commits);
+            })
+            .catch(next);
 
 });
 
 //get a particular commit for a document
-router.get('/:docId/commit/:commitId', function(req, res, next){
+router.get('/:commitId', function(req, res, next){
 
-    Document.findByIdAsync(req.params.docId)
-        .then(function(doc){
-            return doc.repo.checkoutAsync(req.params.commitId)
-        })
-        .then(function(commit){
-            res.sendFile(repo.path + '/contents.md')
-        })
-       .catch(next);
+        req.doc.repo.checkoutAsync(req.params.commitId)
+            .then(function(commit){
+                res.sendFile(req.doc.repo.path + '/contents.md')
+            })
+            .catch(next);
 
 });
 
