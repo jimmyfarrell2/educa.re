@@ -1,16 +1,16 @@
 <div>
    <tabset justified="true">
-      <tab heading="Drafts">
+      <tab heading="Drafts ({{commits.length}})">
          <ul>
             <li ng-repeat="commit in commits">{{commit.date}} {{commit.message}}</li>
          </ul>
       </tab>
-      <tab heading="Collaborators">
+      <tab heading="Collaborators ({{document.editAccess.length}})">
          <ul>
-            <li ng-repeat="collaborator in document.editAccess">{{collaborator}}</li>
+            <li ng-repeat="collaborator in document.editAccess" ui-sref='userProfile({userId: collaborator._id})'>{{collaborator.name.first}} {{collaborator.name.last}}</li>
          </ul>
       </tab>
-      <tab heading="Suggested Edits">
+      <tab heading="Suggested Edits ({{document.pullRequests.length }}) ">
          <ul>
             <li ng-repeat="pullRequest in document.pullRequests" ng-click="open('lg', document, $index, pullRequest)">{{pullRequest.author}} {{pullRequest.message}}</li>
          </ul>

@@ -13,7 +13,7 @@ app.config(function($stateProvider) {
 
 });
 
-app.controller('UserDocsController', function($scope, Socket, UserFactory, user, $state){
+app.controller('UserDocsController', function($scope, Socket, UserFactory, user, $state, DocumentFactory, UserFactory){
     $scope.documents = '';
 
     UserFactory.getUserDocuments(user._id).then(function(docs){
@@ -21,13 +21,15 @@ app.controller('UserDocsController', function($scope, Socket, UserFactory, user,
     });
 
     Socket.on('successfulMerge', function(data){
-        $scope.documents.forEach(function(doc){
-            if(doc.branchedFrom === data.author){
-                doc.hasChanged = true;
-                console.log(doc);
-                $scope.$digest();
-            }
-        })
+        UserFactory.getUserDocuments(user._id).then(function(docs){
+            $scope.documents = docs;
+            console.log(docs);
+        });
     });
 
-})
+    $scope.removeFromNotifications = function(docId){
+        UserFactory.removeNotifications(docId).then(function(doc){
+            console.log(doc);
+        })
+    }
+});
