@@ -279,7 +279,6 @@ describe('User model', function () {
                     return User.createAsync(userInfo)
                 })
                 .then(function(user) {
-                    console.log(user.bookmarks[0])
                     expect(user.bookmarks).to.be.an('array');
                     expect(user.bookmarks[0]).to.be.equal(document1._id);
                     expect(user.bookmarks[1]).to.be.equal(document2._id);
