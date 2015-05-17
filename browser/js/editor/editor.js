@@ -22,6 +22,31 @@ app.config(function($stateProvider) {
 
 app.controller('EditorController', function($scope, DocumentFactory, $state, document, user, commits, $window, $stateParams) {
 
+    var collaborators = new Bloodhound({
+        datumTokenizer: function(datum) {
+            var firstNameTokens = Bloodhound.tokenizers.whitespace(datum.name.first);
+            var lastNameTokens = Bloodhound.tokenizers.whitespace(datum.name.last);
+            return firstNameTokens.concat(lastNameTokens, datum.email);
+        },
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        remote: {
+            url: '/api/search?type=user&q=%QUERY',
+            wildcard: '%QUERY'
+        }
+    });
+
+    $('#search-collaborators').typeahead(null, {
+        name: 'users',
+        limit: 10,
+        display: 'email',
+        source: collaborators,
+        templates: {
+            suggestion: function(datum) {
+                return '<div>' + datum.name.first + ' ' + datum.name.last + ' <em>' + datum.email + '</em></div>';
+            },
+            notFound: '<div>No matching users</div>'
+        }
+    });
 
     var converter = $window.markdownit({
         html: true
