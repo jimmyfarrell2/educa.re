@@ -79,7 +79,7 @@ var seedUsersAndDocuments = function () {
     var documents = [
         {
             title: chance.sentence({words: 4}),
-            public: false,
+            public: true,
             author: sonia._id,
             currentVersion: docTextGenerator(),
             dateCreated: chance.date(),
@@ -88,7 +88,7 @@ var seedUsersAndDocuments = function () {
         },
         {
             title: chance.sentence({words: 4}),
-            public: false,
+            public: true,
             author: sonia._id,
             editAccess: [nastia._id],
             readAccess: [nastia._id, david._id, jimmy._id],
@@ -109,7 +109,7 @@ var seedUsersAndDocuments = function () {
         },
         {
             title: chance.sentence({words: 4}),
-            public: false,
+            public: true,
             author: nastia._id,
             currentVersion: docTextGenerator(),
             dateCreated: chance.date(),
@@ -118,7 +118,7 @@ var seedUsersAndDocuments = function () {
         },
         {
             title: chance.sentence({words: 4}),
-            public: false,
+            public: true,
             author: nastia._id,
             editAccess: [sonia._id],
             readAccess: [sonia._id, david._id, jimmy._id],
@@ -139,7 +139,7 @@ var seedUsersAndDocuments = function () {
         },
         {
             title: chance.sentence({words: 4}),
-            public: false,
+            public: true,
             author: david._id,
             currentVersion: docTextGenerator(),
             dateCreated: chance.date(),
@@ -148,7 +148,7 @@ var seedUsersAndDocuments = function () {
         },
         {
             title: chance.sentence({words: 4}),
-            public: false,
+            public: true,
             author: david._id,
             editAccess: [jimmy._id],
             readAccess: [jimmy._id, sonia._id, nastia._id],
@@ -169,7 +169,7 @@ var seedUsersAndDocuments = function () {
         },
         {
             title: chance.sentence({words: 4}),
-            public: false,
+            public: true,
             author: jimmy._id,
             currentVersion: docTextGenerator(),
             dateCreated: chance.date(),
@@ -178,7 +178,7 @@ var seedUsersAndDocuments = function () {
         },
         {
             title: chance.sentence({words: 4}),
-            public: false,
+            public: true,
             author: jimmy._id,
             editAccess: [david._id],
             readAccess: [david._id, sonia._id, nastia._id],
