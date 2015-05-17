@@ -101,6 +101,18 @@ router.put('/:docId/reset', function(req, res, next){
 
 });
 
+router.param('docId', function(req, res, next) {
+
+    Document.findByIdAsync(req.params.docId)
+        .then(function(doc){
+            req.doc = doc;
+            next();
+        })
+        .catch(next);
+
+});
+
+router.use('/:docId/commits', require('../commits'));
 
 function createRepo(request) {
 

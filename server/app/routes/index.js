@@ -8,8 +8,6 @@ router.use('/members', require('./members'));
 
 router.use('/documents', require('./documents'));
 
-router.use('/commits', require('./commits'));
-
 router.use('/collaborate', require('./collaborate'));
 
 router.use('/user', require('./user'));
