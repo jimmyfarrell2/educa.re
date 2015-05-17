@@ -6,9 +6,9 @@ app.config(function($stateProvider) {
         templateUrl: 'js/userProfile/userProfile.html',
         resolve: {
             user: function(AuthService, $stateParams, UserFactory){
-                // if($stateParams.userId){
-                //     return UserFactory.getUser($stateParams.userId);
-                // }
+                if($stateParams.userId){
+                    return UserFactory.getUser($stateParams.userId);
+                }
                 return AuthService.getLoggedInUser();
             }
         }
