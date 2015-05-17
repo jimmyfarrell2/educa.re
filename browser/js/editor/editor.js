@@ -22,17 +22,17 @@ app.config(function($stateProvider) {
 
 app.controller('EditorController', function($scope, DocumentFactory, $state, document, user, commits, $window, $stateParams) {
 
-    $scope.addOrDelete = function(){
-        console.log('hi');
-    }
 
     var converter = $window.markdownit({
         html: true
     });
 
-    if(document.currentVersion === "") $scope.contentToHtml = "<h1>Title</h1><br/><p>Start your story...</p>";
+    if(document.currentVersion === "") {
+        $scope.contentToHtml = "<h1>Title</h1><br/><p>Start your story...</p>";
+    }
     else if($stateParams.pullReq) {
         DocumentFactory.mergeDocument(document, document.pullRequests[$stateParams.pullReq]).then(function(diff){
+            diff = diff.replace(/>#/g, ">\n#");
             $scope.contentToHtml = converter.render(diff);
         });
     }
@@ -43,9 +43,8 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
 
 
     function sanitize(content) {
-        return content.replace(/<\/?(ins|del)>/g, '');
+        return content.replace(/<\/?(ins( \w*="\w*")?|del)>/g, '');
     }
-
 
 
     $scope.markdownOptions = {
@@ -56,10 +55,10 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
         }
     };
 
-
     $scope.docInfo = {
         message: $scope.message,
-        document: document
+        document: document,
+        merge: false
     }
 
 
@@ -68,7 +67,8 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
             docId: document._id
         });
     }
-    $scope.checked = false; // This will be binded using the ps-open attribute
+
+    $scope.checked = false;
     $scope.toggle = function() {
         $scope.checked = !$scope.checked
     };
@@ -76,8 +76,8 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
     $scope.isNotUser = user._id !== document.author._id;
     $scope.isUser = !$scope.isNotUser;
     $scope.isBranched = document.branchedFrom;
-    console.log(document.branchedFrom)
 
+    //refactor so that user's can actually input a message
     $scope.message = 'a message';
     $scope.pullRequests = document.pullRequests;
     $scope.commits = commits;
@@ -92,20 +92,12 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
         });
     };
 
-    //$scope.getDiff = function(pullRequest) {
-    //    DocumentFactory.mergeDocument($scope.docInfo.document, pullRequest).then(function(diff) {
-    //        diff = diff.replace(/>#/g, ">\n#");
-    //        $scope.contentToHtml = converter.render(diff);
-    //    });
-    //}
-    //
 
     $scope.createUserFolder = function() {
         DocumentFactory.createDocument().then(function(doc) {
             $state.go('editor', {
                 docId: doc._id
             })
-            console.log('created', doc);
         });
     };
 
@@ -116,6 +108,7 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
     };
 
     $scope.saveUserDocument = function(docInfo) {
+        if($stateParams.pullReq) docInfo.merge = true;
         docInfo.document.currentVersion = sanitize(docInfo.document.currentVersion);
         DocumentFactory.saveDocument(docInfo).then(function(document) {
 
@@ -125,7 +118,6 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
     $scope.goToUserProfile = function(){
         $state.go('userProfile', {userId: user._id});
     }
-
 
 });
 

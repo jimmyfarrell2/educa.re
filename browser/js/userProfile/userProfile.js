@@ -1,7 +1,7 @@
 app.config(function($stateProvider) {
 
     $stateProvider.state('userProfile', {
-        url: '/userProfile/:userId',
+        url: '/userProfile',
         controller: 'UserProfileController',
         templateUrl: 'js/userProfile/userProfile.html',
         resolve: {
@@ -14,7 +14,7 @@ app.config(function($stateProvider) {
 });
 
 
-app.controller('UserProfileController', function($scope, user){
+app.controller('UserProfileController', function($scope, user, Socket){
     $scope.user = user;
 });
 
