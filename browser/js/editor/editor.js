@@ -22,6 +22,15 @@ app.config(function($stateProvider) {
 
 app.controller('EditorController', function($scope, DocumentFactory, $state, document, user, commits, $window, $stateParams) {
 
+    var editAccess = document.editAccess.map(user => user._id.toString());
+    if (user._id.toString() === document.author._id.toString() ||
+        editAccess.indexOf(user._id.toString()) > -1) {
+            $scope.canEdit = true;
+    }
+    else {
+        $scope.canEdit = false;
+    }
+
     var collaborators = new Bloodhound({
         datumTokenizer: function(datum) {
             var firstNameTokens = Bloodhound.tokenizers.whitespace(datum.name.first);
