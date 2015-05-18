@@ -2,7 +2,10 @@
 app.directive('addOrDelete', function ($window, $rootScope) {
     return {
         restrict: 'A',
-        link: function(scope, element, attrs){
+        require: 'ngModel',
+        link: function(scope, element, attrs, ctrl){
+            console.log('attrs', attrs)
+            console.log('scope', scope)
 
             //How can we refactor this to not use setTimeout?
             setTimeout(function(){
@@ -13,7 +16,21 @@ app.directive('addOrDelete', function ($window, $rootScope) {
                     if(elementToDelete.children('button').length === 0){
                         elementToDelete.append('<button>x</button>');
                         elementToDelete.children('button').click(function(){
+                            var currentVersion = '';
                             elementToDelete.replaceWith("");
+                            //console.log('viewValue', ctrl.$viewValue)
+                            element.contents().each(function () {
+                                //check if it is a text node
+                                if (this.nodeType == 3) {
+                                    //if so get the node value for the element
+                                    currentVersion += this.nodeValue;
+                                } else {
+                                    //if not use outerHTML or innerHTML based on need
+                                    currentVersion += this.outerHTML;
+                                }
+                            })
+                            scope.document.currentVersion = $window.toMarkdown(currentVersion)
+                            scope.$digest();
                         });
                     }
                 });
@@ -25,6 +42,8 @@ app.directive('addOrDelete', function ($window, $rootScope) {
                         elementToKeep.append('<button>+</button>');
                         elementToKeep.children('button').click(function(){
                             elementToKeep.addClass('clearIns');
+                            ctrl.$setViewValue('');
+                            scope.$digest();
                         });
                     }
                 });
