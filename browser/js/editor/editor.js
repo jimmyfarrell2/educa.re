@@ -9,7 +9,7 @@ app.config(function($stateProvider) {
                 return DocumentFactory.getDocument($stateParams.docId);
             },
             user: function(AuthService) {
-                return AuthService.getLoggedInUser()
+                return AuthService.getLoggedInUser();
             },
             commits: function(DocumentFactory, $stateParams) {
                 return DocumentFactory.commitHistory($stateParams.docId);
@@ -21,6 +21,15 @@ app.config(function($stateProvider) {
 
 
 app.controller('EditorController', function($scope, DocumentFactory, $state, document, user, commits, $window, $stateParams) {
+
+    var editAccess = document.editAccess.map(user => user._id.toString());
+    if (user._id.toString() === document.author._id.toString() ||
+        editAccess.indexOf(user._id.toString()) > -1) {
+            $scope.canEdit = true;
+    }
+    else {
+        $scope.canEdit = false;
+    }
 
     var collaborators = new Bloodhound({
         datumTokenizer: function(datum) {
@@ -46,6 +55,9 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
             },
             notFound: '<div>No matching users</div>'
         }
+    }).on('typeahead:selected', function (obj, datum) {
+       $state.go('userProfile', {userId: datum._id})
+        console.log("datum", datum);
     });
 
     var converter = $window.markdownit({
@@ -62,9 +74,8 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
         });
     }
     else {
-        console.log('in here')
         $scope.contentToHtml = converter.render(document.currentVersion);
-    };
+    }
 
 
     function sanitize(content) {
@@ -84,18 +95,18 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
         message: $scope.message,
         document: document,
         merge: false
-    }
+    };
 
 
     $scope.seeDashboard = function() {
         $state.go("documentDashboard", {
             docId: document._id
         });
-    }
+    };
 
     $scope.checked = false;
     $scope.toggle = function() {
-        $scope.checked = !$scope.checked
+        $scope.checked = !$scope.checked;
     };
 
     $scope.isNotUser = user._id !== document.author._id;
@@ -122,7 +133,7 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
         DocumentFactory.createDocument().then(function(doc) {
             $state.go('editor', {
                 docId: doc._id
-            })
+            });
         });
     };
 
@@ -142,67 +153,6 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
 
     $scope.goToUserProfile = function(){
         $state.go('userProfile', {userId: user._id});
-    }
-
-});
-
-app.factory('DocumentFactory', function($http) {
-
-    return {
-        createDocument: function() {
-            return $http.post('api/documents/').then(function(response) {
-                return response.data;
-            });
-        },
-        saveDocument: function(docInfo) {
-            return $http.put('api/documents/' + docInfo.document._id, docInfo).then(function(response) {
-                return response.data;
-            });
-        },
-        getDocument: function(docId) {
-            return $http.get('api/documents/' + docId).then(function(response) {
-                console.log('document', response.data)
-                return response.data;
-            })
-        },
-        getUserDocuments: function(userId) {
-            return $http.get('api/user/' + userId + '/documents').then(function(response) {
-                return response.data;
-            })
-        },
-        branchOtherDocument: function(doc) {
-            return $http.post('api/collaborate/branch', doc).then(function(response) {
-                return response.data;
-            })
-        },
-        makePullRequest: function(doc, message) {
-            var data = {
-                document: doc,
-                message: message
-            };
-            return $http.post('api/collaborate/pullRequest', data).then(function(response) {
-                return response.data;
-            })
-        },
-        mergeDocument: function(doc, pullRequest) {
-           var data = {
-               document: doc,
-               pullRequest: pullRequest
-           }
-           return $http.put('api/collaborate/merge', data).then(function(response) {
-               return response.data;
-           })
-        },
-        getAllDocuments: function() {
-            return $http.get('/api/documents/').then(function(response) {
-                return response.data;
-            })
-        },
-        commitHistory: function(docId) {
-            return $http.get('/api/documents/' + docId + '/commits').then(function(response) {
-                return response.data;
-            })
-        }
-    }
+    };
 
 });

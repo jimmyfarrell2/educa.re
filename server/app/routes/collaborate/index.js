@@ -32,7 +32,7 @@ router.post('/branch', function(req, res, next){
         .then(function(branch){
             currentBranch = branch;
             // Need to get branch name from currentBranch, maybe currentBranch.name?
-            if (currentBranch.name !== originalAuthor) return repo.checkoutAsync(originalAuthor);
+            if (currentBranch.name !== originalAuthor) return doc.repo.checkoutAsync(originalAuthor);
             else return;
         })
         .then(function(){
@@ -76,9 +76,6 @@ router.put('/merge', function(req, res, next){
         .then(function(){
             var markdownDiff = diff.diffLines(req.body.document.currentVersion, req.body.pullRequest.proposedVersion);
             var xmlFormatted = diff.convertChangesToXML(markdownDiff);
-
-            console.log('markdown diff', markdownDiff)
-            console.log('xmlFormatted', xmlFormatted);
             res.json(xmlFormatted);
         });
         //.then(function(){

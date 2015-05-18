@@ -30,11 +30,11 @@ router.get('/', function(req, res, next){
 router.get('/:docId', function(req, res, next){
 
     Document.findById(req.params.docId)
-    .populate("author branchedFrom readAccess editAccess pullRequests.author")
-    .exec()
+        .populate("author branchedFrom readAccess editAccess pullRequests.author")
+        .exec()
         .then(function(doc){
             res.json(doc);
-        })
+        });
 });
 
 //create client's first folder
@@ -97,7 +97,7 @@ router.put('/:docId/reset', function(req, res, next){
             return doc.repo.commitAsync('Restore previous version');
         })
         .then(function(){
-            return fs.readFileAsync(repo.path + '/contents.md');
+            return fs.readFileAsync(doc.repo.path + '/contents.md');
         })
         .then(function(file){
             doc.currentVersion = file.toString();
