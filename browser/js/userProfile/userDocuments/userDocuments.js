@@ -1,7 +1,7 @@
 app.config(function($stateProvider) {
 
     $stateProvider.state('userProfile.userDocuments', {
-        url: '/:userId/userDocuments',
+        url: '/userDocuments',
         controller: 'UserDocsController',
         templateUrl: 'js/userProfile/userDocuments/userDocuments.html',
         resolve: {
