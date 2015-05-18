@@ -24,7 +24,6 @@ router.get('/', function(req, res, next) {
     }
 
     else if (req.query.type === 'document') {
-        console.log('in else if')
         Document.find({ $or: [
             { title: new RegExp(req.query.q, 'i') },
             { currentVersion: new RegExp(req.query.q, 'i') }

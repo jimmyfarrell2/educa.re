@@ -10,7 +10,7 @@ app.config(function ($stateProvider) {
         resolve: {
             allDocuments: function(DocumentFactory){
                return DocumentFactory.getAllDocuments();
-            }   
+            }
         }
     });
 
@@ -30,9 +30,9 @@ app.filter('byQuery', function(){
     return function(documents, criteria, query){
         if (criteria === 'category'){
             return documents.filter(function(element){
-                return _.includes(element.categories, query)
-            })
+                return _.includes(element.categories, query);
+            });
         }
         else return _.where(documents, {criteria: query});
-    };            
+    };
 });
