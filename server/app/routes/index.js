@@ -12,6 +12,8 @@ router.use('/collaborate', require('./collaborate'));
 
 router.use('/user', require('./user'));
 
+router.use('/upload', require('./upload'));
+
 router.use('/search', require('./search'));
 
 // Make sure this is after all of

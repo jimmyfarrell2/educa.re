@@ -4,7 +4,8 @@ var app = angular.module('FullstackGeneratedApp', [
     'fsaPreBuilt',
     'angular-medium-editor',
     'pageslide-directive',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'ngFileUpload'
 ]);
 
 app.config(function ($urlRouterProvider, $locationProvider) {
@@ -16,7 +17,7 @@ app.config(function ($urlRouterProvider, $locationProvider) {
 
 // This app.run is for controlling access to specific states.
 app.run(function ($rootScope, AuthService, $state) {
-    
+
     // The given state requires an authenticated user.
     var destinationStateRequiresAuth = function (state) {
         return state.data && state.data.authenticate;

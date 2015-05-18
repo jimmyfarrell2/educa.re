@@ -48,7 +48,6 @@ router.get('/:userId', function(req, res, next){
 
     User.findOneAsync({_id: req.params.userId})
         .then(function(user){
-          console.log(user);
             res.json(user);
         })
         .catch(function(err){

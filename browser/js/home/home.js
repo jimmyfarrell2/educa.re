@@ -7,7 +7,7 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('HomeCtrl', function($scope, $state, DocumentFactory){
+app.controller('HomeCtrl', function($scope, $state, DocumentFactory, Upload){
 
     var documents = new Bloodhound({
         datumTokenizer: function(datum) {
@@ -34,13 +34,36 @@ app.controller('HomeCtrl', function($scope, $state, DocumentFactory){
             notFound: '<div>No matching documents</div>'
         }
     }).on('typeahead:selected', function (obj, datum) {
-       $state.go('editor', {docId: datum._id});
+        $state.go('editor', {docId: datum._id});
         console.log("datum", datum);
-    });;
+    });
 
     $scope.createDocument = function(){
         DocumentFactory.createDocument().then(function(doc){
             $state.go('editor', {docId: doc._id});
         });
+    };
+
+    $scope.$watch('files', function () {
+        $scope.upload($scope.files);
+    });
+
+    $scope.upload = function (files) {
+        if (files && files.length) {
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                Upload.upload({
+                    url: '/api/upload',
+                    fields: {'username': $scope.username},
+                    file: file
+                }).progress(function (evt) {
+                    var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                    console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
+                }).success(function (data, status, headers, config) {
+                    $state.go('editor', {docId: data._id});
+                    console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
+                });
+            }
+        }
     };
 });

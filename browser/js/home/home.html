@@ -5,12 +5,17 @@
       	<div class="container-fluid">
          <div class="row">
             <div class="col-sm-4"></div>
-            <div class="col-sm-4"><h1><p id="ourName">educa.re</p><h1>            	       
-            <div class="col-sm-4"></div>             
+            <div class="col-sm-4"><h1><p id="ourName">educa.re</p><h1>
+            <div class="col-sm-4"></div>
          </div>
       	</div>
       </div>
       <button class="btn createNew" ng-click="createDocument()">New Document</button>
+      Drop File:
+    <div ngf-drop ng-model="files" class="drop-box"
+        ngf-drag-over-class="dragover" ngf-multiple="true" ngf-allow-dir="true"
+        ngf-accept="'.jpg,.png,.pdf,.docx'">Drop Images or PDFs files here</div>
+    <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
    </section>
 </div>
 <section>

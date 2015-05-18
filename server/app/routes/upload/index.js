@@ -10,33 +10,52 @@ var router = require('express').Router(),
     diff = require('htmldiff/src/htmldiff.js'),
     cp = Promise.promisifyAll(require("child_process")),
     Busboy = require('busboy'),
+    mammoth = require('mammoth'),
     md = require('markdown-it')();
 
-//create client's first folder
+router.use('/', function(req, res, next){
+    req.userPath = path.join(__dirname, '/../../../../documents/' + req.user._id);
+    next();
+});
+
+//Uploading a New Document
 router.post('/', function(req, res, next){
     var busboy = new Busboy({ headers: req.headers });
+    var docData;
+    var newDoc;
+    var result;
 
     busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
-      var saveTo = path.join('.', filename);
-      console.log('Uploading: ' + saveTo);
-      file.pipe(fs.createWriteStream(saveTo));
+        var saveTo = path.join('.', filename);
+        var body = new Buffer(0);
+
+        file.on('data', function (chunk) {
+            body = Buffer.concat([body, chunk]);
+        });
+
+        file.on('end', function () {
+            mammoth.convertToMarkdown({buffer: body})
+            .then(function(_result){
+                req.docData = _result.value;
+                return mkdirp(req.userPath);
+            })
+            .then(function(){
+                return createRepo(req);
+            })
+            .then(function(doc){
+                res.json(doc);
+            });
+        });
     });
 
-    busboy.on('finish', function() {
-      console.log('Upload complete');
-      res.writeHead(200, { 'Connection': 'close' });
-      res.end("That's all folks!");
-    });
+    // busboy.on('finish', function() {
+    //     console.log('Upload complete');
+    //     console.log("this should contain the newly created doc",newDoc);
+    //     // res.writeHead(200, { 'Connection': 'close' });
+    //     res.end('This is the end');
+    // });
 
     return req.pipe(busboy);
-    // mkdirp(req.userPath)
-    //     .then(function() {
-    //         return createRepo(req);
-    //     })
-    //     .then(function(doc){
-    //         res.send(doc);
-    //     })
-    //     .catch(next);
 
 });
 
@@ -46,7 +65,9 @@ function createRepo(request) {
     var doc;
     var docPath = '';
 
-    return Document.createAsync(request.body.document)
+    console.log("request dataDoc", request.docData);
+
+    return Document.createAsync({})
         .then(function(_doc) {
             doc = _doc;
             return User.findByIdAndUpdateAsync(request.user._id, {$push: {'documents': doc._id}});
@@ -56,6 +77,7 @@ function createRepo(request) {
             return mkdirp(docPath);
         })
         .then(function(){
+            doc.currentVersion = request.docData;
             return fs.writeFileAsync(docPath + '/contents.md', doc.currentVersion);
         })
         .then(function(){
