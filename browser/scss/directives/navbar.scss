@@ -7,7 +7,7 @@ navbar {
   display: block;
   position: fixed;
   top: 0;
-  background:#FFF;
+  background:#eee;
   border-bottom: 1px solid #CCC;
   width: 100%;
   z-index: 1000;
@@ -86,7 +86,7 @@ navbar {
   }
 
   &.nav-top-level {
-    border-bottom: 1px solid #FFF;
+    border-bottom: none;
     background: transparent;
 
     .logo {
@@ -94,7 +94,7 @@ navbar {
     }
 
     a {
-      color: #000;
+      color: white;
     }
     .welcome {
       span {

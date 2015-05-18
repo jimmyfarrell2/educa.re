@@ -88,4 +88,14 @@ router.put('/merge', function(req, res, next){
 
 });
 
+//is this redundant/inelegant?
+router.put('/:docId', function(req, res, next){
+
+    Document.findByIdAndUpdateAsync(req.params.docId, {changedSinceBranch: false})
+        .then(function(doc){
+            res.json(doc);
+        });
+
+});
+
 module.exports = router;
