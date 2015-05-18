@@ -82,15 +82,6 @@ router.put('/:docId', function(req, res, next){
 
 });
 
-//is this redundant/inelegant?
-router.put('/:docId/removeNotification', function(req, res, next){
-
-    Document.findByIdAndUpdateAsync(req.params.docId, {changedSinceBranch: false})
-        .then(function(doc){
-            res.json(doc);
-        });
-
-});
 
 //reset to a previous version
 router.put('/:docId/reset', function(req, res, next){
