@@ -46,6 +46,9 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
             },
             notFound: '<div>No matching users</div>'
         }
+    }).on('typeahead:selected', function (obj, datum) {
+       $state.go('userProfile', {userId: datum._id})
+        console.log("datum", datum);
     });
 
     var converter = $window.markdownit({
