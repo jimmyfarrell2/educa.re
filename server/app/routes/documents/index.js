@@ -171,7 +171,7 @@ function alertBranchesOfChange(request){
                 return doc.saveAsync();
             });
         });
-
 }
+
 
 module.exports = router;

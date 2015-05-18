@@ -86,7 +86,7 @@ navbar {
   }
 
   &.nav-top-level {
-    border-bottom: 1px solid #FFF;
+    border-bottom: none;
     background: transparent;
 
     .logo {
@@ -94,7 +94,7 @@ navbar {
     }
 
     a {
-      color: #000;
+      color: white;
     }
     .welcome {
       span {
