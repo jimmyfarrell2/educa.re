@@ -82,15 +82,6 @@ router.put('/:docId', function(req, res, next){
 
 });
 
-//is this redundant/inelegant?
-router.put('/:docId/removeNotification', function(req, res, next){
-
-    Document.findByIdAndUpdateAsync(req.params.docId, {changedSinceBranch: false})
-        .then(function(doc){
-            res.json(doc);
-        });
-
-});
 
 //reset to a previous version
 router.put('/:docId/reset', function(req, res, next){
@@ -173,7 +164,7 @@ function createRepo(request) {
 function alertBranchesOfChange(request){
     var docsToSave = [];
 
-    return Document.findAsync({branchedFrom: request.user._id})
+    return Document.findAsync({branchedFrom: request.user._id, pathToRepo: request.body.document.pathToRepo})
         .then(function(docs){
             return Promise.map(docs, function(doc){
                 doc.changedSinceBranch = true;
