@@ -33,7 +33,10 @@ app.controller('HomeCtrl', function($scope, $state, DocumentFactory){
             },
             notFound: '<div>No matching documents</div>'
         }
-    });
+    }).on('typeahead:selected', function (obj, datum) {
+       $state.go('editor', {docId: datum._id});
+        console.log("datum", datum);
+    });;
 
     $scope.createDocument = function(){
         DocumentFactory.createDocument().then(function(doc){
