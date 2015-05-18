@@ -87,3 +87,46 @@ body {
     font-size: 30px;
   } 
 }
+
+#createAccount {
+  border: 1px solid #d8d8d8;
+  background:none;
+  border-radius: 45%;
+  padding: 20px;
+  width: 400px;
+  cursor: pointer;
+  outline: none;
+  position: absolute;
+  bottom: -115%;
+  right: 5%;
+
+  font-size: 1.4em;
+  color: #757575;
+
+
+  text-align: center;
+  outline: none;
+  background-color: #e0f2f1;
+  opacity: 0.7;
+}
+
+#logIn {
+  border: 1px solid #d8d8d8;
+  background:none;
+  border-radius: 45%;
+  padding: 18px;
+  width: 250px;
+  cursor: pointer;
+  outline: none;
+  position: absolute;
+  bottom: -125%;
+  right: 5%;
+
+  font-size: 1.4em;
+  color: #757575;
+
+  text-align: center;
+  outline: none;
+  background-color: #eee;
+  opacity: 0.7;
+}
