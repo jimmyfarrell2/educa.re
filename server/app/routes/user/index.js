@@ -27,7 +27,7 @@ router.post('/', function(req, res, next){
             mkdirp(path.join(__dirname, '/../../../../documents/' + user._id), function(err) {
                 if(err) return next(err);
                 res.status(200).send({ user: _.omit(user.toJSON(), ['password', 'salt']) });
-            })
+            });
         });
     });
 
@@ -70,7 +70,7 @@ router.get('/:userId/documents', function(req, res, next){
 
 router.use('/:userId', function(req, res, next){
 
-    if (req.user._id == req.params.userId) next();
+    if (req.user._id.toString() === req.params.userId) next();
     else next(new Error("You are not allowed."));
 
 });
@@ -83,7 +83,7 @@ router.put('/:userId', function(req, res, next){
         })
         .catch(function(err){
             return next(err);
-        })
+        });
 
 });
 

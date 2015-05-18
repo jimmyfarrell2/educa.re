@@ -6,14 +6,15 @@ app.config(function($stateProvider) {
         templateUrl: 'js/userProfile/userDocuments/userDocuments.html',
         resolve: {
             user: function(AuthService){
-                return AuthService.getLoggedInUser()
+                return AuthService.getLoggedInUser();
             }
         }
     });
 
 });
 
-app.controller('UserDocsController', function($scope, Socket, UserFactory, user, $state, DocumentFactory, UserFactory){
+app.controller('UserDocsController', function($scope, Socket, UserFactory, user, $state, DocumentFactory){
+
     $scope.documents = '';
 
     UserFactory.getUserDocuments(user._id).then(function(docs){
@@ -30,6 +31,7 @@ app.controller('UserDocsController', function($scope, Socket, UserFactory, user,
     $scope.removeFromNotifications = function(docId){
         UserFactory.removeNotifications(docId).then(function(doc){
             console.log(doc);
-        })
-    }
+        });
+    };
+
 });

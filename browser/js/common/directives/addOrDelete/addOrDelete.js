@@ -14,9 +14,9 @@ app.directive('addOrDelete', function ($window, $rootScope) {
                         elementToDelete.append('<button>x</button>');
                         elementToDelete.children('button').click(function(){
                             elementToDelete.replaceWith("");
-                        })
+                        });
                     }
-                })
+                });
 
                 var elementToKeep;
                 element.find('ins').mouseover(function(){
@@ -25,9 +25,9 @@ app.directive('addOrDelete', function ($window, $rootScope) {
                         elementToKeep.append('<button>+</button>');
                         elementToKeep.children('button').click(function(){
                             elementToKeep.addClass('clearIns');
-                        })
+                        });
                     }
-                })
+                });
 
                 element.find('del').mouseleave(function(){
                         $window.$(this).find('button').remove();
@@ -40,5 +40,6 @@ app.directive('addOrDelete', function ($window, $rootScope) {
             }, 1000);
 
         }
-    }
+    };
+
 });
