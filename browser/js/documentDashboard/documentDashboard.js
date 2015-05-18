@@ -9,7 +9,7 @@ app.config(function ($stateProvider) {
                 return DocumentFactory.getDocument($stateParams.docId);
             },
             user: function(AuthService){
-                return AuthService.getLoggedInUser()
+                return AuthService.getLoggedInUser();
             },
             commits: function(DocumentFactory, $stateParams){
                 return DocumentFactory.commitHistory($stateParams.docId);
@@ -83,7 +83,7 @@ app.controller('ModalInstanceCtrl', function ($scope, $modalInstance, content, $
   $scope.mergeChanges = function(){
     $state.go('editor', {docId:document._id, pullReq: index});
     $scope.ok();
-    }
+    };
 
   $scope.ok = function () {
     $modalInstance.close($scope.selected);

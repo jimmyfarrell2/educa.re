@@ -9,7 +9,7 @@ app.config(function($stateProvider) {
                 return DocumentFactory.getDocument($stateParams.docId);
             },
             user: function(AuthService) {
-                return AuthService.getLoggedInUser()
+                return AuthService.getLoggedInUser();
             },
             commits: function(DocumentFactory, $stateParams) {
                 return DocumentFactory.commitHistory($stateParams.docId);
@@ -62,9 +62,8 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
         });
     }
     else {
-        console.log('in here')
         $scope.contentToHtml = converter.render(document.currentVersion);
-    };
+    }
 
 
     function sanitize(content) {
@@ -84,18 +83,18 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
         message: $scope.message,
         document: document,
         merge: false
-    }
+    };
 
 
     $scope.seeDashboard = function() {
         $state.go("documentDashboard", {
             docId: document._id
         });
-    }
+    };
 
     $scope.checked = false;
     $scope.toggle = function() {
-        $scope.checked = !$scope.checked
+        $scope.checked = !$scope.checked;
     };
 
     $scope.isNotUser = user._id !== document.author._id;
@@ -122,7 +121,7 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
         DocumentFactory.createDocument().then(function(doc) {
             $state.go('editor', {
                 docId: doc._id
-            })
+            });
         });
     };
 
@@ -142,7 +141,7 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
 
     $scope.goToUserProfile = function(){
         $state.go('userProfile', {userId: user._id});
-    }
+    };
 
 });
 
@@ -161,19 +160,18 @@ app.factory('DocumentFactory', function($http) {
         },
         getDocument: function(docId) {
             return $http.get('api/documents/' + docId).then(function(response) {
-                console.log('document', response.data)
                 return response.data;
-            })
+            });
         },
         getUserDocuments: function(userId) {
             return $http.get('api/user/' + userId + '/documents').then(function(response) {
                 return response.data;
-            })
+            });
         },
         branchOtherDocument: function(doc) {
             return $http.post('api/collaborate/branch', doc).then(function(response) {
                 return response.data;
-            })
+            });
         },
         makePullRequest: function(doc, message) {
             var data = {
@@ -182,27 +180,27 @@ app.factory('DocumentFactory', function($http) {
             };
             return $http.post('api/collaborate/pullRequest', data).then(function(response) {
                 return response.data;
-            })
+            });
         },
         mergeDocument: function(doc, pullRequest) {
            var data = {
                document: doc,
                pullRequest: pullRequest
-           }
+           };
            return $http.put('api/collaborate/merge', data).then(function(response) {
                return response.data;
-           })
+           });
         },
         getAllDocuments: function() {
             return $http.get('/api/documents/').then(function(response) {
                 return response.data;
-            })
+            });
         },
         commitHistory: function(docId) {
             return $http.get('/api/documents/' + docId + '/commits').then(function(response) {
                 return response.data;
-            })
+            });
         }
-    }
+    };
 
 });

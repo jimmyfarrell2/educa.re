@@ -39,5 +39,5 @@ app.controller('HomeCtrl', function($scope, $state, DocumentFactory){
         DocumentFactory.createDocument().then(function(doc){
             $state.go('editor', {docId: doc._id});
         });
-    }
+    };
 });
