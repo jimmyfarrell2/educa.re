@@ -15,7 +15,7 @@
 <input id="search-collaborators" class="form-control">
 <div class="container editorWrapper">
 
-    <div medium-editor add-or-delete class="editor" ng-model="contentToHtml"  options='{"buttons": ["bold", "italic", "underline", "anchor", "header1", "header2", "quote", "orderedlist", "unorderedlist"]}' bind-options="markdownOptions">
+    <div medium-editor add-or-delete="contentToHtml" class="editor" ng-model="contentToHtml"  options='{"buttons": ["bold", "italic", "underline", "anchor", "header1", "header2", "quote", "orderedlist", "unorderedlist"]}' bind-options="markdownOptions">
     </div><br/>
 
 
@@ -30,8 +30,8 @@
 
 
 
-<ul>
-    <li  ng-repeat="pullRequest in pullRequests" ng-click="getDiff(pullRequest)">{{pullRequest}}</li>
-</ul>
+<!--<ul>-->
+    <!--<li  ng-repeat="pullRequest in pullRequests" ng-click="getDiff(pullRequest)">{{pullRequest}}</li>-->
+<!--</ul>-->
 
 

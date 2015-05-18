@@ -78,6 +78,7 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
         extensions: {
             "markdown": new MeMarkdown(function(md) {
                 document.currentVersion = md;
+                console.log('MD', md)
             })
         }
     };
