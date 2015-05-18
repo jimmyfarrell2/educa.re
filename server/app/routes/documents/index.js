@@ -173,14 +173,14 @@ function createRepo(request) {
 function alertBranchesOfChange(request){
     var docsToSave = [];
 
-    return Document.findAsync({branchedFrom: request.user._id})
+    return Document.findAsync({branchedFrom: request.user._id, pathToRepo: request.body.document.pathToRepo})
         .then(function(docs){
             return Promise.map(docs, function(doc){
                 doc.changedSinceBranch = true;
                 return doc.saveAsync();
             });
         });
-
 }
+
 
 module.exports = router;
