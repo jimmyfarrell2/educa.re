@@ -8,7 +8,7 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) 
         link: function (scope) {
 
             scope.items = [
-                { label: 'My Profile', state: 'userProfile({userId: user._id})', auth: true }   
+                { label: 'My Profile', state: 'userProfile({userId: user._id})', auth: true }
             ];
 
             scope.user = null;
@@ -59,7 +59,6 @@ app.controller('windowCtrl', function($scope, $window, $rootScope) {
     });
 
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-        console.log(toState);
         $scope.validState = toState.name === "home" || toState.name === "editor" || toState.name === 'userProfile';
     });
 });
