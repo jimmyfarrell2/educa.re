@@ -9,11 +9,12 @@ router.get('/', function(req, res, next) {
     if (req.query.type === 'user') {
         User.find({ $or: [
             { email: new RegExp(req.query.q, 'i') },
+            { username: new RegExp(req.query.q, 'i') },
             { 'name.first': new RegExp(req.query.q, 'i') },
             { 'name.last': new RegExp(req.query.q, 'i') }
         ]})
-            .select('_id name email')
-            .execAsync()
+        .select('_id username')
+        .execAsync()
             .then(function(users) {
                 var filteredUsers = users.filter(function(user) {
                     return user._id.toString() !== req.user._id.toString();
@@ -23,14 +24,31 @@ router.get('/', function(req, res, next) {
             .catch(next);
     }
 
-    else if (req.query.type === 'document') {
-        Document.find({ $or: [
-            { title: new RegExp(req.query.q, 'i') },
-            { currentVersion: new RegExp(req.query.q, 'i') }
+    else if (req.query.type === 'all') {
+
+        var results = [];
+
+        User.find({ $or: [
+            { email: new RegExp(req.query.q, 'i') },
+            { username: new RegExp(req.query.q, 'i') },
+            { 'name.first': new RegExp(req.query.q, 'i') },
+            { 'name.last': new RegExp(req.query.q, 'i') }
         ]})
-            .populate('author', 'name').execAsync()
+        .select('_id username')
+        .execAsync()
+            .then(function(users) {
+                results = results.concat(users);
+                return Document.find({ $or: [
+                    { title: new RegExp(req.query.q, 'i') },
+                    { currentVersion: new RegExp(req.query.q, 'i') }
+                ]})
+                .populate('author', 'username')
+                .execAsync();
+            })
             .then(function(documents) {
-                res.json(documents);
+                results = results.concat(documents);
+                console.log('results', results)
+                res.json(results);
             })
             .catch(next);
     }

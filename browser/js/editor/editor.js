@@ -25,15 +25,15 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
 
    $scope.categories = [
         'Health',
-        'Education', 
-        'Science', 
-        'Food', 
-        'Travel', 
-        'Politics', 
+        'Education',
+        'Science',
+        'Food',
+        'Travel',
+        'Politics',
         'Art',
         'Other'
     ];
-    
+
 
     setInterval(function() {
         $('#click').trigger('click');
@@ -54,7 +54,7 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
         datumTokenizer: function(datum) {
             var firstNameTokens = Bloodhound.tokenizers.whitespace(datum.name.first);
             var lastNameTokens = Bloodhound.tokenizers.whitespace(datum.name.last);
-            return firstNameTokens.concat(lastNameTokens, datum.email);
+            return firstNameTokens.concat(lastNameTokens, datum.email, datum.username);
         },
         queryTokenizer: Bloodhound.tokenizers.whitespace,
         remote: {
@@ -66,17 +66,16 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
     $('#search-collaborators').typeahead(null, {
         name: 'users',
         limit: 10,
-        display: 'email',
+        display: 'username',
         source: collaborators,
         templates: {
             suggestion: function(datum) {
-                return '<div>' + datum.name.first + ' ' + datum.name.last + ' <em>' + datum.email + '</em></div>';
+                return '<div>' + datum.username + '</em></div>';
             },
             notFound: '<div>No matching users</div>'
         }
     }).on('typeahead:selected', function (obj, datum) {
        $state.go('userProfile', {userId: datum._id})
-        console.log("datum", datum);
     });
 
     $scope.changeMade = function(docInfo) {

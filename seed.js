@@ -42,6 +42,7 @@ var seedUsersAndDocuments = function () {
     var sonia = new User({
         email: 'sonia@fsa.com',
         password: 'sonia',
+        username: 'soniatrehan',
         name: {
             first: 'Sonia',
             last: 'Trehan'
@@ -50,6 +51,7 @@ var seedUsersAndDocuments = function () {
     var nastia = new User({
         email: 'nastia@fsa.com',
         password: 'nastia',
+        username: 'nastiasergiienko',
         name: {
             first: 'Nastia',
             last: 'Sergiienko'
@@ -58,6 +60,7 @@ var seedUsersAndDocuments = function () {
     var david = new User({
         email: 'david@fsa.com',
         password: 'david',
+        username: 'davidphelan',
         name: {
             first: 'David',
             last: 'Phelan'
@@ -66,6 +69,7 @@ var seedUsersAndDocuments = function () {
     var jimmy = new User({
             email: 'jimmy@fsa.com',
             password: 'jimmy',
+            username: 'jimmyfarrell',
             name: {
                 first: 'Jimmy',
                 last: 'Farrell'
