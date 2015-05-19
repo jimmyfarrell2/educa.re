@@ -78,6 +78,33 @@ router.param('docId', function(req, res, next) {
 
 });
 
+router.put('/:docId/likes', function(req, res, next){
+
+    if(req.user.likedDocuments.indexOf(req.doc._id) === -1){
+        req.doc.likes++;
+        req.user.likedDocuments.push(req.doc._id);
+    }
+    else {
+        if(req.doc.likes > 0) req.doc.likes--;
+
+        req.user.likedDocuments = req.user.likedDocuments.filter(function(doc){
+            return doc.toString() !== req.doc._id.toString();
+        })
+
+        console.log(req.user.likedDocuments);
+    }
+
+    var tasks = [req.doc.saveAsync(), req.user.saveAsync()];
+
+    Promise.all(tasks)
+        .then(function(){
+            res.json(req.doc)
+        })
+        .catch(next);
+
+});
+
+
 router.use(':/docId', function(req, res, next){
     if(req.user._id === req.doc.author._id || req.user._id === req.doc.author) next();
     else next(new Error('You are not authorized to perform these functions!'))
@@ -118,6 +145,7 @@ router.put('/:docId', function(req, res, next){
         .catch(next);
 
 });
+
 
 
 //reset to a previous version
