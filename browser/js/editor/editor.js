@@ -155,4 +155,8 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
         $state.go('userProfile', {userId: user._id});
     };
 
+    $scope.exportDocument = function(docId){
+        DocumentFactory.exportDocument(docId);
+    };
+
 });
