@@ -22,7 +22,6 @@ app.config(function($stateProvider) {
 
 app.controller('EditorController', function($scope, DocumentFactory, $state, document, user, commits, $window, $stateParams, Socket) {
 
-
    $scope.categories = [
         'Health',
         'Education',
@@ -92,7 +91,7 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
     });
 
     if (document.currentVersion === "") {
-        $scope.contentToHtml = "<h1>Title</h1><br/><p>Start your story...</p>";
+        $scope.contentToHtml = "<p>Begin writing here...</p>";
     }
     else if ($stateParams.pullReq) {
         DocumentFactory.mergeDocument(document, document.pullRequests[$stateParams.pullReq]).then(function(diff){
