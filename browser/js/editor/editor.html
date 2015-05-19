@@ -30,6 +30,12 @@
     <div ng-if="!canEdit" medium-editor add-or-delete="contentToHtml" class="editor" ng-model="contentToHtml"  options='{"buttons": ["bold", "italic", "underline", "anchor", "header1", "header2", "quote", "orderedlist", "unorderedlist"], "disableEditing": true, "disableToolbar": true}' bind-options="markdownOptions">
     </div><br/>
 
+    <div class="author">
+      {{document.author.username}} PLACEHOLDER AUTHOR
+    </div>
+
+    <br/>
+
     <div class="buttonWrapper">
         <button class="btn info-btn" ng-click="toggle()"><i class="fa fa-info fa-fw"></i></button>
         <button ng-show="changeMade(docInfo)" class="btn save-btn" ng-click="changeMade(docInfo) && saveUserDocument(docInfo)" ng-show="isUser"><i class="fa fa-floppy-o fa-fw"></i></button>
@@ -38,6 +44,7 @@
         <br/>
         <tags-input ng-model="docInfo.document.tags"></tags-input>
     </div>
+
 
 
 </div>
