@@ -1,3 +1,18 @@
+<div class="buttonWrapper">
+    <div ng-if="!isNotUser" class="edit-buttons">
+        <button class="btn info-btn" ng-click="toggle()"><i class="fa fa-info fa-fw"></i></button>
+        <button class="btn" href="/api/documents/{{document._id}}/export" target="_blank"><i class="fa fa-file-pdf-o fa-fw"></i></button>
+        <button class="btn suggest-btn" ng-click="makePullRequest()" ng-show="isBranched"><i class="fa fa-share fa-fw"></i></button>
+        <button ng-show="changeMade(docInfo)" class="btn save-btn" ng-click="changeMade(docInfo) && saveUserDocument(docInfo)" ng-show="isUser"><i class="fa fa-floppy-o fa-fw"></i></button>
+    </div>
+    <div ng-if="isNotUser" class="view-buttons">
+        <p>By {{document.author.username}}</p>
+        <button title="Favorite This Document" class="btn like-btn" ng-click="branchDocument()"><i class="fa fa-heart-o fa-fw"></i></button>
+        <button title="Add to Reading List" class="btn like-btn" ng-click="branchDocument()"><i class="fa fa-bookmark-o fa-fw"></i></button>
+        <button title="Download PDF" class="btn pdf-btn" href="/api/documents/{{document._id}}/export" target="_blank"><i class="fa fa-file-pdf-o fa-fw"></i></button>
+        <button title="Copy This Document" class="btn copy-btn" ng-click="branchDocument()"><i class="fa fa-files-o fa-fw"></i></button>
+    </div>
+</div>
 
 <div>
         <div id="sidebar-wrapper" ng-show="checked">
