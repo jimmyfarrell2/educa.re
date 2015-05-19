@@ -1,14 +1,35 @@
+.buttonWrapper {
+    position: fixed;
+    margin-left: 15px;
+    width: 250px;
+    height: 100%;
+    top: 200px;
+    .fa {
+        color: #bdbdbd;
+    }
+    .btn {
+        border-radius: 100%;
+        background-color: transparent;
+        border-color: #bdbdbd;
+        height: 44px;
+        outline: none;
+
+        &:focus {
+            outline: none;
+        }
+    }
+}
 
 #sidebar-wrapper {
     z-index: 1000;
     position: fixed;
     left: 250px;
     width: 0;
-    height: 50%;
+    height: 350px;
     margin-left: -250px;
     overflow-y: auto;
     background: #b2dfdb;
-    margin-top: 150px;
+    margin-top: 200px;
 
 	animation-name: slideRight;
 	-webkit-animation-name: slideRight;
@@ -51,9 +72,7 @@
 
 
 .categoriesButton {
-  position: absolute;
-  top: 150px;
-  left: 200px;
+    padding-left: 50px;
 }
 .sidebar-nav {
     position: absolute;
@@ -124,32 +143,34 @@
 
 
 
-.editor {
-    outline: none;
-    padding: 100px 50px 50px 50px;
-}
-
 .editorWrapper {
     width: 65%;
     height: 85vh;
 
-    .buttonWrapper {
-        margin-left: 50px;
-    }
-
-    .fa {
-        color: #bdbdbd;
-    }
-
-    .btn {
-        border-radius: 100%;
-        background-color: transparent;
-        border-color: #bdbdbd;
-        height: 44px;
+    .editor {
         outline: none;
-
-        &:focus {
-            outline: none;
+        padding: 50px 50px 10px 50px;
+        h1, h2, p, span {
+            font-family: Garamond;
+            text-align: justify;
+            line-height: 150%;
+        }
+        p, span {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            font-size: 24px;
+            line-height: 200%;
+        }
+        h1 {
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 42px;
+            font-weight: 600;
+        }
+        h2 {
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 32px;
         }
     }
 
@@ -204,10 +225,17 @@
        border: 1px solid grey;
        display: inline-block;
        text-align: center;
-       border-radius: 6%;
      }
 
+
    }
+
+tags-input .tags {
+    padding: 0 50px 10px;
+    margin-bottom: 25px;
+    border: none;
+    box-shadow: none;
+}
 
 /*
  * typehead.js-bootstrap3.less

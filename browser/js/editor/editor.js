@@ -83,11 +83,8 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
     });
 
     $scope.changeMade = function(docInfo) {
-        var returnVal;
-        if (originalCurrentVersion === sanitize(docInfo.document.currentVersion)) returnVal = false;
-        else returnVal = true;
-        console.log(returnVal)
-        return returnVal;
+        if (originalCurrentVersion === sanitize(docInfo.document.currentVersion)) return false;
+        else return true;
     };
 
     var converter = $window.markdownit({
