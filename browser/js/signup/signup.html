@@ -20,6 +20,12 @@
         </div>
 
         <div class="form-group">
+            <label for="username">Username</label>
+            <input name="username" type="text" ng-model="signUp.username" class="form-control" id="username" placeholder="Enter Username" required>
+            <error ng-show="signUpForm.username.$error.required && signUpForm.$submitted">Username is required</error>
+        </div>
+
+        <div class="form-group">
             <label for="email">Email address</label>
             <input name="email" type="text" ng-model="signUp.email" class="form-control" id="email" placeholder="Enter email" required>
             <error ng-show="signUpForm.email.$error.required && signUpForm.$submitted">Last name is required</error>

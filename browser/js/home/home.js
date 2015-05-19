@@ -17,7 +17,7 @@ app.controller('HomeCtrl', function($scope, $state, DocumentFactory, Upload){
         },
         queryTokenizer: Bloodhound.tokenizers.whitespace,
         remote: {
-            url: '/api/search?type=document&q=%QUERY',
+            url: '/api/search?type=all&q=%QUERY',
             wildcard: '%QUERY'
         }
     });
@@ -29,12 +29,18 @@ app.controller('HomeCtrl', function($scope, $state, DocumentFactory, Upload){
         source: documents,
         templates: {
             suggestion: function(datum) {
-                return '<div>' + datum.title + ' <em>' + datum.author.name.first + ' ' + datum.author.name.last + '</em></div>';
+                if (datum.title) {
+                    return '<div><strong>Document:</strong> ' + datum.title + ' <em>' + datum.author.username + '</em></div>';
+                }
+                else {
+                    return '<div><strong>User:</strong> ' + datum.username + '</em></div>';
+                }
             },
             notFound: '<div>No matching documents</div>'
         }
     }).on('typeahead:selected', function (obj, datum) {
-        $state.go('editor', {docId: datum._id});
+        if (datum.title) $state.go('editor', {docId: datum._id});
+        else $state.go('userProfile', {userId: datum._id})
         console.log("datum", datum);
     });
 

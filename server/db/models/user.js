@@ -32,6 +32,11 @@ var schema = new mongoose.Schema({
     google: {
         id: String
     },
+    username: {
+        type: String,
+        required: true,
+        unique: true
+    },
     name: {
         first: String,
         last: String
