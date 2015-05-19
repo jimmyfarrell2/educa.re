@@ -7,7 +7,7 @@
         <button title="Save Document" ng-show="changeMade(docInfo)" class="btn save-btn" ng-click="changeMade(docInfo) && saveUserDocument(docInfo)" ng-show="isUser"><i class="fa fa-floppy-o fa-fw"></i></button>
     </div>
     <div ng-if="isNotUser" class="view-buttons">
-        <p>By <a ui-sref="userProfile(document.author._id)">{{document.author.username}}</a></p>
+        <p>By <a ui-sref="userProfile({userId: document.author._id})">{{document.author.username}}</a></p>
         <p> Likes: {{docInfo.document.likes}}</p>
         <button title="Favorite" class="btn like-btn" ng-class="{'hasLiked': hasLiked}" ng-click="likeDoc()"><i class="fa fa-heart-o fa-fw"></i></button>
         <button title="Add to Reading List" ng-show="isNotUser" class="btn" ng-click="addToBookmarks()" ng-class="{'hasAdded': hasAdded}"><i class="fa fa-bookmark-o fa-fw"></i></button>
@@ -29,10 +29,11 @@
 <div id="click" ng-click=""></div>
 <input id="search-collaborators" class="form-control">
 <div class="container editorWrapper">
+    <input id="document-title" ng-model="docInfo.document.title" placeholder="Title">
     <div ng-if="canEdit" medium-editor add-or-delete="contentToHtml" class="editor" ng-model="contentToHtml"  options='{"buttons": ["bold", "italic", "underline", "anchor", "header1", "header2", "quote", "orderedlist", "unorderedlist"], "firstHeader": "h1", "secondHeader": "h2"}' bind-options="markdownOptions">
-    </div><br/>
+    </div>
     <div ng-if="!canEdit" medium-editor add-or-delete="contentToHtml" class="editor" ng-model="contentToHtml"  options='{"buttons": ["bold", "italic", "underline", "anchor", "header1", "header2", "quote", "orderedlist", "unorderedlist"], "disableEditing": true, "disableToolbar": true}' bind-options="markdownOptions">
-    </div><br/>
+    </div>
     <div ng-show="isUser">
         <div class="btn-group categoriesButton" dropdown ng-show="isUser">
             <select type="button" class="btn btn-default category-select" ng-model="docInfo.document.categories[0]">
