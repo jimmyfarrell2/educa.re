@@ -1,9 +1,9 @@
 <div class="buttonWrapper">
     <div ng-if="!isNotUser" class="edit-buttons">
-        <button class="btn info-btn" ng-click="toggle()"><i class="fa fa-info fa-fw"></i></button>
-        <button class="btn" href="/api/documents/{{document._id}}/export" target="_blank"><i class="fa fa-file-pdf-o fa-fw"></i></button>
-        <button class="btn suggest-btn" ng-click="makePullRequest()" ng-show="isBranched"><i class="fa fa-share fa-fw"></i></button>
-        <button ng-show="changeMade(docInfo)" class="btn save-btn" ng-click="changeMade(docInfo) && saveUserDocument(docInfo)" ng-show="isUser"><i class="fa fa-floppy-o fa-fw"></i></button>
+        <button title="Show Document Info" class="btn info-btn" ng-click="toggle()"><i class="fa fa-info fa-fw"></i></button>
+        <button title="DownloadPDF" class="btn" href="/api/documents/{{document._id}}/export" target="_blank"><i class="fa fa-file-pdf-o fa-fw"></i></button>
+        <button title="Suggest Changes to Original Author" class="btn suggest-btn" ng-click="makePullRequest()" ng-show="isBranched"><i class="fa fa-share fa-fw"></i></button>
+        <button title="Save Document" ng-show="changeMade(docInfo)" class="btn save-btn" ng-click="changeMade(docInfo) && saveUserDocument(docInfo)" ng-show="isUser"><i class="fa fa-floppy-o fa-fw"></i></button>
     </div>
     <div ng-if="isNotUser" class="view-buttons">
         <p>By {{document.author.username}}</p>
@@ -12,6 +12,7 @@
         <button title="Download PDF" class="btn pdf-btn" href="/api/documents/{{document._id}}/export" target="_blank"><i class="fa fa-file-pdf-o fa-fw"></i></button>
         <button title="Copy This Document" class="btn copy-btn" ng-click="branchDocument()"><i class="fa fa-files-o fa-fw"></i></button>
     </div>
+    <span> Likes: {{docInfo.document.likes}}</span>
 </div>
 
 <div>
@@ -44,32 +45,8 @@
     </div><br/>
     <div ng-if="!canEdit" medium-editor add-or-delete="contentToHtml" class="editor" ng-model="contentToHtml"  options='{"buttons": ["bold", "italic", "underline", "anchor", "header1", "header2", "quote", "orderedlist", "unorderedlist"], "disableEditing": true, "disableToolbar": true}' bind-options="markdownOptions">
     </div><br/>
-
-    <div class="author">
-      {{document.author.username}} PLACEHOLDER AUTHOR
-    </div>
-
-    <br/>
-
-    <div class="buttonWrapper">
-        <button class="btn info-btn" ng-click="toggle()" ng-show="isUser"><i class="fa fa-info fa-fw"></i></button>
-        <button ng-show="changeMade(docInfo) && isUser" class="btn save-btn" ng-click="changeMade(docInfo) && saveUserDocument(docInfo)"><i class="fa fa-floppy-o fa-fw"></i></button>
-        <button ng-show="isNotUser" class="btn" ng-click="likeDoc()" ng-class="{'hasLiked': hasLiked}"><i class="fa fa-heart-o fa-fw"></i></button>
-        <button ng-click="branchDocument()" ng-show="isNotUser">Branch doc</button>
-        <button ng-click="makePullRequest()" ng-show="isBranched">Suggest changes</button>
-        <br/>
-        <tags-input ng-model="docInfo.document.tags" ng-show="isUser" ></tags-input>
-        <span> Likes: {{docInfo.document.likes}}</span>
-    </div>
-
-
-
+    <tags-input class="tag-box" ng-model="docInfo.document.tags"></tags-input>
 </div>
-
-<a href="/api/documents/{{document._id}}/export" target="_blank">Export Document as PDF </a>
-
-
-
 
 <!--<ul>-->
     <!--<li  ng-repeat="pullRequest in pullRequests" ng-click="getDiff(pullRequest)">{{pullRequest}}</li>-->
