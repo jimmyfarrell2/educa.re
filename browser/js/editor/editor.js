@@ -22,6 +22,19 @@ app.config(function($stateProvider) {
 
 app.controller('EditorController', function($scope, DocumentFactory, $state, document, user, commits, $window, $stateParams) {
 
+
+   $scope.categories = [
+        'Health',
+        'Education', 
+        'Science', 
+        'Food', 
+        'Travel', 
+        'Politics', 
+        'Art',
+        'Other'
+    ];
+    
+
     setInterval(function() {
         $('#click').trigger('click');
     }, 1000);
