@@ -22,6 +22,17 @@ app.config(function($stateProvider) {
 
 app.controller('EditorController', function($scope, DocumentFactory, $state, document, user, commits, $window, $stateParams) {
 
+   $scope.categories = [
+        'Health',
+        'Education', 
+        'Science', 
+        'Food', 
+        'Travel', 
+        'Politics', 
+        'Art',
+        'Other'
+    ];
+    
     var editAccess = document.editAccess.map(user => user._id.toString());
     if (user._id.toString() === document.author._id.toString() ||
         editAccess.indexOf(user._id.toString()) > -1) {
