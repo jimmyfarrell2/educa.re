@@ -46,7 +46,9 @@ router.get('/', function(req, res, next){
 
 router.get('/:userId', function(req, res, next){
 
-    User.findOneAsync({_id: req.params.userId})
+    User.findOne({_id: req.params.userId})
+    .populate('bookmarks', 'title')
+    .execAsync()
         .then(function(user){
             res.json(user);
         })

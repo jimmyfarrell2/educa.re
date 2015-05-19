@@ -105,6 +105,24 @@ router.put('/:docId/likes', function(req, res, next){
 });
 
 
+router.put('/:docId/bookmarks', function(req,res,next){
+   
+    if(req.user.bookmarks.indexOf(req.doc._id) === -1){
+        req.user.bookmarks.push(req.doc._id)
+    }
+    else {
+        return next(new Error("You already have this document in your bookmarks"));
+    }
+
+    req.user.saveAsync()
+        .then(function(){
+            res.json(req.doc);
+        })
+        .catch(next);
+});
+
+
+
 router.use(':/docId', function(req, res, next){
     if(req.user._id === req.doc.author._id || req.user._id === req.doc.author) next();
     else next(new Error('You are not authorized to perform these functions!'))

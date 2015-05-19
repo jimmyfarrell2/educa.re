@@ -50,10 +50,7 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
         $scope.canEdit = false;
     }
 
-    console.log('big socket', Socket);
-
     $scope.$on('$destroy', function(){
-        console.log('destroying...!');
         Socket.disconnect();
     })
 
@@ -210,6 +207,13 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
             else $scope.docInfo.document.likes--;
         });
 
+    }
+
+    $scope.hasAdded = false;
+    $scope.addToBookmarks = function(){
+        DocumentFactory.addToBookmark($scope.docInfo.document._id).then(function(doc){
+            $scope.hasAdded = !$scope.hasAdded;
+        })
     }
 
 });
