@@ -37,7 +37,7 @@ app.factory('DocumentFactory', function($http) {
             });
         },
         mergeDocument: function(doc, pullRequest) {
-           var data = {
+            var data = {
                document: doc,
                pullRequest: pullRequest
            };
@@ -52,6 +52,11 @@ app.factory('DocumentFactory', function($http) {
         },
         commitHistory: function(docId) {
             return $http.get('/api/documents/' + docId + '/commits').then(function(response) {
+                return response.data;
+            });
+        },
+        exportDocument: function(docId) {
+            return $http.get('/api/documents/' + docId + '/export').then(function(response) {
                 return response.data;
             });
         }
