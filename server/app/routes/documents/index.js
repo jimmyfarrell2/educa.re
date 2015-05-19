@@ -9,8 +9,10 @@ var router = require('express').Router(),
     User = Promise.promisifyAll(mongoose.model('User')),
     diff = require('htmldiff/src/htmldiff.js'),
     cp = Promise.promisifyAll(require("child_process")),
-    md = require('markdown-it')(),
-    _ = require('lodash');
+    _ = require('lodash'),
+    markdownpdf = require('markdown-pdf'),
+    md = require('markdown-it')();
+
 
 //set a repo for the user
 router.use('/', function(req, res, next){
@@ -36,6 +38,19 @@ router.get('/:docId', function(req, res, next){
         .then(function(doc){
             res.json(doc);
         });
+});
+
+router.get('/:docId/export', function(req, res, next){
+
+    Document.findByIdAsync(req.params.docId)
+        .then(function(doc){
+                markdownpdf().from.string(doc.currentVersion).to.buffer(function (err, data) {
+                    res.setHeader('Content-Type', 'application/pdf');
+                    res.send(data);
+                });
+            });
+
+
 });
 
 //create client's first folder
