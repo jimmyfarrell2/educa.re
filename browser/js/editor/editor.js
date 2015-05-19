@@ -153,6 +153,11 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
     $scope.commits = commits;
     $scope.document = document;
 
+    $scope.commits = commits.filter(function(commit) {
+      return commit.authored_date >= document.dateCreated;
+    });
+
+
 
     $scope.branchDocument = function() {
         DocumentFactory.branchOtherDocument($scope.docInfo.document).then(function(doc) {
