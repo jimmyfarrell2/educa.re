@@ -12,6 +12,16 @@
 </div>
 
 
+<div class="btn-group categoriesButton" dropdown>
+    <select type="button" class="btn btn-success" ng-model="docInfo.document.categories[0]">
+        <option value>Category</option>
+        <option ng-repeat="category in categories" value="{{category}}">{{category}}
+        </option>
+    </select>
+</div>
+
+<div id="click" ng-click=""></div>
+
 <input id="search-collaborators" class="form-control">
 <div class="container editorWrapper">
 
@@ -21,12 +31,9 @@
     <div ng-if="!canEdit" medium-editor add-or-delete="contentToHtml" class="editor" ng-model="contentToHtml"  options='{"buttons": ["bold", "italic", "underline", "anchor", "header1", "header2", "quote", "orderedlist", "unorderedlist"], "disableEditing": true, "disableToolbar": true}' bind-options="markdownOptions">
     </div><br/>
 
-    <!--<div medium-editor add-or-delete class="editor" ng-model="contentToHtml"  options='{"buttons": ["bold", "italic", "underline", "anchor", "header1", "header2", "quote", "orderedlist", "unorderedlist"]}' bind-options="markdownOptions">-->
-    <!--</div><br/>-->
-
     <div class="buttonWrapper">
-        <button class= "btn" ng-click = "toggle()"><i class="fa fa-info fa-fw"></i></button>
-        <button class= "btn" ng-click="saveUserDocument(docInfo)" ng-show="isUser"><i class="fa fa-floppy-o fa-fw"></i></button>
+        <button class="btn info-btn" ng-click="toggle()"><i class="fa fa-info fa-fw"></i></button>
+        <button ng-show="changeMade(docInfo)" class="btn save-btn" ng-click="changeMade(docInfo) && saveUserDocument(docInfo)" ng-show="isUser"><i class="fa fa-floppy-o fa-fw"></i></button>
         <button ng-click="branchDocument()" ng-show="isNotUser">Branch doc</button>
         <button ng-click="makePullRequest()" ng-show="isBranched">Suggest changes</button>
         <br/>
@@ -35,6 +42,8 @@
 
 
 </div>
+
+<a href="/api/documents/{{document._id}}/export" target="_blank">Export Document as PDF </a>
 
 
 
