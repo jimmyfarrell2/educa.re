@@ -64,6 +64,11 @@ app.factory('DocumentFactory', function($http) {
             return $http.put('/api/documents/' + docId + '/likes').then(function(response){
                 return response.data;
             })
+        },
+        addToBookmark: function(docId){
+            return $http.put('/api/documents/' + docId + '/bookmarks').then(function(response){
+                return response.data;
+            })
         }
     };
 

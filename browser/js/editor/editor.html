@@ -40,6 +40,7 @@
         <button class="btn info-btn" ng-click="toggle()" ng-show="isUser"><i class="fa fa-info fa-fw"></i></button>
         <button ng-show="changeMade(docInfo) && isUser" class="btn save-btn" ng-click="changeMade(docInfo) && saveUserDocument(docInfo)"><i class="fa fa-floppy-o fa-fw"></i></button>
         <button ng-show="isNotUser" class="btn" ng-click="likeDoc()" ng-class="{'hasLiked': hasLiked}"><i class="fa fa-heart-o fa-fw"></i></button>
+        <button ng-show="isNotUser" class="btn" ng-click="addToBookmarks()" ng-class="{'hasAdded': hasAdded}"><i class="fa fa-bookmark-o fa-fw"></i></button>
         <button ng-click="branchDocument()" ng-show="isNotUser">Branch doc</button>
         <button ng-click="makePullRequest()" ng-show="isBranched">Suggest changes</button>
         <br/>
