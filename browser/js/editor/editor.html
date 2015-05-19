@@ -11,7 +11,7 @@
         </div>
 </div>
 
-
+<div id="click" ng-click=""></div>
 <input id="search-collaborators" class="form-control">
 <div class="container editorWrapper">
 
@@ -26,8 +26,8 @@
 
 
     <div class="buttonWrapper">
-        <button class= "btn" ng-click = "toggle()"><i class="fa fa-info fa-fw"></i></button>
-        <button class= "btn" ng-click="saveUserDocument(docInfo)" ng-show="isUser"><i class="fa fa-floppy-o fa-fw"></i></button>
+        <button class="btn info-btn" ng-click="toggle()"><i class="fa fa-info fa-fw"></i></button>
+        <button ng-show="changeMade(docInfo)" class="btn save-btn" ng-click="changeMade(docInfo) && saveUserDocument(docInfo)" ng-show="isUser"><i class="fa fa-floppy-o fa-fw"></i></button>
         <button ng-click="branchDocument()" ng-show="isNotUser">Branch doc</button>
         <button ng-click="makePullRequest()" ng-show="isBranched">Suggest changes</button>
     </div>
