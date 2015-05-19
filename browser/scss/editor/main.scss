@@ -1,3 +1,28 @@
+.buttonWrapper {
+    position: fixed;
+    margin-left: 15px;
+    width: 250px;
+    height: 100%;
+    top: 200px;
+    .fa {
+        color: #bdbdbd;
+    }
+    .btn {
+        border-radius: 100%;
+        background-color: transparent;
+        border-color: #bdbdbd;
+        height: 44px;
+        outline: none;
+
+        &:focus {
+            outline: none;
+        }
+    }
+}
+
+.tag-box {
+    margin-bottom: 25px;
+}
 
 #sidebar-wrapper {
     z-index: 1000;

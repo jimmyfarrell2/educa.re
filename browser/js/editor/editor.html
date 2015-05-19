@@ -1,5 +1,6 @@
 <div class="buttonWrapper">
     <div ng-if="!isNotUser" class="edit-buttons">
+        <p> Likes: {{docInfo.document.likes}}</p>
         <button title="Show Document Info" class="btn info-btn" ng-click="toggle()"><i class="fa fa-info fa-fw"></i></button>
         <button title="DownloadPDF" class="btn" href="/api/documents/{{document._id}}/export" target="_blank"><i class="fa fa-file-pdf-o fa-fw"></i></button>
         <button title="Suggest Changes to Original Author" class="btn suggest-btn" ng-click="makePullRequest()" ng-show="isBranched"><i class="fa fa-share fa-fw"></i></button>
@@ -7,12 +8,12 @@
     </div>
     <div ng-if="isNotUser" class="view-buttons">
         <p>By {{document.author.username}}</p>
+        <p> Likes: {{docInfo.document.likes}}</p>
         <button title="Favorite This Document" class="btn like-btn" ng-click="branchDocument()"><i class="fa fa-heart-o fa-fw"></i></button>
         <button title="Add to Reading List" class="btn like-btn" ng-click="branchDocument()"><i class="fa fa-bookmark-o fa-fw"></i></button>
         <button title="Download PDF" class="btn pdf-btn" href="/api/documents/{{document._id}}/export" target="_blank"><i class="fa fa-file-pdf-o fa-fw"></i></button>
         <button title="Copy This Document" class="btn copy-btn" ng-click="branchDocument()"><i class="fa fa-files-o fa-fw"></i></button>
     </div>
-    <span> Likes: {{docInfo.document.likes}}</span>
 </div>
 
 <div>
