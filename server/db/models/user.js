@@ -42,6 +42,7 @@ var schema = new mongoose.Schema({
     facebookUrl: String,
     instagramUrl: String,
     documents: [{type: Schema.ObjectId, ref: 'Document'}],
+    likedDocuments: [{type: Schema.ObjectId, ref: 'Document'}],
     bookmarks: [{type: Schema.ObjectId, ref: "Document"}]
 });
 

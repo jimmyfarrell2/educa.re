@@ -59,6 +59,11 @@ app.factory('DocumentFactory', function($http) {
             return $http.get('/api/documents/' + docId + '/export').then(function(response) {
                 return response.data;
             });
+        },
+        likeDocument: function(docId){
+            return $http.put('/api/documents/' + docId + '/likes').then(function(response){
+                return response.data;
+            })
         }
     };
 

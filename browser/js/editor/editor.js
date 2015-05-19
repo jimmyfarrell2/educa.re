@@ -37,7 +37,7 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
 
     setInterval(function() {
         $('#click').trigger('click');
-    }, 1000);
+    }, 5000);
 
     var originalCurrentVersion = document.currentVersion;
 
@@ -147,6 +147,7 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
     $scope.isUser = !$scope.isNotUser;
     $scope.isBranched = document.branchedFrom;
 
+
     //refactor so that user's can actually input a message
     $scope.message = 'a message';
     $scope.pullRequests = document.pullRequests;
@@ -196,5 +197,15 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
     $scope.exportDocument = function(docId){
         DocumentFactory.exportDocument(docId);
     };
+
+    $scope.hasLiked = false;
+    $scope.likeDoc = function(){
+        DocumentFactory.likeDocument($scope.docInfo.document._id).then(function (doc) {
+            $scope.hasLiked = !$scope.hasLiked;
+            if($scope.hasLiked) $scope.docInfo.document.likes++;
+            else $scope.docInfo.document.likes--;
+        });
+
+    }
 
 });

@@ -47,13 +47,18 @@ var schema = new mongoose.Schema({
         type: Boolean, default: false
     },
     categories: [{type: String, enum:['Health', 'Education', 'Science', 'Food', 'Travel', 'Politics', 'Art', 'Other']}],
-    tags: []
+    tags: [String],
+    likes: {type: Number, default: 0}
 });
 
 
 schema.virtual('repo').get(function(){
     return Promise.promisifyAll(git(this.pathToRepo));
 });
+
+schema.methods.getPopularity = function(){
+    return this.likes.length;
+}
 
 schema.methods.getHistory = function(num){
 
