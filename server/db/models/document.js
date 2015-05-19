@@ -47,7 +47,7 @@ var schema = new mongoose.Schema({
         type: Boolean, default: false
     },
     categories: [],
-    tags: []
+    tags: [String]
 });
 
 

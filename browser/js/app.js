@@ -5,7 +5,8 @@ var app = angular.module('FullstackGeneratedApp', [
     'angular-medium-editor',
     'pageslide-directive',
     'ui.bootstrap',
-    'ngFileUpload'
+    'ngFileUpload',
+    'ngTagsInput'
 ]);
 
 app.config(function ($urlRouterProvider, $locationProvider) {

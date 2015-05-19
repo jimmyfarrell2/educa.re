@@ -20,7 +20,7 @@ app.config(function($stateProvider) {
 });
 
 
-app.controller('EditorController', function($scope, DocumentFactory, $state, document, user, commits, $window, $stateParams) {
+app.controller('EditorController', function($scope, DocumentFactory, $state, document, user, commits, $window, $stateParams, Socket) {
 
     var editAccess = document.editAccess.map(user => user._id.toString());
     if (user._id.toString() === document.author._id.toString() ||
@@ -30,6 +30,13 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
     else {
         $scope.canEdit = false;
     }
+
+    console.log('big socket', Socket);
+
+    $scope.$on('$destroy', function(){
+        console.log('destroying...!');
+        Socket.disconnect();
+    })
 
     var collaborators = new Bloodhound({
         datumTokenizer: function(datum) {
@@ -146,6 +153,10 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
     $scope.saveUserDocument = function(docInfo) {
         if($stateParams.pullReq) docInfo.merge = true;
         docInfo.document.currentVersion = sanitize(docInfo.document.currentVersion);
+        docInfo.document.tags = docInfo.document.tags.map(function(tag){
+            return tag.text;
+        });
+        console.log(docInfo.document)
         DocumentFactory.saveDocument(docInfo).then(function(document) {
 
         });

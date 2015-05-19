@@ -67,6 +67,12 @@ router.post('/pullRequest', function(req, res, next){
 
 });
 
+router.use(function(req, res, next){
+    console.log(req.body);
+    next();
+})
+
+
 //merge another user's proposed changes
 router.put('/merge', function(req, res, next){
     var repo =  Promise.promisifyAll(git(req.body.document.pathToRepo));

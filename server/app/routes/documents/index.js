@@ -53,7 +53,7 @@ router.post('/', function(req, res, next){
 
 //update a user's file and commit
 router.put('/:docId', function(req, res, next){
-
+    console.log(req.body);
     var doc;
     var io = require('../../../io')();
 
@@ -64,7 +64,7 @@ router.put('/:docId', function(req, res, next){
             });
     }
 
-    Document.findByIdAndUpdateAsync(req.params.docId, {currentVersion: req.body.document.currentVersion})
+    Document.findByIdAndUpdateAsync(req.params.docId, {currentVersion: req.body.document.currentVersion, tags: req.body.document.tags})
         .then(function(_doc) {
             doc = _doc;
             return doc.repo.checkoutAsync(req.body.document.author._id);

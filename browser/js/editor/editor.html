@@ -24,13 +24,16 @@
     <!--<div medium-editor add-or-delete class="editor" ng-model="contentToHtml"  options='{"buttons": ["bold", "italic", "underline", "anchor", "header1", "header2", "quote", "orderedlist", "unorderedlist"]}' bind-options="markdownOptions">-->
     <!--</div><br/>-->
 
-
     <div class="buttonWrapper">
         <button class= "btn" ng-click = "toggle()"><i class="fa fa-info fa-fw"></i></button>
         <button class= "btn" ng-click="saveUserDocument(docInfo)" ng-show="isUser"><i class="fa fa-floppy-o fa-fw"></i></button>
         <button ng-click="branchDocument()" ng-show="isNotUser">Branch doc</button>
         <button ng-click="makePullRequest()" ng-show="isBranched">Suggest changes</button>
+        <br/>
+        <tags-input ng-model="docInfo.document.tags"></tags-input>
     </div>
+
+
 </div>
 
 
