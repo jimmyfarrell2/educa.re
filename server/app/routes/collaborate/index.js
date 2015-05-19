@@ -22,6 +22,7 @@ router.post('/branch', function(req, res, next){
     req.body.editAccess = [];
     req.body.branchedFrom = originalAuthor;
     req.body.pullRequests = [];
+    req.body.dateCreated = Date.now();
     delete req.body._id;
 
     Document.createAsync(req.body)

@@ -9,8 +9,8 @@
     <div ng-if="isNotUser" class="view-buttons">
         <p>By <a ui-sref="userProfile(document.author._id)">{{document.author.username}}</a></p>
         <p> Likes: {{docInfo.document.likes}}</p>
-        <button title="Favorite" class="btn like-btn" ng-click="branchDocument()"><i class="fa fa-heart-o fa-fw"></i></button>
-        <button title="Add to Reading List" class="btn bookmark-btn" ng-click="branchDocument()"><i class="fa fa-bookmark-o fa-fw"></i></button>
+        <button title="Favorite" class="btn like-btn" ng-class="{'hasLiked': hasLiked}" ng-click="likeDoc()"><i class="fa fa-heart-o fa-fw"></i></button>
+        <button title="Add to Reading List" ng-show="isNotUser" class="btn" ng-click="addToBookmarks()" ng-class="{'hasAdded': hasAdded}"><i class="fa fa-bookmark-o fa-fw"></i></button>
         <button title="Download PDF" class="btn pdf-btn" href="/api/documents/{{document._id}}/export" target="_blank"><i class="fa fa-file-pdf-o fa-fw"></i></button>
         <button title="Copy Document" class="btn copy-btn" ng-click="branchDocument()"><i class="fa fa-files-o fa-fw"></i></button>
     </div>
@@ -44,9 +44,3 @@
         <tags-input class="tag-box" ng-model="docInfo.document.tags"></tags-input>
     </div>
 </div>
-
-<!--<ul>-->
-    <!--<li  ng-repeat="pullRequest in pullRequests" ng-click="getDiff(pullRequest)">{{pullRequest}}</li>-->
-<!--</ul>-->
-
-
