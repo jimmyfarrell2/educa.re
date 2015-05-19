@@ -22,6 +22,12 @@ app.config(function($stateProvider) {
 
 app.controller('EditorController', function($scope, DocumentFactory, $state, document, user, commits, $window, $stateParams) {
 
+    setInterval(function() {
+        $('#click').trigger('click');
+    }, 1000);
+
+    var originalCurrentVersion = document.currentVersion;
+
     var editAccess = document.editAccess.map(user => user._id.toString());
     if (user._id.toString() === document.author._id.toString() ||
         editAccess.indexOf(user._id.toString()) > -1) {
@@ -60,14 +66,22 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
         console.log("datum", datum);
     });
 
+    $scope.changeMade = function(docInfo) {
+        var returnVal;
+        if (originalCurrentVersion === sanitize(docInfo.document.currentVersion)) returnVal = false;
+        else returnVal = true;
+        console.log(returnVal)
+        return returnVal;
+    };
+
     var converter = $window.markdownit({
         html: true
     });
 
-    if(document.currentVersion === "") {
+    if (document.currentVersion === "") {
         $scope.contentToHtml = "<h1>Title</h1><br/><p>Start your story...</p>";
     }
-    else if($stateParams.pullReq) {
+    else if ($stateParams.pullReq) {
         DocumentFactory.mergeDocument(document, document.pullRequests[$stateParams.pullReq]).then(function(diff){
             diff = diff.replace(/>#/g, ">\n#");
             $scope.contentToHtml = converter.render(diff);
@@ -79,7 +93,7 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
 
 
     function sanitize(content) {
-        return content.replace(/<\/?(ins( \w*="\w*")?|del)>/g, '').replace(/<\/?span.*>/g, '');
+        return content.replace(/<\/?(ins|del).*>/g, '').replace(/<\/?span.*>/g, '');
     }
 
 
