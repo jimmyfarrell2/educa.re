@@ -67,11 +67,11 @@ router.post('/pullRequest', function(req, res, next){
 
 });
 
+//check to see if user is document's author
 router.use(function(req, res, next){
-    console.log(req.body);
-    next();
-})
-
+    if(req.user._id === req.body.document.author._id) next();
+    else next(new Error('Error! You are not authorized.'));
+});
 
 //merge another user's proposed changes
 router.put('/merge', function(req, res, next){
@@ -84,13 +84,7 @@ router.put('/merge', function(req, res, next){
             var xmlFormatted = diff.convertChangesToXML(markdownDiff);
             res.json(xmlFormatted);
         });
-        //.then(function(){
-        //    return cp.execAsync('git diff ' + req.user._id + '..' + req.body.pullRequest.author, {cwd: req.body.document.pathToRepo});
-        //})
-        //.then(function(diff){
-        //    res.json(diff);
-        //    //something?!?!?
-        //});
+
 
 });
 

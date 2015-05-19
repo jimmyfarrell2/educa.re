@@ -9,7 +9,8 @@ var router = require('express').Router(),
     User = Promise.promisifyAll(mongoose.model('User')),
     diff = require('htmldiff/src/htmldiff.js'),
     cp = Promise.promisifyAll(require("child_process")),
-    md = require('markdown-it')();
+    md = require('markdown-it')(),
+    _ = require('lodash');
 
 //set a repo for the user
 router.use('/', function(req, res, next){
@@ -51,6 +52,23 @@ router.post('/', function(req, res, next){
 
 });
 
+router.param('docId', function(req, res, next) {
+
+    Document.findByIdAsync(req.params.docId)
+        .then(function(doc){
+            req.doc = doc;
+            next();
+        })
+        .catch(next);
+
+});
+
+router.use(':/docId', function(req, res, next){
+    if(req.user._id === req.doc.author._id || req.user._id === req.doc.author) next();
+    else next(new Error('You are not authorized to perform these functions!'))
+
+})
+
 //update a user's file and commit
 router.put('/:docId', function(req, res, next){
     console.log(req.body);
@@ -64,19 +82,23 @@ router.put('/:docId', function(req, res, next){
             });
     }
 
-    Document.findByIdAndUpdateAsync(req.params.docId, {currentVersion: req.body.document.currentVersion, tags: req.body.document.tags})
-        .then(function(_doc) {
-            doc = _doc;
-            return doc.repo.checkoutAsync(req.body.document.author._id);
+    //make this more elegant?
+    req.doc.currentVersion = req.body.document.currentVersion;
+    req.doc.tags = req.body.document.tags;
+    req.doc.categories = req.body.document.categories;
+
+    req.doc.saveAsync()
+        .then(function() {
+            return req.doc.repo.checkoutAsync(req.body.document.author._id);
         })
         .then(function(){
             return fs.writeFileAsync(req.body.document.pathToRepo + '/contents.md', req.body.document.currentVersion);
         })
         .then(function(){
-            return doc.addAndCommit(req.body.message);
+            return req.doc.addAndCommit(req.body.message);
         })
         .then(function() {
-            res.json(doc);
+            res.json(req.doc);
         })
         .catch(next);
 
@@ -86,41 +108,25 @@ router.put('/:docId', function(req, res, next){
 //reset to a previous version
 router.put('/:docId/reset', function(req, res, next){
 
-    var doc;
 
-    Document.findByIdAsync(req.params.docId)
-        .then(function(_doc){
-            doc = _doc;
-            return cp.execAsync('git checkout ' + req.body.commit.id + " .", {cwd: doc.pathToRepo} );
+    cp.execAsync('git checkout ' + req.body.commit.id + " .", {cwd: req.doc.pathToRepo} )
+        .then(function(){
+            return req.doc.repo.commitAsync('Restore previous version');
         })
         .then(function(){
-            return doc.repo.commitAsync('Restore previous version');
-        })
-        .then(function(){
-            return fs.readFileAsync(doc.repo.path + '/contents.md');
+            return fs.readFileAsync(req.doc.repo.path + '/contents.md');
         })
         .then(function(file){
-            doc.currentVersion = file.toString();
-            return doc.saveAsync();
+            req.doc.currentVersion = file.toString();
+            return req.doc.saveAsync();
         })
         .then(function(){
-            res.json(doc);
+            res.json(req.doc);
         })
         .catch(next);
 
 });
 
-
-router.param('docId', function(req, res, next) {
-
-    Document.findByIdAsync(req.params.docId)
-        .then(function(doc){
-            req.doc = doc;
-            next();
-        })
-        .catch(next);
-
-});
 
 router.use('/:docId/commits', require('../commits'));
 
