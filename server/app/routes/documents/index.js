@@ -23,6 +23,8 @@ router.use('/', function(req, res, next){
 router.get('/', function(req, res, next){
 
     Document.find({})
+    .populate('author', 'username')
+    .execAsync()
         .then(function(docs){
             res.json(docs);
         })

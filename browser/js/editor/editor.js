@@ -217,7 +217,7 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
 
     };
 
-    $scope.hasAddedCheck = function(docoument){
+    $scope.hasAddedCheck = function(document){
         return user.bookmarks.indexOf(document._id) > -1;
     };
 
