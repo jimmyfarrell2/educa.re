@@ -10,6 +10,10 @@
   }
 }
 
+#view-content {
+    margin-top: 50px;
+}
+
 @import 'home/main';
 @import 'about/main';
 @import 'tutorial/main';
@@ -20,3 +24,4 @@
 @import 'userDocuments/main';
 @import 'directives/main';
 @import 'userBookmarks/main';
+@import 'directives/document-snapshot';
