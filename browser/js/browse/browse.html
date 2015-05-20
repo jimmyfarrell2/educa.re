@@ -1,0 +1,10 @@
+<div id="browse">
+    <div id="browse-categories" class="col-sm-2">
+        <ul>
+            <li ng-repeat="category in categories">{{ category }}</li>
+        </ul>
+    </div>
+    <div id="browse-content" class="col-sm-10">
+        <document-snapshot user="user" document="document" ng-repeat="document in documents"></document-snapshot>
+    </div>
+</div>
