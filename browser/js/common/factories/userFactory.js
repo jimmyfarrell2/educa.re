@@ -30,6 +30,11 @@ app.factory('UserFactory', function($http, $q) {
             return $http.get('/api/user').then(function(response){
                 return response.data;
             });
+        },
+        removeBookmark: function(userId, bookmarkId){
+            return $http.put('/api/user/' + userId + '/removeBookmark/' + bookmarkId).then(function(response){
+                return response.data;
+            });
         }
     };
 });

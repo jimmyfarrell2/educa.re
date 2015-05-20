@@ -1,6 +1,9 @@
 
+<div class="container" style="margin-top:100px;">
 <ul>
-    <li ng-repeat="bookmark in user.bookmarks" ui-sref="editor({docId: bookmark._id})">{{bookmark.title}}
-       <button>x</button>
+    <li ng-repeat="bookmark in user.bookmarks">
+      <a ui-sref="editor({docId: bookmark._id})">{{bookmark.title}}</a>
+       <button ng-click="removeBookmark(user._id, bookmark._id)">x</button>
     </li>
 </ul>
+</div>
