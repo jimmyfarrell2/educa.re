@@ -153,6 +153,9 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
 
 
     $scope.branchDocument = function() {
+        $scope.docInfo.document.tags = $scope.docInfo.document.tags.map(function(tag){
+            return tag.text;
+        });
         DocumentFactory.branchOtherDocument($scope.docInfo.document).then(function(doc) {
             $state.go('editor', {
                 docId: doc._id
@@ -181,7 +184,6 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
         docInfo.document.tags = docInfo.document.tags.map(function(tag){
             return tag.text;
         });
-        console.log(docInfo.document)
         DocumentFactory.saveDocument(docInfo).then(function(document) {
 
         });
