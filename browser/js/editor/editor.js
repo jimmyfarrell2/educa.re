@@ -198,7 +198,13 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
         DocumentFactory.exportDocument(docId);
     };
 
-    $scope.hasLiked = false;
+    $scope.hasLikedCheck = function(document){
+        return user.likedDocuments.indexOf(document._id) > -1;
+    }
+
+    $scope.hasLiked = $scope.hasLikedCheck(document);
+
+
     $scope.likeDoc = function(){
         DocumentFactory.likeDocument($scope.docInfo.document._id).then(function (doc) {
             $scope.hasLiked = !$scope.hasLiked;
