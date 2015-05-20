@@ -70,6 +70,7 @@ function createRepo(request) {
     return Document.createAsync({})
         .then(function(_doc) {
             doc = _doc;
+            doc.dateCreated = Date.now();
             return User.findByIdAndUpdateAsync(request.user._id, {$push: {'documents': doc._id}});
         })
         .then(function() {
