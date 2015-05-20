@@ -60,6 +60,11 @@ app.factory('DocumentFactory', function($http) {
                 return response.data;
             });
         },
+        restoreVersion: function(docId, commitId) {
+            return $http.put('/api/documents/' + docId + '/restore/' + commitId).then(function(response) {
+                return response.data;
+            });
+        },
         exportDocument: function(docId) {
             return $http.get('/api/documents/' + docId + '/export').then(function(response) {
                 return response.data;
