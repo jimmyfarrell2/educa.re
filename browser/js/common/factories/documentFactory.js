@@ -73,12 +73,12 @@ app.factory('DocumentFactory', function($http) {
         likeDocument: function(docId){
             return $http.put('/api/documents/' + docId + '/likes').then(function(response){
                 return response.data;
-            })
+            });
         },
         addToBookmark: function(docId){
             return $http.put('/api/documents/' + docId + '/bookmarks').then(function(response){
                 return response.data;
-            })
+            });
         }
     };
 

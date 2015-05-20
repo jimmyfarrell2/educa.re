@@ -13,22 +13,34 @@
                </div>
             </div>
          </div>
-         <div class="container-fluid description">
-            <div class="row">
-               <div class="col-sm-3"></div>
-               <div class="col-sm-3"><h1>
-                  <p>Likes</p>
+         <div class="description">
+            <div class="container-fluid">
+               <div class="row">
+                  <div class="col-sm-4"></div>
+                  <div class="col-sm-4"><h1>
+                     <div class="container=fluid">
+                        <div class="row">
+                           <div class="col-sm-4"><button class="userBtn">
+                              Likes:
+                              <strong>5</strong>
+                           </button></div>
+                           <div class="col-sm-4"><button class="userBtn" ui-sref="userProfile.userDocuments">
+                              Works:
+                              <strong>{{user.documents.length}}</strong>
+                           </button></div>
+                           <div class="col-sm-4"><button class="userBtn">
+                              Read:
+                              <strong>{{user.bookmarks.length}}</strong>
+                              <button/></div>
+                        </div>
+                     </div>
+                  </div>
                </div>
-               <div class="col-sm-3"><h1>
-                  <p>Works</p>
-               </div>
-               <div class="col-sm-3">
+               <div class="col-sm-4">
                </div>
             </div>
          </div>
-
       </div>
-
    </div>
 </ui-view>
 

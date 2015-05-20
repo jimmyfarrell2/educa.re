@@ -107,7 +107,7 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
 
 
     function sanitize(content) {
-        return content.replace(/<\/?(ins|del).*>/g, '').replace(/<\/?span[^<]*>/g, '');
+        return content.replace(/<\/?(ins|del)[^<]*>/g, '').replace(/<\/?span[^<]*>/g, '');
     }
 
 
@@ -204,10 +204,9 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
 
     $scope.hasLikedCheck = function(document){
         return user.likedDocuments.indexOf(document._id) > -1;
-    }
+    };
 
     $scope.hasLiked = $scope.hasLikedCheck(document);
-
 
     $scope.likeDoc = function(){
         DocumentFactory.likeDocument($scope.docInfo.document._id).then(function (doc) {
@@ -216,13 +215,46 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
             else $scope.docInfo.document.likes--;
         });
 
-    }
+    };
 
-    $scope.hasAdded = false;
+    $scope.hasAddedCheck = function(docoument){
+        return user.bookmarks.indexOf(document._id) > -1;
+    };
+
+    $scope.hasAdded = $scope.hasAddedCheck(document);
     $scope.addToBookmarks = function(){
         DocumentFactory.addToBookmark($scope.docInfo.document._id).then(function(doc){
             $scope.hasAdded = !$scope.hasAdded;
-        })
-    }
+        });
+    };
 
+});
+
+app.directive('contenteditable', function() {
+    return {
+        restrict: 'A',
+        require: 'ngModel',
+        link: function(scope, element, attrs, ctrl) {
+            element.on('blur', function() {
+                scope.$apply(function() {
+                    ctrl.$setViewValue(element.html());
+                });
+            });
+            ctrl.$render = function() {
+                element.html(ctrl.$viewValue);
+            };
+            //element.on('keyup', function(e) {
+                //console.log(e.preventDefault())
+                //if (e.which !== 8 && element.text().length > 10) e.preventDefault();
+            //});
+        }
+    };
+});
+
+app.controller('PopoverDemoCtrl', function ($scope) {
+  $scope.dynamicPopover = {
+    content: 'Write your message!',
+    templateUrl: 'myPopoverTemplate.html',
+    title: 'Title'
+  };
 });
