@@ -114,3 +114,13 @@ navbar {
   }
 
 }
+
+.dropdown-menu {
+  position: absolute;
+  top: 50px;
+  left: -10px;
+  a{
+    color: black !important;
+  }
+  
+}

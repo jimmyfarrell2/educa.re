@@ -1,5 +1,5 @@
 'use strict';
-app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) {
+app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state, DocumentFactory) {
 
     return {
         restrict: 'E',
@@ -34,6 +34,12 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) 
             };
 
             setUser();
+
+            scope.createDocument = function(){
+                DocumentFactory.createDocument().then(function(doc){
+                $state.go('editor', {docId: doc._id});
+                });
+            };
 
             $rootScope.$on(AUTH_EVENTS.loginSuccess, setUser);
             $rootScope.$on(AUTH_EVENTS.logoutSuccess, removeUser);
