@@ -1,5 +1,5 @@
 'use strict';
-app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state, DocumentFactory) {
+app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state, DocumentFactory, $modal) {
 
     return {
         restrict: 'E',
@@ -41,11 +41,22 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state, 
                 });
             };
 
+            scope.open = function () {
+                console.log("openFunc");
+            var modalInstance = $modal.open({
+              animation: scope.animationsEnabled,
+              templateUrl: 'mynew.html',
+              controller: 'InstanceCtrl'
+            });
+            };
+
             $rootScope.$on(AUTH_EVENTS.loginSuccess, setUser);
             $rootScope.$on(AUTH_EVENTS.logoutSuccess, removeUser);
             $rootScope.$on(AUTH_EVENTS.sessionTimeout, removeUser);
 
         }
+
+
 
     };
 
@@ -68,3 +79,57 @@ app.controller('windowCtrl', function($scope, $window, $rootScope) {
         $scope.validState = toState.name === "home" || toState.name === "editor" || toState.name === 'userProfile' || toState.name === 'userProfile.userDocuments';
     });
 });
+
+
+
+// app.controller('UploadCtrl', function ($scope, $modal) {
+
+
+//   $scope.animationsEnabled = true;
+
+
+
+//   $scope.toggleAnimation = function () {
+//     $scope.animationsEnabled = !$scope.animationsEnabled;
+//   };
+
+// });
+
+app.controller('InstanceCtrl', function ($scope, $modalInstance) {
+
+
+  $scope.ok = function () {
+    $modalInstance.close();
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+});
+
+
+
+// app.controller('UploadCtrl', function($scope, $modal) {
+
+//       $scope.animationsEnabled = true;
+
+//      $scope.open = function (size) {
+
+//     var modalInstance = $modal.open({
+//       templateUrl: 'some.html',
+//       controller: 'InstanceCtrl',
+//       size: size
+//     });
+// };
+// });
+
+// app.controller('InstanceCtrl', function ($scope, $modalInstance) {
+
+//   $scope.ok = function () {
+//     $modalInstance.close($scope.selected.item);
+//   };
+
+//   $scope.cancel = function () {
+//     $modalInstance.dismiss('cancel');
+//   };
+// });

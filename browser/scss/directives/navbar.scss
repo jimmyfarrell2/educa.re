@@ -124,3 +124,27 @@ navbar {
   }
   
 }
+
+.modal-content {
+  background-color: white;
+  .modal-title {
+    text-align: center;
+  }
+  .drop-box {
+    position: absolute;
+    left: 190px;
+    top: -10px;
+  }
+
+p {
+  padding-right: 7px;
+}
+
+}
+
+.modal-header {
+  border: none;
+}
+.modal-footer {
+  border: none;
+}
