@@ -41,6 +41,9 @@ app.controller('DocumentDashboardController', function($scope, $log, $modal, Doc
                 },
                 document: function() {
                     return document;
+                },
+                commit: function() {
+                    return commit;
                 }
             }
         });
@@ -118,7 +121,9 @@ app.controller('ModalInstanceCtrl', function ($scope, $modalInstance, content, $
   };
 });
 
-app.controller('VersionModalCtrl', function($scope, $modalInstance, versionContent, $state, $sce, $window, DocumentFactory, document) {
+app.controller('VersionModalCtrl', function($scope, $modalInstance, versionContent, $state, $sce, $window, DocumentFactory, document, commit) {
+
+    $scope.differentContent = versionContent !== document.currentVersion;
 
     var converter = $window.markdownit({
         html: true
@@ -133,8 +138,8 @@ app.controller('VersionModalCtrl', function($scope, $modalInstance, versionConte
             document: document,
             merge: false
         };
-        DocumentFactory.saveDocument(docInfo).then(function(document) {
-            $state.go('editor', { docId: document._id });
+        DocumentFactory.restoreVersion(document._id, commit.id).then(function(restoredDoc) {
+            $state.go('editor', { docId: restoredDoc._id });
             $scope.ok();
         });
     };

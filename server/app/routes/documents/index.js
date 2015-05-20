@@ -122,12 +122,12 @@ router.put('/:docId/bookmarks', function(req,res,next){
 });
 
 
-
 router.use(':/docId', function(req, res, next){
     if(req.user._id.toString() === req.doc.author._id.toString() || req.user._id.toString() === req.doc.author.toString()) next();
     else next(new Error('You are not authorized to perform these functions!'))
 
 })
+
 
 //update a user's file and commit
 router.put('/:docId', function(req, res, next){
@@ -135,7 +135,8 @@ router.put('/:docId', function(req, res, next){
     var doc;
     var io = require('../../../io')();
 
-    if(req.body.merge) {
+    if(req.body.merge > -1) {
+        req.doc.pullRequests.splice(req.body.merge, 1);
         alertBranchesOfChange(req)
             .then(function(docs){
                 io.emit('successfulMerge');
@@ -173,12 +174,14 @@ router.put('/:docId', function(req, res, next){
 
 
 //reset to a previous version
-router.put('/:docId/reset', function(req, res, next){
+router.put('/:docId/restore/:commitId', function(req, res, next){
 
-
-    cp.execAsync('git checkout ' + req.body.commit.id + " .", {cwd: req.doc.pathToRepo} )
+    req.doc.repo.checkoutAsync(req.user._id.toString())
+        .then(function() {
+            return cp.execAsync('git checkout ' + req.params.commitId + " .", {cwd: req.doc.pathToRepo} )
+        })
         .then(function(){
-            return req.doc.repo.commitAsync('Restore previous version');
+            return req.doc.repo.commitAsync('Restored previous version');
         })
         .then(function(){
             return fs.readFileAsync(req.doc.repo.path + '/contents.md');
