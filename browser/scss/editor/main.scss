@@ -1,9 +1,9 @@
 .buttonWrapper {
-    position: fixed;
-    margin-left: 15px;
+    position: absolute;
+    left: 50px;
+    top: 170px;
     width: 250px;
     height: 100%;
-    top: 200px;
     .fa {
         color: #bdbdbd;
     }
@@ -20,8 +20,45 @@
     }
 }
 
+
+.popover {
+  p {
+  font-family: sans-serif;
+  line-height: 1.1;
+  font-size: 15px;
+  letter-spacing: -0.02em;
+  font-weight: 400;
+  font-style: normal;
+  text-align: center;
+  position: absolute;
+  top: 63px;
+  left: 150px;
+  color: #bdbdbd;
+  }
+  .writeYourMessage {
+    color: #bdbdbd;
+    text-align: center;
+  }
+}
+
+.btn-default {
+        border-radius: 100%;
+        background-color: transparent;
+        border-color: #bdbdbd;
+        height: 44px;
+        outline: none;
+
+        &:focus {
+            outline: none;
+        }
+         position: absolute;
+         left: 150px;
+         top: 200px;
+      
+    }
+
 #document-title {
-    height: 80px;
+    height: auto;
     font-size: 50px;
     font-weight: 900;
     font-family: 'Lora', serif;
@@ -29,7 +66,7 @@
     border: none;
     box-shadow: none;
     margin-left: 50px;
-    margin-top: 20px;
+    margin-top: 40px;
     padding: 0;
     text-align: justify;
     &:focus {
@@ -39,7 +76,8 @@
 
 #sidebar-wrapper {
     z-index: 1000;
-    position: fixed;
+    position: absolute;
+    top: 80px;
     left: 250px;
     width: 0;
     height: 350px;
@@ -242,6 +280,9 @@
        border: 1px solid grey;
        display: inline-block;
        text-align: center;
+        &:focus {
+            outline: none;
+        }
      }
 
 
@@ -252,6 +293,15 @@ tags-input .tags {
     margin-bottom: 25px;
     border: none;
     box-shadow: none;
+    &:focus {
+        outline: none;
+    }
+}
+
+tags-input {
+    &:focus {
+        outline: none;
+    }
 }
 
 /*

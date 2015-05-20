@@ -107,7 +107,7 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
 
 
     function sanitize(content) {
-        return content.replace(/<\/?(ins|del).*>/g, '').replace(/<\/?span.*>/g, '');
+        return content.replace(/<\/?(ins|del).*>/g, '').replace(/<\/?span[^<]*>/g, '');
     }
 
 
@@ -147,6 +147,7 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
     $scope.pullRequests = document.pullRequests;
     $scope.commits = commits;
     $scope.document = document;
+    $scope.numPullRequests = document.pullRequests.length;
 
     $scope.commits = commits.filter(function(commit) {
       return commit.authored_date >= document.dateCreated;
@@ -181,7 +182,10 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
     };
 
     $scope.saveUserDocument = function(docInfo) {
-        if($stateParams.pullReq) docInfo.merge = true;
+        if($stateParams.pullReq) {
+            docInfo.merge = $stateParams.pullReq;
+            $scope.numPullRequests--;
+        }
         docInfo.document.currentVersion = sanitize(docInfo.document.currentVersion);
         docInfo.document.tags = docInfo.document.tags.map(function(tag){
             return tag.text;
@@ -224,4 +228,32 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
         });
     };
 
+});
+
+app.directive('contenteditable', function() {
+    return {
+        restrict: 'A',
+        require: 'ngModel',
+        link: function(scope, element, attrs, ctrl) {
+            element.on('blur', function() {
+                scope.$apply(function() {
+                    ctrl.$setViewValue(element.html());
+                });
+            });
+            ctrl.$render = function() {
+                element.html(ctrl.$viewValue);
+            };
+            //element.on('keyup', function(e) {
+                //console.log(e.preventDefault())
+                //if (e.which !== 8 && element.text().length > 10) e.preventDefault();
+            //});
+        }
+    };
+
+app.controller('PopoverDemoCtrl', function ($scope) {
+  $scope.dynamicPopover = {
+    content: 'Write your message!',
+    templateUrl: 'myPopoverTemplate.html',
+    title: 'Title'
+  };
 });

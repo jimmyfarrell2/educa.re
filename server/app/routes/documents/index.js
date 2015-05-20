@@ -137,7 +137,8 @@ router.put('/:docId', function(req, res, next){
     var doc;
     var io = require('../../../io')();
 
-    if(req.body.merge) {
+    if(req.body.merge > -1) {
+        req.doc.pullRequests.splice(req.body.merge, 1);
         alertBranchesOfChange(req)
             .then(function(docs){
                 io.emit('successfulMerge');
