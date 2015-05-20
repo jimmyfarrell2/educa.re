@@ -185,7 +185,6 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
             return tag.text;
         });
         DocumentFactory.saveDocument(docInfo).then(function(document) {
-
         });
     };
 

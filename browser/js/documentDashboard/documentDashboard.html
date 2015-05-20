@@ -2,7 +2,7 @@
    <tabset justified="true">
       <tab heading="Drafts ({{commits.length}})">
          <ul>
-            <li ng-repeat="commit in commits">{{commit.message}}, {{commit.authored_date | date:'medium'}} {{document.dateCreated | date:'medium'}}</li>
+            <li ng-repeat="commit in commits" ng-click="showVersion(commit, document)">{{commit.message}}, {{commit.authored_date | date:'medium'}} {{document.dateCreated | date:'medium'}}</li>
          </ul>
       </tab>
       <tab heading="Collaborators ({{document.editAccess.length}})">
@@ -19,12 +19,23 @@
 </div>
 
 <script type="text/ng-template" id="myModalContent.html">
-        <div class="modal-body">
-          {{content}}
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-primary" ng-click="ok()">OK</button>
-            <button class="btn btn-primary" ng-click="mergeChanges()">Merge</button>
-            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-        </div>
-    </script>
+    <div class="modal-body">
+        <div ng-bind-html="content"></div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="ok()">OK</button>
+        <button class="btn btn-primary" ng-click="mergeChanges()">Merge</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+</script>
+
+<script type="text/ng-template" id="versionModalContent.html">
+    <div class="modal-body">
+        <div ng-bind-html="versionContent"></div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="ok()">OK</button>
+        <button class="btn btn-primary" ng-click="restoreVersion()">Restore</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+</script>

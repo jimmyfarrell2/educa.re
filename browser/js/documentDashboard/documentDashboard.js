@@ -20,11 +20,31 @@ app.config(function ($stateProvider) {
 });
 
 
-app.controller('DocumentDashboardController', function($scope, $log, $modal, DocumentFactory, user, document, commits, $state){
+app.controller('DocumentDashboardController', function($scope, $log, $modal, DocumentFactory, user, document, commits, $state, $window){
 
     $scope.commits = commits.filter(function(commit) {
       return commit.authored_date >= document.dateCreated;
     });
+
+    $scope.showVersion = function(commit, document) {
+        var modalInstance = $modal.open({
+            animation: true,
+            templateUrl: 'versionModalContent.html',
+            controller: 'VersionModalCtrl',
+            size: 'lg',
+            resolve: {
+                versionContent: function(){
+                    return DocumentFactory.getVersion(document._id, commit.id)
+                        .then(function(versionContent) {
+                            return versionContent;
+                        });
+                },
+                document: function() {
+                    return document;
+                }
+            }
+        });
+    };
 
     $scope.document = document;
     $scope.user = user;
@@ -51,7 +71,10 @@ app.controller('DocumentDashboardController', function($scope, $log, $modal, Doc
       size: size,
       resolve: {
         content: function(){
-            return pullRequest.proposedVersion;
+            var converter = $window.markdownit({
+                html: true
+            });
+            return converter.render(pullRequest.proposedVersion);
         },
         document: function(){
             return document;
@@ -76,8 +99,8 @@ app.controller('DocumentDashboardController', function($scope, $log, $modal, Doc
 });
 
 
-app.controller('ModalInstanceCtrl', function ($scope, $modalInstance, content, $state, document, index, pullRequest) {
-    $scope.content = content;
+app.controller('ModalInstanceCtrl', function ($scope, $modalInstance, content, $state, document, index, pullRequest, $sce) {
+    $scope.content = $sce.trustAsHtml(content);
     $scope.index = index;
     $scope.pullRequest = pullRequest;
 
@@ -93,4 +116,34 @@ app.controller('ModalInstanceCtrl', function ($scope, $modalInstance, content, $
   $scope.cancel = function () {
     $modalInstance.dismiss('cancel');
   };
+});
+
+app.controller('VersionModalCtrl', function($scope, $modalInstance, versionContent, $state, $sce, $window, DocumentFactory, document) {
+
+    var converter = $window.markdownit({
+        html: true
+    });
+
+    $scope.versionContent = $sce.trustAsHtml(converter.render(versionContent));
+
+    $scope.restoreVersion = function() {
+        document.currentVersion = versionContent;
+        var docInfo = {
+            message: 'Restored previous version',
+            document: document,
+            merge: false
+        };
+        DocumentFactory.saveDocument(docInfo).then(function(document) {
+            $state.go('editor', { docId: document._id });
+            $scope.ok();
+        });
+    };
+
+    $scope.ok = function () {
+        $modalInstance.close($scope.selected);
+    };
+
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
 });

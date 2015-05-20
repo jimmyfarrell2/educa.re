@@ -86,7 +86,7 @@ var seedUsersAndDocuments = function () {
             public: true,
             author: sonia._id,
             currentVersion: docTextGenerator(),
-            dateCreated: chance.date(),
+            dateCreated: Date.now(),
             categories: ['Technology', 'Health/Wellness', 'Science'],
             tags: [chance.word(), chance.word(), chance.word(), chance.word(), chance.word()]
         },
@@ -97,7 +97,7 @@ var seedUsersAndDocuments = function () {
             editAccess: [nastia._id],
             readAccess: [nastia._id, david._id, jimmy._id],
             currentVersion: docTextGenerator(),
-            dateCreated: chance.date(),
+            dateCreated: Date.now(),
             categories: ['Education'],
             tags: [chance.word(), chance.word(), chance.word()]
         },
@@ -107,7 +107,7 @@ var seedUsersAndDocuments = function () {
             editAccess: [nastia._id],
             readAccess: [nastia._id, david._id, jimmy._id],
             currentVersion: docTextGenerator(),
-            dateCreated: chance.date(),
+            dateCreated: Date.now(),
             categories: ['Business', 'Technology'],
             tags: [chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word()]
         },
@@ -116,7 +116,7 @@ var seedUsersAndDocuments = function () {
             public: true,
             author: nastia._id,
             currentVersion: docTextGenerator(),
-            dateCreated: chance.date(),
+            dateCreated: Date.now(),
             categories: ['Technology', 'Health/Wellness', 'Science'],
             tags: [chance.word(), chance.word(), chance.word(), chance.word(), chance.word()]
         },
@@ -127,7 +127,7 @@ var seedUsersAndDocuments = function () {
             editAccess: [sonia._id],
             readAccess: [sonia._id, david._id, jimmy._id],
             currentVersion: docTextGenerator(),
-            dateCreated: chance.date(),
+            dateCreated: Date.now(),
             categories: ['Education'],
             tags: [chance.word(), chance.word(), chance.word()]
         },
@@ -137,7 +137,7 @@ var seedUsersAndDocuments = function () {
             editAccess: [sonia._id],
             readAccess: [sonia._id, david._id, jimmy._id],
             currentVersion: docTextGenerator(),
-            dateCreated: chance.date(),
+            dateCreated: Date.now(),
             categories: ['Business', 'Technology'],
             tags: [chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word()]
         },
@@ -146,7 +146,7 @@ var seedUsersAndDocuments = function () {
             public: true,
             author: david._id,
             currentVersion: docTextGenerator(),
-            dateCreated: chance.date(),
+            dateCreated: Date.now(),
             categories: ['Technology', 'Health/Wellness', 'Science'],
             tags: [chance.word(), chance.word(), chance.word(), chance.word(), chance.word()]
         },
@@ -157,7 +157,7 @@ var seedUsersAndDocuments = function () {
             editAccess: [jimmy._id],
             readAccess: [jimmy._id, sonia._id, nastia._id],
             currentVersion: docTextGenerator(),
-            dateCreated: chance.date(),
+            dateCreated: Date.now(),
             categories: ['Education'],
             tags: [chance.word(), chance.word(), chance.word()]
         },
@@ -167,7 +167,7 @@ var seedUsersAndDocuments = function () {
             editAccess: [jimmy._id],
             readAccess: [jimmy._id, sonia._id, nastia._id],
             currentVersion: docTextGenerator(),
-            dateCreated: chance.date(),
+            dateCreated: Date.now(),
             categories: ['Business', 'Technology'],
             tags: [chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word()]
         },
@@ -176,7 +176,7 @@ var seedUsersAndDocuments = function () {
             public: true,
             author: jimmy._id,
             currentVersion: docTextGenerator(),
-            dateCreated: chance.date(),
+            dateCreated: Date.now(),
             categories: ['Technology', 'Health/Wellness', 'Science'],
             tags: [chance.word(), chance.word(), chance.word(), chance.word(), chance.word()]
         },
@@ -187,7 +187,7 @@ var seedUsersAndDocuments = function () {
             editAccess: [david._id],
             readAccess: [david._id, sonia._id, nastia._id],
             currentVersion: docTextGenerator(),
-            dateCreated: chance.date(),
+            dateCreated: Date.now(),
             categories: ['Education'],
             tags: [chance.word(), chance.word(), chance.word()]
         },
@@ -197,7 +197,7 @@ var seedUsersAndDocuments = function () {
             editAccess: [david._id],
             readAccess: [david._id, sonia._id, nastia._id],
             currentVersion: docTextGenerator(),
-            dateCreated: chance.date(),
+            dateCreated: Date.now(),
             categories: ['Business', 'Technology'],
             tags: [chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word(), chance.word()]
         }

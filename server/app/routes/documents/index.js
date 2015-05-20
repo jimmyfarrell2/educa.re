@@ -106,7 +106,7 @@ router.put('/:docId/likes', function(req, res, next){
 
 
 router.put('/:docId/bookmarks', function(req,res,next){
-   
+
     if(req.user.bookmarks.indexOf(req.doc._id) === -1){
         req.user.bookmarks.push(req.doc._id)
     }
@@ -199,6 +199,7 @@ function createRepo(request) {
     return Document.createAsync(request.body.document)
         .then(function(_doc) {
             doc = _doc;
+            doc.dateCreated = Date.now();
             return User.findByIdAndUpdateAsync(request.user._id, {$push: {'documents': doc._id}});
         })
         .then(function() {
