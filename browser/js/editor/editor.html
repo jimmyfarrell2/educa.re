@@ -29,7 +29,7 @@
 <div id="click" ng-click=""></div>
 <input id="search-collaborators" class="form-control">
 <div class="container editorWrapper">
-    <input id="document-title" ng-model="docInfo.document.title" placeholder="Title">
+    <div contentEditable="true" id="document-title" ng-model="docInfo.document.title">{{ docInfo.document.title }}</div>
     <div ng-if="canEdit" medium-editor add-or-delete="contentToHtml" class="editor" ng-model="contentToHtml"  options='{"buttons": ["bold", "italic", "underline", "anchor", "header1", "header2", "quote", "orderedlist", "unorderedlist"], "firstHeader": "h1", "secondHeader": "h2"}' bind-options="markdownOptions">
     </div>
     <div ng-if="!canEdit" medium-editor add-or-delete="contentToHtml" class="editor" ng-model="contentToHtml"  options='{"buttons": ["bold", "italic", "underline", "anchor", "header1", "header2", "quote", "orderedlist", "unorderedlist"], "disableEditing": true, "disableToolbar": true}' bind-options="markdownOptions">

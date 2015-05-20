@@ -21,7 +21,7 @@
 }
 
 #document-title {
-    height: 80px;
+    height: auto;
     font-size: 50px;
     font-weight: 900;
     font-family: 'Lora', serif;
@@ -29,7 +29,7 @@
     border: none;
     box-shadow: none;
     margin-left: 50px;
-    margin-top: 20px;
+    margin-top: 40px;
     padding: 0;
     text-align: justify;
     &:focus {
@@ -242,6 +242,9 @@
        border: 1px solid grey;
        display: inline-block;
        text-align: center;
+        &:focus {
+            outline: none;
+        }
      }
 
 
@@ -252,6 +255,15 @@ tags-input .tags {
     margin-bottom: 25px;
     border: none;
     box-shadow: none;
+    &:focus {
+        outline: none;
+    }
+}
+
+tags-input {
+    &:focus {
+        outline: none;
+    }
 }
 
 /*
