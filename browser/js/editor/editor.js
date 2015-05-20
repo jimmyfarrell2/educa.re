@@ -227,6 +227,25 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
 
 });
 
+app.directive('contenteditable', function() {
+    return {
+        restrict: 'A',
+        require: 'ngModel',
+        link: function(scope, element, attrs, ctrl) {
+            element.on('blur', function() {
+                scope.$apply(function() {
+                    ctrl.$setViewValue(element.html());
+                });
+            });
+            ctrl.$render = function() {
+                element.html(ctrl.$viewValue);
+            };
+            //element.on('keyup', function(e) {
+                //console.log(e.preventDefault())
+                //if (e.which !== 8 && element.text().length > 10) e.preventDefault();
+            //});
+        }
+    };
 
 app.controller('PopoverDemoCtrl', function ($scope) {
   $scope.dynamicPopover = {
