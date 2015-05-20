@@ -7,7 +7,11 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('HomeCtrl', function($scope, $state, DocumentFactory, Upload){
+app.controller('HomeCtrl', function($scope, $state, DocumentFactory, Upload, AuthService){
+
+    $scope.isLoggedIn = function () {
+        return AuthService.isAuthenticated();
+    };
 
     var documents = new Bloodhound({
         datumTokenizer: function(datum) {
