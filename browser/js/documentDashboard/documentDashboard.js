@@ -23,8 +23,30 @@ app.config(function ($stateProvider) {
 app.controller('DocumentDashboardController', function($scope, $log, $modal, DocumentFactory, user, document, commits, $state){
 
     $scope.commits = commits.filter(function(commit) {
+        console.log('filter', commit)
+        console.log('dateCreated', document.dateCreated)
       return commit.authored_date >= document.dateCreated;
     });
+
+    $scope.showVersion = function(commit) {
+        console.log('commit', commit)
+        DocumentFactory.getVersion(document._id, commit.id)
+            .then(function(version) {
+                var modalInstance = $modal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: 'myModalContent.html',
+                    controller: 'VersionModalCtrl',
+                    size: size,
+                    resolve: {
+                        content: function(){
+                            var converter = $window.markdownit({
+                                html: true
+                            });
+                            return converter.render(pullRequest.proposedVersion);
+                        }
+                    }
+            });
+    };
 
     $scope.document = document;
     $scope.user = user;
@@ -46,7 +68,6 @@ app.controller('DocumentDashboardController', function($scope, $log, $modal, Doc
 
     var modalInstance = $modal.open({
       animation: $scope.animationsEnabled,
-      templateUrl: 'myModalContent.html',
       controller: 'ModalInstanceCtrl',
       size: size,
       resolve: {

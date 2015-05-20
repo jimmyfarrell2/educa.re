@@ -55,6 +55,11 @@ app.factory('DocumentFactory', function($http) {
                 return response.data;
             });
         },
+        getVersion: function(docId, commitId) {
+            return $http.get('/api/documents/' + docId + '/commits/' + commitId).then(function(response) {
+                return response.data;
+            });
+        },
         exportDocument: function(docId) {
             return $http.get('/api/documents/' + docId + '/export').then(function(response) {
                 return response.data;
