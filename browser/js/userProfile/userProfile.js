@@ -17,7 +17,15 @@ app.config(function($stateProvider) {
 });
 
 
-app.controller('UserProfileController', function($scope, user, Socket){
+app.controller('UserProfileController', function($scope, user, Socket, UserFactory){
+
+    $scope.documents = [];
+
+    UserFactory.getUserDocuments(user._id).then(function(docs){
+        $scope.documents = docs.splice(docs.length - 3, 3);
+        console.log(docs);
+    });
+
     $scope.user = user;
 });
 
