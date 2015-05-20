@@ -249,6 +249,7 @@ app.directive('contenteditable', function() {
             //});
         }
     };
+});
 
 app.controller('PopoverDemoCtrl', function ($scope) {
   $scope.dynamicPopover = {
