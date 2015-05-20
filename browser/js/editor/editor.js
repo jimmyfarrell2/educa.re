@@ -107,7 +107,7 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
 
 
     function sanitize(content) {
-        return content.replace(/<\/?(ins|del).*>/g, '').replace(/<\/?span[^<]*>/g, '');
+        return content.replace(/<\/?(ins|del)[^<]*>/g, '').replace(/<\/?span[^<]*>/g, '');
     }
 
 
