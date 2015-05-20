@@ -1,74 +1,101 @@
 
 <ui-view>
-<div id='userProfile'>
-    <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Dancing+Script:400,700' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=PT+Sans+Narrow|Dancing+Script:400,700' rel='stylesheet' type='text/css'>
-    <div class="row">
-    <div class="col-sm-10">
-       <h1 class="userName">{{ user.name.first }} {{ user.name.last }}</h1>
-       <div class="row">
-          <div class="col-xs-8 col-sm-6">
-             <div class="row">
-                <img class="img-responsive center-block" ng-src="https://placekitten.com/g/400/500"
-                   alt="Responsive image">
-             </div>
-             <div class="row">
-                <h1>I would love to hear from you:</h1>
-                <div class="social__container">
-                   <div class="social__item">
-                      <a target="_blank" href="" class="social__icon--linkedin"><i class="icon--linkedin"></i></a>
-                   </div>
-                   <div class="social__item">
-                      <a target="_blank" href="" class="social__icon--twitter"><i class="icon--twitter"></i></a>
-                   </div>
-                   <div class="social__item">
-                      <a target="_blank" href="" class="social__icon--googleplus"><i class="icon--googleplus"></i></a>
-                   </div>
-                   <div class="social__item">
-                      <a target="_blank" href="http://facebook.com" class="social__icon--facebook"><i class="icon--facebook"></i></a>
-                   </div>
-                   <div class="social__item">
-                      <a target="_blank" href="http://instagram.com" class="social__icon--instagram"><i class="icon--instagram"></i></a>
-                   </div>
-                </div>
-             </div>
-          </div>
-          <div class="col-xs-4 col-sm-6">
-             <h2> My Story: </h2>
-             <p class="aboutMe">
-                Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac
-                turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec
-                eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend
-                leon.
-                Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac
-                turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec
-                eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend
-                leon.
-                <!--   <!   {{user.aboutMe}} -->
-             </p>
-             <h2> My Intrests: </h2>
-             <p class="aboutMe">
-                Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac
-                turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec
-                eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend
-                leon.
-                <!--   <!   {{user.myInterests}} -->
-             </p>
-             <h2> Member since: </h2>
-             <p class="dateCreated"> 01.01.2015 </p>
-             <div class="row">
+   <div id='userProfile'>
+      <div class="userJumbotron">
+         <div class="container-fluid">
+            <div class="row">
+               <div class="col-sm-4"></div>
+               <div class="col-sm-4"><h1>
+                     <div class="userCircle">{{user.name.first.charAt(0)}}</div>
+                  <p class="userProfName">{{user.name.first}} {{user.name.last}}</p>
+               </div>
+               <div class="col-sm-4">
+               </div>
+            </div>
+         </div>
+         <div class="container-fluid description">
+            <div class="row">
+               <div class="col-sm-3"></div>
+               <div class="col-sm-3"><h1>
+                  <p>Likes</p>
+               </div>
+               <div class="col-sm-3"><h1>
+                  <p>Works</p>
+               </div>
+               <div class="col-sm-3">
+               </div>
+            </div>
+         </div>
 
-                <div class="viewMyDocs">
-                   <button class="documentList" ui-sref="userProfile.userDocuments">View My Work</button>
-                 </div>
-                 <div class="viewBookmarks">
-                   <button class="myBookmarks" ui-sref="userProfile.myBookmarks" >My Bookmarks</button>
-                 </div>
-             </div>
-          </div>
-       </div>
-    </div>
-    </div>
-  </div>
+      </div>
+
+   </div>
 </ui-view>
+
+
+<!--<div class="row">-->
+   <!--<div class="col-sm-10">-->
+      <!--<h1 class="userName">{{ user.name.first }} {{ user.name.last }}</h1>-->
+      <!--<div class="row">-->
+         <!--<div class="col-xs-8 col-sm-6">-->
+            <!--<div class="row">-->
+               <!--<img class="img-responsive center-block" ng-src="https://placekitten.com/g/400/500"-->
+                    <!--alt="Responsive image">-->
+            <!--</div>-->
+            <!--<div class="row">-->
+               <!--<h1>I would love to hear from you:</h1>-->
+               <!--<div class="social__container">-->
+                  <!--<div class="social__item">-->
+                     <!--<a target="_blank" href="" class="social__icon&#45;&#45;linkedin"><i class="icon&#45;&#45;linkedin"></i></a>-->
+                  <!--</div>-->
+                  <!--<div class="social__item">-->
+                     <!--<a target="_blank" href="" class="social__icon&#45;&#45;twitter"><i class="icon&#45;&#45;twitter"></i></a>-->
+                  <!--</div>-->
+                  <!--<div class="social__item">-->
+                     <!--<a target="_blank" href="" class="social__icon&#45;&#45;googleplus"><i class="icon&#45;&#45;googleplus"></i></a>-->
+                  <!--</div>-->
+                  <!--<div class="social__item">-->
+                     <!--<a target="_blank" href="http://facebook.com" class="social__icon&#45;&#45;facebook"><i class="icon&#45;&#45;facebook"></i></a>-->
+                  <!--</div>-->
+                  <!--<div class="social__item">-->
+                     <!--<a target="_blank" href="http://instagram.com" class="social__icon&#45;&#45;instagram"><i class="icon&#45;&#45;instagram"></i></a>-->
+                  <!--</div>-->
+               <!--</div>-->
+            <!--</div>-->
+         <!--</div>-->
+         <!--<div class="col-xs-4 col-sm-6">-->
+            <!--<h2> My Story: </h2>-->
+            <!--<p class="aboutMe">-->
+               <!--Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac-->
+               <!--turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec-->
+               <!--eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend-->
+               <!--leon.-->
+               <!--Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac-->
+               <!--turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec-->
+               <!--eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend-->
+               <!--leon.-->
+               <!--&lt;!&ndash;   <!   {{user.aboutMe}} &ndash;&gt;-->
+            <!--</p>-->
+            <!--<h2> My Intrests: </h2>-->
+            <!--<p class="aboutMe">-->
+               <!--Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac-->
+               <!--turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec-->
+               <!--eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend-->
+               <!--leon.-->
+               <!--&lt;!&ndash;   <!   {{user.myInterests}} &ndash;&gt;-->
+            <!--</p>-->
+            <!--<h2> Member since: </h2>-->
+            <!--<p class="dateCreated"> 01.01.2015 </p>-->
+            <!--<div class="row">-->
+
+               <!--<div class="viewMyDocs">-->
+                  <!--<button class="documentList" ui-sref="userProfile.userDocuments">View My Work</button>-->
+               <!--</div>-->
+               <!--<div class="viewBookmarks">-->
+                  <!--<button class="myBookmarks" ui-sref="userProfile.myBookmarks" >My Bookmarks</button>-->
+               <!--</div>-->
+            <!--</div>-->
+         <!--</div>-->
+      <!--</div>-->
+   <!--</div>-->
+<!--</div>-->

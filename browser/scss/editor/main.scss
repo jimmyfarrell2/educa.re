@@ -87,9 +87,20 @@
 	}
 }
 
+select.btn.btn-default.category-select {
+  &:focus,
+  &:active {
+    outline: none;
+    background: white;
+  }
+}
+
 .tag-box{
-  margin-top: 20%;
-  border: grey;
+  display: inline-block;
+  border: 1px solid grey;
+  margin: 3px;
+  padding: 3px;
+  border-radius: 3px;
 }
 
 .categoriesButton {
