@@ -1,5 +1,5 @@
 'use strict';
-app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state, DocumentFactory) {
+app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state, DocumentFactory, $modal, Upload) {
 
     return {
         restrict: 'E',
@@ -7,8 +7,13 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state, 
         templateUrl: 'js/common/directives/navbar/navbar.html',
         link: function (scope) {
 
+            scope.createDocument = function(){
+                DocumentFactory.createDocument().then(function(doc){
+                    $state.go('editor', {docId: doc._id});
+                });
+            };
+
             scope.items = [
-                { label: 'My Profile', state: 'userProfile({userId: user._id})', auth: true }
             ];
 
             scope.user = null;
@@ -41,11 +46,48 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state, 
                 });
             };
 
+            scope.open = function () {
+                console.log("openFunc");
+            var modalInstance = $modal.open({
+              animation: scope.animationsEnabled,
+              templateUrl: 'mynew.html',
+              controller: 'InstanceCtrl'
+            });
+            };
+
+            scope.files = [];
+
+            scope.upload = function (files) {
+                    if (files && files.length) {
+                    for (var i = 0; i < files.length; i++) {
+                        var file = files[i];
+                        Upload.upload({
+                            url: '/api/upload',
+                            fields: {'username': scope.username},
+                            file: file
+                        }).progress(function (evt) {
+                            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                            console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
+                        }).success(function (data, status, headers, config) {
+                            $state.go('editor', {docId: data._id});
+                            console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
+                        });
+                }
+            }
+        };
+
+            scope.$watch('files', function () {
+                scope.upload(scope.files);
+            });
+
+
             $rootScope.$on(AUTH_EVENTS.loginSuccess, setUser);
             $rootScope.$on(AUTH_EVENTS.logoutSuccess, removeUser);
             $rootScope.$on(AUTH_EVENTS.sessionTimeout, removeUser);
 
         }
+
+
 
     };
 
@@ -68,3 +110,16 @@ app.controller('windowCtrl', function($scope, $window, $rootScope) {
         $scope.validState = toState.name === "home" || toState.name === "editor" || toState.name === 'userProfile' || toState.name === 'userProfile.userDocuments';
     });
 });
+
+app.controller('InstanceCtrl', function ($scope, $modalInstance) {
+
+
+  $scope.ok = function () {
+    $modalInstance.close();
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+});
+

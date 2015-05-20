@@ -7,7 +7,7 @@ navbar {
   display: block;
   position: fixed;
   top: 0;
-  background:#eee;
+  background: white;
   border-bottom: 1px solid #CCC;
   width: 100%;
   z-index: 1000;
@@ -16,15 +16,14 @@ navbar {
     margin-bottom: 0px;
   }
 
+
   .logo {
     margin-top: 20%;
     margin-right: 8px;
     transition: margin 0.2s;
     transform: translate3d(0,0,0);
-    i.fa {
-      font-size: 35px;
-      color: $blue-color;
-    }
+    font-family: 'Megrim', cursive;
+    color: black;
   }
 
   a {
@@ -58,11 +57,18 @@ navbar {
 
   .login-button {
     float: right;
-    background: $red-color;
+    border: none;
+    background-color: white;
+    color: black;
+    height: 5%;
+    font-size: 2em;
     margin-top: 8px;
     margin-right: 8px;
     transition: margin 0.2s;
-    color:#FFF;
+    &:focus,
+    &:active {
+      outline: none;
+    }
   }
 
   .welcome {
@@ -72,7 +78,7 @@ navbar {
     transform: translate3d(0,0,0);
 
     span {
-      color: #0c0c0c;
+      color: grey !important;
       position: relative;
       top: 16px;
       padding-right: 8px;
@@ -89,8 +95,11 @@ navbar {
     border-bottom: none;
     background: transparent;
 
+
     .logo {
-      margin-top: 50%;
+      margin-top: 39%;
+      color: white;
+      font-family: 'Megrim', cursive;
     }
 
     a {
@@ -110,6 +119,17 @@ navbar {
 
     .login-button {
       margin-top: 23px;
+      float: right;
+      border: none;
+      background-color: black;
+      font-size: 3em;
+      margin-right: 8px;
+      transition: margin 0.2s;
+      color:#FFF;
+      &:focus,
+      &:active {
+        outline: none;
+      }
     }
   }
 
@@ -123,4 +143,28 @@ navbar {
     color: black !important;
   }
   
+}
+
+.modal-content {
+  background-color: white;
+  .modal-title {
+    text-align: center;
+  }
+  .drop-box {
+    position: absolute;
+    left: 190px;
+    top: -10px;
+  }
+
+p {
+  padding-right: 7px;
+}
+
+}
+
+.modal-header {
+  border: none;
+}
+.modal-footer {
+  border: none;
 }
