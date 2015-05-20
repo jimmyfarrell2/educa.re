@@ -14,7 +14,6 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state, 
             };
 
             scope.items = [
-                { label: 'My Profile', state: 'userProfile({userId: user._id})', auth: true }
             ];
 
             scope.user = null;
