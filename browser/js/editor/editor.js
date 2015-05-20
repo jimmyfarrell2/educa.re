@@ -226,3 +226,12 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
     }
 
 });
+
+
+app.controller('PopoverDemoCtrl', function ($scope) {
+  $scope.dynamicPopover = {
+    content: 'Write your message!',
+    templateUrl: 'myPopoverTemplate.html',
+    title: 'Title'
+  };
+});

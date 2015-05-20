@@ -2,7 +2,7 @@
    <tabset justified="true">
       <tab heading="Drafts ({{commits.length}})">
          <ul>
-            <li ng-repeat="commit in commits" ng-click="showVersion(commit, document)">{{commit.message}}, {{commit.authored_date | date:'medium'}} {{document.dateCreated | date:'medium'}}</li>
+            <li ng-repeat="commit in commits" ng-click="showVersion(commit, document)">{{commit.message}}, {{commit.authored_date | date:'medium'}}</li>
          </ul>
       </tab>
       <tab heading="Collaborators ({{document.editAccess.length}})">
