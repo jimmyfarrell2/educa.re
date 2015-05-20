@@ -56,6 +56,25 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state, 
             });
             };
 
+            scope.upload = function (files) {
+                if (files && files.length) {
+                for (var i = 0; i < files.length; i++) {
+                    var file = files[i];
+                    Upload.upload({
+                        url: '/api/upload',
+                        fields: {'username': scope.username},
+                        file: file
+                    }).progress(function (evt) {
+                        var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                        console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
+                    }).success(function (data, status, headers, config) {
+                        $state.go('editor', {docId: data._id});
+                        console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
+                    });
+            }
+        }
+    };
+
             $rootScope.$on(AUTH_EVENTS.loginSuccess, setUser);
             $rootScope.$on(AUTH_EVENTS.logoutSuccess, removeUser);
             $rootScope.$on(AUTH_EVENTS.sessionTimeout, removeUser);
@@ -86,21 +105,6 @@ app.controller('windowCtrl', function($scope, $window, $rootScope) {
     });
 });
 
-
-
-// app.controller('UploadCtrl', function ($scope, $modal) {
-
-
-//   $scope.animationsEnabled = true;
-
-
-
-//   $scope.toggleAnimation = function () {
-//     $scope.animationsEnabled = !$scope.animationsEnabled;
-//   };
-
-// });
-
 app.controller('InstanceCtrl', function ($scope, $modalInstance) {
 
 
@@ -113,29 +117,3 @@ app.controller('InstanceCtrl', function ($scope, $modalInstance) {
   };
 });
 
-
-
-// app.controller('UploadCtrl', function($scope, $modal) {
-
-//       $scope.animationsEnabled = true;
-
-//      $scope.open = function (size) {
-
-//     var modalInstance = $modal.open({
-//       templateUrl: 'some.html',
-//       controller: 'InstanceCtrl',
-//       size: size
-//     });
-// };
-// });
-
-// app.controller('InstanceCtrl', function ($scope, $modalInstance) {
-
-//   $scope.ok = function () {
-//     $modalInstance.close($scope.selected.item);
-//   };
-
-//   $scope.cancel = function () {
-//     $modalInstance.dismiss('cancel');
-//   };
-// });
