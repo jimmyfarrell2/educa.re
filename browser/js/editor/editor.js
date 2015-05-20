@@ -246,4 +246,11 @@ app.directive('contenteditable', function() {
             //});
         }
     };
+
+app.controller('PopoverDemoCtrl', function ($scope) {
+  $scope.dynamicPopover = {
+    content: 'Write your message!',
+    templateUrl: 'myPopoverTemplate.html',
+    title: 'Title'
+  };
 });
