@@ -51,7 +51,10 @@ app.controller('DocumentDashboardController', function($scope, $log, $modal, Doc
       size: size,
       resolve: {
         content: function(){
-            return pullRequest.proposedVersion;
+            var converter = $window.markdownit({
+                html: true
+            });
+            return converter.render(pullRequest.proposedVersion);
         },
         document: function(){
             return document;
