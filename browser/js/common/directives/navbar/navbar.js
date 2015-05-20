@@ -1,5 +1,5 @@
 'use strict';
-app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state, DocumentFactory, $modal) {
+app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state, DocumentFactory, $modal, Upload) {
 
     return {
         restrict: 'E',
@@ -56,24 +56,31 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state, 
             });
             };
 
+            scope.files = [];
+
             scope.upload = function (files) {
-                if (files && files.length) {
-                for (var i = 0; i < files.length; i++) {
-                    var file = files[i];
-                    Upload.upload({
-                        url: '/api/upload',
-                        fields: {'username': scope.username},
-                        file: file
-                    }).progress(function (evt) {
-                        var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-                        console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
-                    }).success(function (data, status, headers, config) {
-                        $state.go('editor', {docId: data._id});
-                        console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
-                    });
+                    if (files && files.length) {
+                    for (var i = 0; i < files.length; i++) {
+                        var file = files[i];
+                        Upload.upload({
+                            url: '/api/upload',
+                            fields: {'username': scope.username},
+                            file: file
+                        }).progress(function (evt) {
+                            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                            console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
+                        }).success(function (data, status, headers, config) {
+                            $state.go('editor', {docId: data._id});
+                            console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
+                        });
+                }
             }
-        }
-    };
+        };
+
+            scope.$watch('files', function () {
+                scope.upload(scope.files);
+            });
+
 
             $rootScope.$on(AUTH_EVENTS.loginSuccess, setUser);
             $rootScope.$on(AUTH_EVENTS.logoutSuccess, removeUser);

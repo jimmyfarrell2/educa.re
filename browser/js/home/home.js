@@ -50,7 +50,5 @@ app.controller('HomeCtrl', function($scope, $state, DocumentFactory, Upload, Aut
 
 
 
-    $scope.$watch('files', function () {
-        $scope.upload($scope.files);
-    });
+
 });
