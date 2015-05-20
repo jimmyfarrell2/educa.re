@@ -12,6 +12,9 @@
         <button title="Add to Reading List" ng-show="isNotUser" class="btn" ng-click="addToBookmarks()" ng-class="{'hasAdded': hasAdded}"><i class="fa fa-bookmark-o fa-fw"></i></button>
         <a  title="Download PDF" class="btn pdf-btn" href="/api/documents/{{document._id}}/export" target="_blank"><i class="fa fa-file-pdf-o fa-fw"></i></a>
         <button title="Copy Document" class="btn copy-btn" ng-click="branchDocument()"><i class="fa fa-files-o fa-fw"></i></button>
+        <br/>
+        <p>Tags:</p>
+        <p class="tag-box" ng-repeat="tag in docInfo.document.tags">{{tag.text}}</p>
     </div>
 </div>
 <div>
@@ -41,10 +44,13 @@
                 </option>
             </select>
         </div>
-        <tags-input class="tag-box" ng-model="docInfo.document.tags"></tags-input>
+        <tags-input ng-model="docInfo.document.tags"></tags-input>
     </div>
+
 </div>
 
+<<<<<<< HEAD
+=======
 
 <div ng-controller="PopoverDemoCtrl">
      <button class="btn btn-default" popover-template="dynamicPopover.templateUrl" ng-show="isUser"><i class="fa fa-floppy-o fa-fw"></i></button>
@@ -56,3 +62,4 @@
         </div>
     </script>    
 </div>
+>>>>>>> master

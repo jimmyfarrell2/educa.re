@@ -1,35 +1,64 @@
 <div class="homeContainer">
    <section id="home">
-     <!-- <input id="search-documents" class="form-control"> -->
+
+     <!--<input id="search-documents" class="form-control">-->
+
       <div>
       	<div class="container-fluid">
          <div class="row">
             <div class="col-sm-4"></div>
-            <div class="col-sm-4"><h1><p id="ourName">educa.re</p><h1></div>
-            <div class="col-sm-4"></div>
+            <div class="col-sm-4"><h1>
+                <div class="circleBase">e</div>
+                <p class="callToAction">write better</p>
+                <i class="fa fa-angle-down coverChevron"></i>
+            </div>
+            <div class="col-sm-4">
+            </div>
          </div>
       	</div>
       </div>
-    <!-- <div ngf-drop ng-model="files" class="drop-box"
+
+
+    <div ngf-drop ng-model="files" class="drop-box"
         ngf-drag-over-class="dragover" ngf-multiple="true" ngf-allow-dir="true"
         ngf-accept="'.jpg,.png,.pdf,.docx'">Drop Images or PDFs files here</div>
-    <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div> -->
+    <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
+
    </section>
 </div>
-<section>
-   <div id="homePageBar" class="text-center">
-      <div class="container-fluid">
-         <div class="row" id="sectionsOnBar">
-            <div class="col-sm-4"><h1>Create</h1><p>Hey there</p></div>
-            <div class="col-sm-4"><h1>Collaborate</h1><p>Hey there</p></div>
-            <div class="col-sm-4"><h1>Share</h1><p>Hey there</p></div>
-         </div>
-      </div>
-   </div>
-</section>
+<!--<section>-->
+   <!--<div id="homePageBar" class="text-center">-->
+      <!--<div class="container-fluid">-->
+         <!--<div class="row" id="sectionsOnBar">-->
+             <!--<div class="col-sm-4"><button ui-sref="signup">Sign Up</button></div>-->
+             <!--<div class="col-sm-4"><button class="btn" ng-click="createDocument()">Create Documents</button></div>-->
+             <!--<div class="col-sm-4"><button class="btn" ng-click="createDocument()">Seek Knowledge</button></div>-->
+         <!--</div>-->
+      <!--</div>-->
+   <!--</div>-->
+<!--</section>-->
 <section>
 	<div class="enterSite">
-   <button id="createAccount" ui-sref="signup">Create an account</button>
-    <button id="logIn" ui-sref="login">Log In</button>
-   </div>
+        <div class="overlay"></div>
+        <!--<div class="row">-->
+            <!--<div class="col-sm-4"></div>-->
+            <!--<div class="col-sm-4">-->
+                <!--<button ng-show="isLoggedIn" class="button">create</button>-->
+                <!--<button ng-show="!isLoggedIn" class="coverBtn">Sign up</button>-->
+            <!--</div>-->
+            <!--<div class="col-sm-4">-->
+            <!--</div>-->
+        <!--</div>-->
+        <p class="together"><strong>...together</strong></p>
+    </div>
+
 </section>
+
+<!--<button class="btn createNew" ng-click="createDocument()">New Document</button>-->
+<!--Drop File:-->
+<!--<div ngf-drop ng-model="files" class="drop-box"-->
+<!--ngf-drag-over-class="dragover" ngf-multiple="true" ngf-allow-dir="true"-->
+<!--ngf-accept="'.jpg,.png,.pdf,.docx'">Drop Images or PDFs files here</div>-->
+<!--<div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>-->
+<!--<button id="createAccount" ui-sref="signup">Create an account</button>-->
+<!--<button id="logIn" ui-sref="login">Log In</button>-->
