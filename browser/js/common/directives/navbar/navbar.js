@@ -1,11 +1,17 @@
 'use strict';
-app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) {
+app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state, DocumentFactory) {
 
     return {
         restrict: 'E',
         scope: {},
         templateUrl: 'js/common/directives/navbar/navbar.html',
         link: function (scope) {
+
+            scope.createDocument = function(){
+                DocumentFactory.createDocument().then(function(doc){
+                    $state.go('editor', {docId: doc._id});
+                });
+            };
 
             scope.items = [
                 { label: 'My Profile', state: 'userProfile({userId: user._id})', auth: true }
@@ -35,6 +41,12 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) 
 
             setUser();
 
+            scope.createDocument = function(){
+                DocumentFactory.createDocument().then(function(doc){
+                $state.go('editor', {docId: doc._id});
+                });
+            };
+
             $rootScope.$on(AUTH_EVENTS.loginSuccess, setUser);
             $rootScope.$on(AUTH_EVENTS.logoutSuccess, removeUser);
             $rootScope.$on(AUTH_EVENTS.sessionTimeout, removeUser);
@@ -59,6 +71,6 @@ app.controller('windowCtrl', function($scope, $window, $rootScope) {
     });
 
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-        $scope.validState = toState.name === "home" || toState.name === "editor" || toState.name === 'userProfile';
+        $scope.validState = toState.name === "home" || toState.name === "editor" || toState.name === 'userProfile' || toState.name === 'userProfile.userDocuments';
     });
 });

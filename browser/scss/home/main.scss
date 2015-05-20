@@ -16,14 +16,31 @@
 
 }
 
+div.tags.focused {
+  outline: none;
+  box-shadow: none;
+}
+
+tags-input .tags .tag-item {
+  background: none;
+}
+
+tags-input .tags .tag-item.selected{
+  background: none;
+}
+
+a.remove-button {
+  color: grey;
+}
+
 body {
 
   letter-spacing: .2em;
-  background-color: black;
 
 }
 
 .homeContainer {
+  background-color: black;
   background-size:cover;
   background-attachment: fixed;
   width: 100%;

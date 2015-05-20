@@ -1,12 +1,18 @@
+<div class='userDocuments'>
+	<div class="containerDoc">
+		<h1 class='title'>My documents</h1>
 
-<ul>
-    <li ng-repeat="doc in documents" ui-sref="editor({docId: doc._id})">
-        {{doc.title}}
-        <span class="successAlert" ng-show="doc.changedSinceBranch">
+    <div class='eachDoc' ng-repeat="doc in documents" ui-sref="editor({docId: doc._id})">
+        <h3>Title: {{doc.title}}
+       <!--  <span class="successAlert" ng-show="doc.changedSinceBranch">
             This file has changed on the author's disk
-        </span><button>x</button>
-    </li>
-</ul>
+        </span><button>x</button> -->
+ 	</h3>
+</br>
+        <p>Created: {{doc.dateCreated | date}}    Categories: {{doc.categories[0]}}    Likes: {{doc.likes}}</p>
+    </div>
+</div>
+</div>
 
 
 

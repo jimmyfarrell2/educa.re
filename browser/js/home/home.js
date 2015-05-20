@@ -48,11 +48,7 @@ app.controller('HomeCtrl', function($scope, $state, DocumentFactory, Upload, Aut
         console.log("datum", datum);
     });
 
-    $scope.createDocument = function(){
-        DocumentFactory.createDocument().then(function(doc){
-            $state.go('editor', {docId: doc._id});
-        });
-    };
+
 
     $scope.$watch('files', function () {
         $scope.upload($scope.files);

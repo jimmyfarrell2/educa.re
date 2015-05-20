@@ -34,11 +34,12 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
     ];
 
 
-    setInterval(function() {
-        $('#click').trigger('click');
-    }, 5000);
+    //setInterval(function() {
+        //$('#click').trigger('click');
+    //}, 5000);
 
     var originalCurrentVersion = document.currentVersion;
+    var originalTitle = document.title;
 
     var editAccess = document.editAccess.map(user => user._id.toString());
     if (user._id.toString() === document.author._id.toString() ||
@@ -82,8 +83,9 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
     });
 
     $scope.changeMade = function(docInfo) {
-        if (originalCurrentVersion === sanitize(docInfo.document.currentVersion)) return false;
-        else return true;
+        if (originalCurrentVersion !== sanitize(docInfo.document.currentVersion) ||
+            originalTitle !== $scope.docInfo.document.title) return true;
+        else return false;
     };
 
     var converter = $window.markdownit({
@@ -153,6 +155,9 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
 
 
     $scope.branchDocument = function() {
+        $scope.docInfo.document.tags = $scope.docInfo.document.tags.map(function(tag){
+            return tag.text;
+        });
         DocumentFactory.branchOtherDocument($scope.docInfo.document).then(function(doc) {
             $state.go('editor', {
                 docId: doc._id
@@ -181,9 +186,7 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
         docInfo.document.tags = docInfo.document.tags.map(function(tag){
             return tag.text;
         });
-        console.log(docInfo.document)
         DocumentFactory.saveDocument(docInfo).then(function(document) {
-
         });
     };
 
@@ -195,7 +198,13 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
         DocumentFactory.exportDocument(docId);
     };
 
-    $scope.hasLiked = false;
+    $scope.hasLikedCheck = function(document){
+        return user.likedDocuments.indexOf(document._id) > -1;
+    }
+
+    $scope.hasLiked = $scope.hasLikedCheck(document);
+
+
     $scope.likeDoc = function(){
         DocumentFactory.likeDocument($scope.docInfo.document._id).then(function (doc) {
             $scope.hasLiked = !$scope.hasLiked;

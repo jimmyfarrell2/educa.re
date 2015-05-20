@@ -106,7 +106,7 @@ router.put('/:docId/likes', function(req, res, next){
 
 
 router.put('/:docId/bookmarks', function(req,res,next){
-   
+
     if(req.user.bookmarks.indexOf(req.doc._id) === -1){
         req.user.bookmarks.push(req.doc._id)
     }
@@ -124,7 +124,7 @@ router.put('/:docId/bookmarks', function(req,res,next){
 
 
 router.use(':/docId', function(req, res, next){
-    if(req.user._id === req.doc.author._id || req.user._id === req.doc.author) next();
+    if(req.user._id.toString() === req.doc.author._id.toString() || req.user._id.toString() === req.doc.author.toString()) next();
     else next(new Error('You are not authorized to perform these functions!'))
 
 })
@@ -143,25 +143,31 @@ router.put('/:docId', function(req, res, next){
     }
 
     //make this more elegant?
-    req.doc.currentVersion = req.body.document.currentVersion;
+    var contentChanged = req.doc.currentVersion !== req.body.document.currentVersion;
+    if (contentChanged) req.doc.currentVersion = req.body.document.currentVersion;
     req.doc.tags = req.body.document.tags;
     req.doc.categories = req.body.document.categories;
+    req.doc.title = req.body.document.title;
 
     req.doc.saveAsync()
         .then(function() {
-            return req.doc.repo.checkoutAsync(req.body.document.author._id);
-        })
-        .then(function(){
-            return fs.writeFileAsync(req.body.document.pathToRepo + '/contents.md', req.body.document.currentVersion);
-        })
-        .then(function(){
-            return req.doc.addAndCommit(req.body.message);
+            if (contentChanged) return updateContent(req);
         })
         .then(function() {
             res.json(req.doc);
         })
         .catch(next);
 
+    function updateContent(req) {
+        req.doc.repo.checkoutAsync(req.body.document.author._id)
+            .then(function(){
+                return fs.writeFileAsync(req.body.document.pathToRepo + '/contents.md', req.body.document.currentVersion);
+            })
+            .then(function(){
+                return req.doc.addAndCommit(req.body.message);
+            })
+            .catch(next);
+    }
 });
 
 
@@ -199,6 +205,7 @@ function createRepo(request) {
     return Document.createAsync(request.body.document)
         .then(function(_doc) {
             doc = _doc;
+            doc.dateCreated = Date.now();
             return User.findByIdAndUpdateAsync(request.user._id, {$push: {'documents': doc._id}});
         })
         .then(function() {
