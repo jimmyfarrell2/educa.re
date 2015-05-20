@@ -34,11 +34,12 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
     ];
 
 
-    setInterval(function() {
-        $('#click').trigger('click');
-    }, 5000);
+    //setInterval(function() {
+        //$('#click').trigger('click');
+    //}, 5000);
 
     var originalCurrentVersion = document.currentVersion;
+    var originalTitle = document.title;
 
     var editAccess = document.editAccess.map(user => user._id.toString());
     if (user._id.toString() === document.author._id.toString() ||
@@ -82,8 +83,9 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
     });
 
     $scope.changeMade = function(docInfo) {
-        if (originalCurrentVersion === sanitize(docInfo.document.currentVersion)) return false;
-        else return true;
+        if (originalCurrentVersion !== sanitize(docInfo.document.currentVersion) ||
+            originalTitle !== $scope.docInfo.document.title) return true;
+        else return false;
     };
 
     var converter = $window.markdownit({
