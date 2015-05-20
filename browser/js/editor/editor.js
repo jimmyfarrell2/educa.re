@@ -204,10 +204,9 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
 
     $scope.hasLikedCheck = function(document){
         return user.likedDocuments.indexOf(document._id) > -1;
-    }
+    };
 
     $scope.hasLiked = $scope.hasLikedCheck(document);
-
 
     $scope.likeDoc = function(){
         DocumentFactory.likeDocument($scope.docInfo.document._id).then(function (doc) {
@@ -216,14 +215,18 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
             else $scope.docInfo.document.likes--;
         });
 
-    }
+    };
 
-    $scope.hasAdded = false;
+    $scope.hasAddedCheck = function(docoument){
+        return user.bookmarks.indexOf(document._id) > -1;
+    };
+
+    $scope.hasAdded = $scope.hasAddedCheck(document);
     $scope.addToBookmarks = function(){
         DocumentFactory.addToBookmark($scope.docInfo.document._id).then(function(doc){
             $scope.hasAdded = !$scope.hasAdded;
-        })
-    }
+        });
+    };
 
 });
 

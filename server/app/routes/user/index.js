@@ -88,4 +88,27 @@ router.put('/:userId', function(req, res, next){
 
 });
 
+router.put('/:userId/removeBookmark/:bookmarkId', function(req, res, next){
+
+    var bookmarkId = req.params.bookmarkId;
+    var userId = req.params.userId;
+    var user;
+
+    User.findOneAsync({_id: userId})
+        .then(function(_user){
+            user = _user;
+            var index = user.bookmarks.indexOf(bookmarkId);
+            user.bookmarks.splice(index, 1);
+            user.saveAsync();
+        })
+        .then(function(){
+            console.log(user);
+            res.json(user);
+        })
+        .catch(function(err){
+            return next(err);
+        });
+
+});
+
 module.exports = router;

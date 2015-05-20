@@ -108,10 +108,12 @@ router.put('/:docId/likes', function(req, res, next){
 router.put('/:docId/bookmarks', function(req,res,next){
 
     if(req.user.bookmarks.indexOf(req.doc._id) === -1){
-        req.user.bookmarks.push(req.doc._id)
+        req.user.bookmarks.push(req.doc._id);
     }
     else {
-        return next(new Error("You already have this document in your bookmarks"));
+        var index = req.user.bookmarks.indexOf(req.doc._id);
+        req.user.bookmarks.splice(index, 1);
+        // return next(new Error("You already have this document in your bookmarks"));
     }
 
     req.user.saveAsync()
@@ -124,9 +126,9 @@ router.put('/:docId/bookmarks', function(req,res,next){
 
 router.use(':/docId', function(req, res, next){
     if(req.user._id.toString() === req.doc.author._id.toString() || req.user._id.toString() === req.doc.author.toString()) next();
-    else next(new Error('You are not authorized to perform these functions!'))
+    else next(new Error('You are not authorized to perform these functions!'));
 
-})
+});
 
 
 //update a user's file and commit
