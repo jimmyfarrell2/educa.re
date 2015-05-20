@@ -7,6 +7,40 @@
   border-bottom: 10px solid black;
 }
 
+.docSnippets {
+  margin-top: 21%;
+  width: 70%;
+}
+
+.divider {
+  position: relative;
+  text-align: center;
+  line-height: 1.2;
+  margin-bottom: 5%;
+}
+
+
+
+.dividerName {
+  display: inline-block;
+  border: 1px solid rgba(0,0,0,0.44);
+  background: #fff;
+  text-transform: uppercase;
+  font-size: 12px;
+  padding: 3px 8px 2px 12px;
+  letter-spacing: .3em;
+  color: rgba(0,0,0,0.6);
+  position: relative;
+}
+
+.divider:before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 12px;
+  width: 100%;
+  border-top: 1px solid rgba(0,0,0,0.15);
+}
 
 .container-fluid.userDesc {
   color: grey;
