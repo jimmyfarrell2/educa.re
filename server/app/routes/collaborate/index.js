@@ -70,7 +70,7 @@ router.post('/pullRequest', function(req, res, next){
 
 //check to see if user is document's author
 router.use(function(req, res, next){
-    if(req.user._id === req.body.document.author._id) next();
+    if(req.user._id.toString() === req.body.document.author._id.toString()) next();
     else next(new Error('Error! You are not authorized.'));
 });
 
