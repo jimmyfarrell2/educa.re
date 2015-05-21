@@ -14,7 +14,7 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state, 
             };
 
             scope.items = [
-                { label: 'Browse', state: 'browse.category({category: ""})', auth: false }
+                { label: 'Browse', state: 'browse', auth: false }
             ];
 
             scope.user = null;

@@ -9,7 +9,7 @@ app.config(function($stateProvider) {
 
 });
 
-app.controller('BrowseController', function($scope) {
+app.controller('BrowseController', function($scope, $state) {
 
    $scope.categories = [
         'health',
@@ -21,5 +21,7 @@ app.controller('BrowseController', function($scope) {
         'art',
         'other'
     ];
+
+    $state.go('.category', { category: '' });
 
 });

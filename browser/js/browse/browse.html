@@ -1,7 +1,7 @@
 <div id="browse">
     <div id="browse-categories" class="col-sm-2">
         <ul>
-            <li ng-repeat="category in categories"><a ui-sref=".category({categoryName: category})">{{ category | capitalize:true }}</a></li>
+            <li ng-repeat="category in categories"><a ui-sref="browse.category({categoryName: category})">{{ category | capitalize:true }}</a></li>
         </ul>
     </div>
     <div class="col-sm-9">
