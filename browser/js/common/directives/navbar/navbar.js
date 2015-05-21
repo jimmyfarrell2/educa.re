@@ -81,14 +81,11 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state, 
                 scope.upload(scope.files);
             });
 
-
             $rootScope.$on(AUTH_EVENTS.loginSuccess, setUser);
             $rootScope.$on(AUTH_EVENTS.logoutSuccess, removeUser);
             $rootScope.$on(AUTH_EVENTS.sessionTimeout, removeUser);
 
         }
-
-
 
     };
 
@@ -113,7 +110,6 @@ app.controller('windowCtrl', function($scope, $window, $rootScope) {
 });
 
 app.controller('InstanceCtrl', function ($scope, $modalInstance) {
-
 
   $scope.ok = function () {
     $modalInstance.close();
