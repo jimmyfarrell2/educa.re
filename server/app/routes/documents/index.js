@@ -151,7 +151,7 @@ router.put('/:docId', function(req, res, next){
     var contentChanged = req.doc.currentVersion !== req.body.document.currentVersion;
     if (contentChanged) req.doc.currentVersion = req.body.document.currentVersion;
     req.doc.tags = req.body.document.tags;
-    req.doc.categories = req.body.document.categories;
+    req.doc.category = req.body.document.category;
     req.doc.title = req.body.document.title;
 
     req.doc.saveAsync()
