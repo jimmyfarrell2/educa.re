@@ -4,5 +4,5 @@
     <p>By <a ui-sref="userProfile({userId: document.author._id})">{{ document.author.username }}</a></p>
     <div id="doc-content" ng-bind-html="document.currentVersion"></div>
     <p><a ui-sref="editor({ docId: document._id })">Continue Reading</a></p>
-    <p>Tags: <span class="tag-box" ng-repeat="tag in document.tags">{{tag}}</span></p>
+    <p>Tags: <span class="tag-box" ng-repeat="tag in document.tags" ui-sref="browse.tag({tagName: tag})">{{tag}}</span></p>
 </div>
