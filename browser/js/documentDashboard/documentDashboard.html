@@ -1,22 +1,30 @@
-<div id="userDashboard">
-   <tabset justified="true">
-      <tab heading="Drafts ({{commits.length}})">
-         <ul>
-            <li ng-repeat="commit in commits" ng-click="showVersion(commit, document)">{{commit.message}}, {{commit.authored_date | date:'medium'}}</li>
-         </ul>
-      </tab>
-      <tab heading="Collaborators ({{document.editAccess.length}})">
-         <ul>
-            <li ng-repeat="collaborator in document.editAccess" ui-sref='userProfile({userId: collaborator._id})'>{{collaborator.name.first}} {{collaborator.name.last}}</li>
-         </ul>
-      </tab>
-      <tab heading="Suggested Edits ({{document.pullRequests.length }}) ">
-         <ul>
-            <li ng-repeat="pullRequest in document.pullRequests" ng-click="open('lg', document, $index, pullRequest)">Suggested by: {{pullRequest.author.name.first}}</br> The message: {{pullRequest.message}}</li>
-         </ul>
-      </tab>
-   </tabset>
-</div>
+
+<div class="container">
+    <div id="userDashboard">
+       <tabset justified="true">
+          <tab heading="Drafts ({{commits.length}})">
+            <div class="tabInfo">
+             <ul>
+                <li ng-repeat="commit in commits" ng-click="showVersion(commit, document)">{{commit.message}}, {{commit.authored_date | date:'medium'}}</li>
+             </ul>
+            </div>
+          </tab>
+          <tab heading="Collaborators ({{document.editAccess.length}})">
+              <div class="tabInfo">
+             <ul>
+                <li ng-repeat="collaborator in document.editAccess" ui-sref='userProfile({userId: collaborator._id})'>{{collaborator.name.first}} {{collaborator.name.last}}</li>
+             </ul>
+              </div>
+          </tab>
+          <tab heading="Suggested Edits ({{document.pullRequests.length }}) ">
+              <div class="tabInfo">
+             <ul>
+                <li ng-repeat="pullRequest in document.pullRequests" ng-click="open('lg', document, $index, pullRequest)">{{pullRequest.author}} {{pullRequest.message}}</li>
+             </ul>
+              </div>
+          </tab>
+       </tabset>
+    </div>
 
 <script type="text/ng-template" id="myModalContent.html">
     <div class="modal-body">

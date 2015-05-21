@@ -1,3 +1,35 @@
 #browse {
     margin-top: 50px;
 }
+
+#browse-categories {
+    margin-top: none;
+    padding-left: 0;
+    height: 100vh;
+
+    .categoryWrapper {
+        margin-left: 0;
+        background-color: #eee;
+        height: 100vh;
+        width: inherit;
+        position: fixed;
+    }
+
+    .divider {
+        margin-top: 6px;
+    }
+
+    .dividerName {
+        margin-top: 6px;
+        background-color: #eee;
+    }
+
+    ul {
+        list-style-type: none;
+    }
+
+    a {
+        underline: none;
+
+    }
+}

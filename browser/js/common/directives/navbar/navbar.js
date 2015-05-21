@@ -105,7 +105,7 @@ app.controller('windowCtrl', function($scope, $window, $rootScope) {
     });
 
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-        $scope.validState = toState.name === "home" || toState.name === "editor" || toState.name === 'userProfile' || toState.name === 'userProfile.userDocuments';
+        $scope.validState = toState.name === "home" ||  toState.name === 'userProfile' || toState.name === 'userProfile.userDocuments';
     });
 });
 
