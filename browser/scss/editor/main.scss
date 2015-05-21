@@ -18,6 +18,9 @@
             outline: none;
         }
     }
+    .suggest-btn {
+        margin-left: 50px;
+    }
 }
 
 
@@ -54,7 +57,7 @@
          position: absolute;
          left: 150px;
          top: 200px;
-      
+
     }
 
 .fa.fa-file-pdf-o{
@@ -104,7 +107,7 @@
 
 
 .tt-dropdown-menu, .tt-menu {
-  
+
   background-color: #eee;
   margin-top: 15px;
 }
