@@ -7,6 +7,7 @@ app.directive('documentSnapshot', function(DocumentFactory, $window, $sce) {
             document: '=',
             user: '='
         },
+        transclude: true,
         link: function(scope, element, attrs) {
 
             var converter = $window.markdownit({

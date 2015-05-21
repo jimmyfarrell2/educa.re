@@ -42,6 +42,12 @@
          </div>
       </div>
    </div>
+   <div class="container docSnippets">
+      <div class="divider">
+         <a class="dividerName">Selected Works</a>
+      </div>
+      <document-snapshot document="document" user="user" ng-repeat="document in documents" class="selectedWork"></document-snapshot>
+   </div>
 </ui-view>
 
 
