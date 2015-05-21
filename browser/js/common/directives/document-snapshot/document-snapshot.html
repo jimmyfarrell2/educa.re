@@ -5,6 +5,5 @@
     <div id="doc-content" ng-bind-html="document.currentVersion"></div>
     <p><a ui-sref="editor({ docId: document._id })">Continue Reading</a></p>
     <button title="Add to Bookmarks" ng-show="user" class="btn" ng-click="toggleBookmark()" ng-class="{'hasAdded': hasAdded}"><i class="fa fa-bookmark-o fa-fw"></i></button>
-    <p>Tags: </p>
-    <p class="tag-box" ng-repeat="tag in document.tags">{{tag}}</p>
+    <p>Tags: <span class="tag-box" ng-repeat="tag in document.tags">{{tag}}</span></p>
 </div>
