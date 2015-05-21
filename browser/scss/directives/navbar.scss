@@ -1,6 +1,13 @@
 $blue-color: #23D2F2;
 $red-color: #FE4641;
 
+.search-button {
+  float: right;
+  &:active, &:focus{
+    outline: none;
+  } 
+}
+
 
 navbar {
 
@@ -16,6 +23,12 @@ navbar {
     margin-bottom: 0px;
   }
 
+  .search-button {
+  background-color: white;
+  margin-top: 0.8%;
+  transition: margin 0.2s;
+  transform: translate3d(0,0,0);
+  }
 
   .logo {
     margin-top: 20%;
@@ -95,7 +108,10 @@ navbar {
     border-bottom: none;
     background: transparent;
 
-
+    .search-button {
+      background-color: transparent;
+      margin-top: 1.8%;
+    }
     .logo {
       margin-top: 39%;
       color: black;
@@ -137,8 +153,8 @@ navbar {
 
 .dropdown-menu {
   position: absolute;
-  top: 50px;
-  left: -10px;
+  top: 55px;
+  left: -45px;
   a{
     color: black !important;
   }
@@ -167,4 +183,19 @@ p {
 }
 .modal-footer {
   border: none;
+}
+
+#search-documents {
+  width: 10%;
+  background-color: #eee;
+  float: right;
+  border: 1px solid #757575;
+  border-radius: 8px;
+  height: 27px;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  .fa .fa-search {
+    color: white;
+  }
 }

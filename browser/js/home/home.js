@@ -7,7 +7,7 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('HomeCtrl', function($scope, $state, DocumentFactory, Upload, AuthService){
+app.controller('HomeCtrl', function($scope, $state, DocumentFactory, Upload, AuthService, $rootScope){
 
     $scope.isLoggedIn = function () {
         return AuthService.isAuthenticated();
@@ -47,8 +47,5 @@ app.controller('HomeCtrl', function($scope, $state, DocumentFactory, Upload, Aut
         else $state.go('userProfile', {userId: datum._id})
         console.log("datum", datum);
     });
-
-
-
 
 });

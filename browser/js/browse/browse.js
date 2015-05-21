@@ -5,32 +5,21 @@ app.config(function($stateProvider) {
         url: '/browse',
         templateUrl: 'js/browse/browse.html',
         controller: 'BrowseController',
-        resolve: {
-            documents: function(DocumentFactory) {
-                return DocumentFactory.getAllDocuments();
-            },
-            user: function(AuthService) {
-                return AuthService.getLoggedInUser();
-            }
-        }
     });
 
 });
 
-app.controller('BrowseController', function($scope, DocumentFactory, documents, user) {
+app.controller('BrowseController', function($scope) {
 
    $scope.categories = [
-        'Health',
-        'Education',
-        'Science',
-        'Food',
-        'Travel',
-        'Politics',
-        'Art',
-        'Other'
+        'health',
+        'education',
+        'science',
+        'food',
+        'travel',
+        'politics',
+        'art',
+        'other'
     ];
-
-    $scope.documents = documents;
-    $scope.user = user;
 
 });
