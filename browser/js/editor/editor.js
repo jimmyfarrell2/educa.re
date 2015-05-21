@@ -4,6 +4,9 @@ app.config(function($stateProvider) {
         url: '/editor/:docId/:pullReq',
         controller: 'EditorController',
         templateUrl: 'js/editor/editor.html',
+        onEnter: function($anchorScroll) {
+            $anchorScroll();
+        },
         resolve: {
             document: function(DocumentFactory, $stateParams) {
                 return DocumentFactory.getDocument($stateParams.docId);
