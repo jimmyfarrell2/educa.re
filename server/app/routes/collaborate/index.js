@@ -99,4 +99,16 @@ router.put('/:docId', function(req, res, next){
 
 });
 
+router.put('/:docId/collaborator', function(req, res, next) {
+
+    console.log('in collaborator route')
+    Document.findByIdAndUpdateAsync(req.params.docId, {$push: {editAccess: req.body}})
+        .then(function(doc) {
+            console.log('doc', doc)
+            res.json(doc);
+        })
+        .catch(next);
+
+});
+
 module.exports = router;
