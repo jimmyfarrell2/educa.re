@@ -23,14 +23,14 @@ app.config(function($stateProvider) {
 app.controller('EditorController', function($scope, DocumentFactory, $state, document, user, commits, $window, $stateParams, Socket) {
 
    $scope.categories = [
-        'Health',
-        'Education',
-        'Science',
-        'Food',
-        'Travel',
-        'Politics',
-        'Art',
-        'Other'
+        'health',
+        'education',
+        'science',
+        'food',
+        'travel',
+        'politics',
+        'art',
+        'other'
     ];
 
 

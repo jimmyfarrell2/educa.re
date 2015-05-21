@@ -45,8 +45,8 @@ app.factory('DocumentFactory', function($http) {
                return response.data;
            });
         },
-        getAllDocuments: function() {
-            return $http.get('/api/documents/').then(function(response) {
+        getAllDocuments: function(categoryName) {
+            return $http.get('/api/documents?category=' + categoryName).then(function(response) {
                 return response.data;
             });
         },
