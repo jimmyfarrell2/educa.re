@@ -15,7 +15,9 @@
         <br/>
         <p>Tags:</p>
         <p class="tag-box" ng-repeat="tag in docInfo.document.tags">{{tag.text}}</p>
+
     </div>
+    <input ng-show="isUser" id="search-collaborators" class="form-control center-block" placeholder="search collaborators"></input>
 </div>
 <div>
     <div id="sidebar-wrapper" ng-show="checked">
@@ -60,5 +62,5 @@
           <input type="text" ng-model="docInfo.message" class="form-control">
           <p title="Save Document" class="btn save-btn" ng-click="changeMade(docInfo) && saveUserDocument(docInfo)" ng-show="isUser">Save</p>
         </div>
-    </script>    
+    </script>
 </div>

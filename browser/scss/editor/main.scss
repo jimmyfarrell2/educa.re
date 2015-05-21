@@ -57,6 +57,16 @@
       
     }
 
+.fa.fa-file-pdf-o{
+  text-align: center;
+  padding-top: 7px;
+  padding-left: 3px;
+}
+
+
+.btn-group.categoriesButton{
+  text-align: left;
+}
 #document-title {
     height: auto;
     font-size: 50px;
@@ -85,6 +95,14 @@
     overflow-y: auto;
     background: #e0f2f1;
     margin-top: 200px;
+
+
+.tt-dropdown-menu, .tt-menu {
+  
+  background-color: #eee;
+  margin-top: 15px;
+}
+
 
 	animation-name: slideRight;
 	-webkit-animation-name: slideRight;
@@ -132,6 +150,16 @@ select.btn.btn-default.category-select {
     background: white;
   }
 }
+
+  .form-control{
+      width: 80%;
+      background-color: transparent;
+      border-radius: 8px;
+      position: absolute;
+      top:6px;
+      left: -26px;
+      margin-top: 5px;
+    }
 
 .tag-box{
   display: inline-block;

@@ -1,6 +1,6 @@
 <div class="document-snapshot">
     <p>{{ document.dateCreated | date }}<span><button title="Add to Bookmarks" ng-show="user" class="btn" ng-click="toggleBookmark()" ng-class="{'hasAdded': hasAdded}"><i class="fa fa-bookmark-o fa-fw"></i></button></span></p>
-    <h1>{{ document.title }}</h1>
+    <h1><a ui-sref="editor({ docId: document._id })">{{ document.title }}</a></h1>
     <p>By <a ui-sref="userProfile({userId: document.author._id})">{{ document.author.username }}</a></p>
     <div id="doc-content" ng-bind-html="document.currentVersion"></div>
     <p><a ui-sref="editor({ docId: document._id })">Continue Reading</a></p>
