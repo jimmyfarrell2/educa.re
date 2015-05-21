@@ -50,6 +50,11 @@ app.factory('DocumentFactory', function($http) {
                 return response.data;
             });
         },
+        getByTag: function(tagName) {
+            return $http.get('/api/documents?tag=' + tagName).then(function(response) {
+                return response.data;
+            })
+        },
         commitHistory: function(docId) {
             return $http.get('/api/documents/' + docId + '/commits').then(function(response) {
                 return response.data;

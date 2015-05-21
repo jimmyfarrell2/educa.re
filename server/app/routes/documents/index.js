@@ -22,9 +22,11 @@ router.use('/', function(req, res, next){
 
 router.get('/', function(req, res, next){
 
-    var categoryObj = req.query.category ? {category: req.query.category} : {};
-    console.log('categoryObj', categoryObj)
-    Document.find(categoryObj)
+    var searchObj = {};
+    if (req.query.category) searchObj = {category: req.query.category};
+    if (req.query.tag) searchObj = {tags: req.query.tag};
+
+    Document.find(searchObj)
     .sort('-likes')
     .populate('author', 'username')
     .execAsync()

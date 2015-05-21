@@ -21,6 +21,13 @@
         }
     }
 }
+.tag-box {
+    cursor: pointer;
+    &:hover {
+        border-color: #D0D0D0;
+        color: #D0D0D0;
+    }
+}
 
 #doc-content {
     * {
