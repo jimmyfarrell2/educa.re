@@ -42,8 +42,8 @@
     </div>
     <div ng-show="isUser">
         <div class="btn-group categoriesButton" dropdown ng-show="isUser">
-            <select type="button" class="btn btn-default category-select" ng-model="docInfo.document.category[0]">
-                <option value>Category</option>
+            <select type="button" class="btn btn-default category-select" ng-model="docInfo.document.category" ng-options="category for category in categories">
+                <!--<option value>Category</option>-->
                 <option ng-repeat="category in categories" value="{{category}}">{{category}}
                 </option>
             </select>
