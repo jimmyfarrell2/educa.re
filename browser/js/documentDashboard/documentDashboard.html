@@ -1,3 +1,4 @@
+
 <div class="container">
     <div id="userDashboard">
        <tabset justified="true">
@@ -24,16 +25,15 @@
           </tab>
        </tabset>
     </div>
-</div>
 
 <script type="text/ng-template" id="myModalContent.html">
     <div class="modal-body">
         <div ng-bind-html="content"></div>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary" ng-click="ok()">OK</button>
-        <button class="btn btn-primary" ng-click="mergeChanges()">Merge</button>
-        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        <button class="btn" ng-click="ok()">OK</button>
+        <button class="btn" ng-click="mergeChanges()">Merge</button>
+        <button class="btn" ng-click="cancel()">Cancel</button>
     </div>
 </script>
 

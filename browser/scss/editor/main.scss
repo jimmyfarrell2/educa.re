@@ -18,6 +18,9 @@
             outline: none;
         }
     }
+    .suggest-btn {
+        margin-left: 50px;
+    }
 }
 
 
@@ -54,13 +57,13 @@
          position: absolute;
          left: 150px;
          top: 200px;
-      
+
     }
 
 .fa.fa-file-pdf-o{
   text-align: center;
-  padding-top: 7px;
-  padding-left: 10px;
+  padding-top: 8px;
+  padding-left: 4px;
 
 }
 
@@ -93,7 +96,7 @@
 #sidebar-wrapper {
     z-index: 1000;
     position: absolute;
-    top: 80px;
+    top: 100px;
     left: 250px;
     width: 0;
     height: 350px;
@@ -104,7 +107,7 @@
 
 
 .tt-dropdown-menu, .tt-menu {
-  
+
   background-color: #eee;
   margin-top: 15px;
 }

@@ -43,6 +43,7 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
 
     var originalCurrentVersion = document.currentVersion;
     var originalTitle = document.title;
+    var originalCategory = document.category;
 
     var editAccess = document.editAccess.map(user => user._id.toString());
     if (user._id.toString() === document.author._id.toString() ||
@@ -70,7 +71,9 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
         }
     });
 
-    $('#search-collaborators').typeahead(null, {
+    $('#search-collaborators').typeahead({
+        hint: false
+    }, {
         name: 'users',
         limit: 10,
         display: 'username',
@@ -82,12 +85,17 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
             notFound: '<div>No matching users</div>'
         }
     }).on('typeahead:selected', function (obj, datum) {
-       $state.go('userProfile', {userId: datum._id})
+        $scope.docInfo.collaborator = datum._id;
+        DocumentFactory.addCollaborator($scope.docInfo).then(function(doc) {
+            $scope.document.editAccess.length++;
+            $('#search-collaborators').val('');
+        });
     });
 
     $scope.changeMade = function(docInfo) {
         if (originalCurrentVersion !== sanitize(docInfo.document.currentVersion) ||
-            originalTitle !== $scope.docInfo.document.title) return true;
+            originalTitle !== $scope.docInfo.document.title ||
+            originalCategory !== $scope.docInfo.category) return true;
         else return false;
     };
 
@@ -230,6 +238,7 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
             $scope.hasAdded = !$scope.hasAdded;
         });
     };
+    console.log('docInfo.document.category', $scope.docInfo.document.category)
 
 });
 
