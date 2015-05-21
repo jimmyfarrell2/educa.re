@@ -60,9 +60,15 @@
 .fa.fa-file-pdf-o{
   text-align: center;
   padding-top: 7px;
-  padding-left: 3px;
+  padding-left: 10px;
+
 }
 
+.fa.fa-bookmark-o{
+  text-align: center;
+  padding-top: 7px;
+  padding-left: 0px;
+}
 
 .btn-group.categoriesButton{
   text-align: left;
@@ -144,6 +150,9 @@
 }
 
 select.btn.btn-default.category-select {
+  margin-left: -100px;
+  position: relative;
+  top:120px;
   &:focus,
   &:active {
     outline: none;
@@ -151,7 +160,7 @@ select.btn.btn-default.category-select {
   }
 }
 
-  .form-control{
+ .searchCollabs{
       width: 80%;
       background-color: transparent;
       border-radius: 8px;
@@ -169,9 +178,6 @@ select.btn.btn-default.category-select {
   border-radius: 3px;
 }
 
-.categoriesButton {
-    padding-left: 50px;
-}
 .sidebar-nav {
     position: absolute;
     top: 15%;
@@ -273,6 +279,9 @@ select.btn.btn-default.category-select {
             font-size: 30px;
         }
     }
+    .category-select {
+    margin-right: 80%;
+}
 
 }
 
