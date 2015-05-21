@@ -84,6 +84,11 @@ app.factory('DocumentFactory', function($http) {
             return $http.put('/api/documents/' + docId + '/bookmarks').then(function(response){
                 return response.data;
             });
+        },
+        addCollaborator: function(docInfo) {
+            return $http.put('/api/collaborate/' + docInfo.document._id + '/collaborator', docInfo).then(function(response) {
+                return response.data;
+            });
         }
     };
 

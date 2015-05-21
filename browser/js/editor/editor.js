@@ -70,7 +70,9 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
         }
     });
 
-    $('#search-collaborators').typeahead(null, {
+    $('#search-collaborators').typeahead({
+        hint: false
+    }, {
         name: 'users',
         limit: 10,
         display: 'username',
@@ -82,7 +84,11 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
             notFound: '<div>No matching users</div>'
         }
     }).on('typeahead:selected', function (obj, datum) {
-       $state.go('userProfile', {userId: datum._id})
+        $scope.docInfo.collaborator = datum._id;
+        DocumentFactory.addCollaborator($scope.docInfo).then(function(doc) {
+            $scope.document.editAccess.length++;
+            $('#search-collaborators').val('');
+        });
     });
 
     $scope.changeMade = function(docInfo) {

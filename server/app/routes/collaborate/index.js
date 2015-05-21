@@ -101,11 +101,19 @@ router.put('/:docId', function(req, res, next){
 
 router.put('/:docId/collaborator', function(req, res, next) {
 
-    console.log('in collaborator route')
-    Document.findByIdAndUpdateAsync(req.params.docId, {$push: {editAccess: req.body}})
+    console.log('in collaborator route', req.body.collaborator)
+    Document.findByIdAsync(req.params.docId)
         .then(function(doc) {
-            console.log('doc', doc)
-            res.json(doc);
+
+            var editAccess = doc.editAccess.map(collaborator => collaborator.toString());
+            if (editAccess.indexOf(req.body.collaborator.toString()) === -1) doc.editAccess.push(req.body.collaborator);
+            var readAccess = doc.readAccess.map(collaborator => collaborator.toString());
+            if (readAccess.indexOf(req.body.collaborator.toString()) === -1) doc.readAccess.push(req.body.collaborator);
+            return doc.saveAsync();
+
+        })
+        .then(function() {
+            res.sendStatus(200);
         })
         .catch(next);
 
