@@ -114,7 +114,7 @@ navbar {
     }
     .logo {
       margin-top: 39%;
-      color: black;
+      color: #eee;
       font-family: 'Megrim', cursive;
     }
 
@@ -129,7 +129,10 @@ navbar {
     }
 
     .navbar-nav > li > a {
-      padding: 30px 15px;
+      transition: top 0.2s;
+      transform: translate3d(0,0,0);
+      color: transparent;
+      padding: 17px 15px;
     }
 
 

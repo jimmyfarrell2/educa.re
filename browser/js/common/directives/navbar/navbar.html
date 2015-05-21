@@ -5,7 +5,7 @@
    </div>
    <ul class="nav navbar-nav">
       <li ng-repeat="item in items" ng-show="!item.auth || isLoggedIn()">
-         <a ui-sref-active="active" ui-sref="{{ item.state }}" ui-sref-opts="{ reload: true }">{{ item.label }}</a>
+         <a  ui-sref-active="active" ui-sref="{{ item.state }}" ui-sref-opts="{ reload: true }">{{ item.label }}</a>
       </li>
    </ul>
 
