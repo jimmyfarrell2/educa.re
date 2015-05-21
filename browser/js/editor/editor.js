@@ -4,6 +4,9 @@ app.config(function($stateProvider) {
         url: '/editor/:docId/:pullReq',
         controller: 'EditorController',
         templateUrl: 'js/editor/editor.html',
+        onEnter: function($anchorScroll) {
+            $anchorScroll();
+        },
         resolve: {
             document: function(DocumentFactory, $stateParams) {
                 return DocumentFactory.getDocument($stateParams.docId);
@@ -74,7 +77,7 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
         source: collaborators,
         templates: {
             suggestion: function(datum) {
-                return '<div>' + datum.username + '</em></div>';
+                return '<div id="searchResults">' + datum.username + '</em></div>';
             },
             notFound: '<div>No matching users</div>'
         }

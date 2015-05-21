@@ -4,6 +4,12 @@
       text-decoration: none;
     }
   }
+  h1 {
+      a {
+          text-decoration: none;
+          color: black;
+      }
+  }
   border-bottom: 1px solid #eee;
   padding: 15px;
     * {
@@ -19,6 +25,13 @@
         &:focus {
             outline: none;
         }
+    }
+}
+.tag-box {
+    cursor: pointer;
+    &:hover {
+        border-color: #D0D0D0;
+        color: #D0D0D0;
     }
 }
 
