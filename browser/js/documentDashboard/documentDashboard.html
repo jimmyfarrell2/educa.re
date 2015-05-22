@@ -19,7 +19,7 @@
           <tab heading="Suggested Edits ({{document.pullRequests.length }}) ">
               <div class="tabInfo">
              <ul>
-                <li ng-repeat="pullRequest in document.pullRequests" ng-click="open('lg', document, $index, pullRequest)">{{pullRequest.author}} {{pullRequest.message}}</li>
+                <li ng-repeat="pullRequest in document.pullRequests" ng-click="open('lg', document, $index, pullRequest)">Name: {{pullRequest.author.name.first}} {{pullRequest.author.name.last}}, Message: {{pullRequest.message}}</li>
              </ul>
               </div>
           </tab>
