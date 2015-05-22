@@ -4,9 +4,9 @@
 
     <div class='eachDoc' ng-repeat="doc in documents" ui-sref="editor({docId: doc._id})">
         <h3>Title: {{doc.title}}
-       <!--  <span class="successAlert" ng-show="doc.changedSinceBranch">
+       <span class="successAlert" ng-show="doc.changedSinceBranch">
             This file has changed on the author's disk
-        </span><button>x</button> -->
+        </span><button>x</button>
  	</h3>
 </br>
         <p>Created: {{doc.dateCreated | date}}    Categories: {{doc.categories[0]}}    Likes: {{doc.likes}}</p>

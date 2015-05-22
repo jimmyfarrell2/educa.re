@@ -46,7 +46,7 @@ var schema = new mongoose.Schema({
     changedSinceBranch: {
         type: Boolean, default: false
     },
-    category: {type: String, enum:['health', 'education', 'science', 'food', 'travel', 'politics', 'qrt', 'other']},
+    category: {type: String, enum:['health', 'education', 'science', 'food', 'travel', 'politics', 'art', 'other']},
     tags: [String],
     likes: {type: Number, default: 0}
 });

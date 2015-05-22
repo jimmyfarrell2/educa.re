@@ -25,6 +25,8 @@ app.config(function($stateProvider) {
 
 app.controller('EditorController', function($scope, DocumentFactory, $state, document, user, commits, $window, $stateParams, Socket) {
 
+
+
    $scope.categories = [
         'health',
         'education',
@@ -193,6 +195,8 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
     };
 
     $scope.saveUserDocument = function(docInfo) {
+        $window.$(".popover.top.fade.in").removeClass('in');
+        $window.$(".saveMessage").val("");
         if($stateParams.pullReq) {
             docInfo.merge = $stateParams.pullReq;
             $scope.numPullRequests--;
