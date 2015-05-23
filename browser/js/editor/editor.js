@@ -38,11 +38,6 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
         'other'
     ];
 
-
-    //setInterval(function() {
-        //$('#click').trigger('click');
-    //}, 5000);
-
     var originalCurrentVersion = document.currentVersion;
     var originalTitle = document.title;
     var originalCategory = document.category;
@@ -55,10 +50,6 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
     else {
         $scope.canEdit = false;
     }
-
-    $scope.$on('$destroy', function(){
-        Socket.disconnect();
-    })
 
     var collaborators = new Bloodhound({
         datumTokenizer: function(datum) {
@@ -242,8 +233,6 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
             $scope.hasAdded = !$scope.hasAdded;
         });
     };
-    console.log('docInfo.document.category', $scope.docInfo.document.category)
-
 });
 
 app.directive('contenteditable', function() {
@@ -259,10 +248,6 @@ app.directive('contenteditable', function() {
             ctrl.$render = function() {
                 element.html(ctrl.$viewValue);
             };
-            //element.on('keyup', function(e) {
-                //console.log(e.preventDefault())
-                //if (e.which !== 8 && element.text().length > 10) e.preventDefault();
-            //});
         }
     };
 });
