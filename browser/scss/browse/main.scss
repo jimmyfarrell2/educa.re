@@ -32,4 +32,34 @@
         underline: none;
 
     }
+
+
+}
+
+#browse-content {
+    .tt-menu {
+        width: 50%;
+        margin-top: 15px;
+        margin-left: 10px;
+    }
+    #search-documents {
+        float: left;
+        width: 50%;
+        height: 40px;
+        margin-top: 0;
+        padding-left: 5px;
+        border: none;
+        &:focus {
+            outline: none;
+            padding-top: 2px;
+        }
+        font-size: 30px;
+        background-color: #fff;
+    }
+    .tt-hint {
+        background: #fff !important;
+    }
+    #all-documents {
+        padding-top: 50px;
+    }
 }

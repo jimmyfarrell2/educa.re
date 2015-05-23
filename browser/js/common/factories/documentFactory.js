@@ -89,6 +89,11 @@ app.factory('DocumentFactory', function($http) {
             return $http.put('/api/collaborate/' + docInfo.document._id + '/collaborator', docInfo).then(function(response) {
                 return response.data;
             });
+        },
+        deleteDocument: function(docId) {
+            return $http.delete('/api/documents/' + docId).then(function(response) {
+                return response.data;
+            });
         }
     };
 

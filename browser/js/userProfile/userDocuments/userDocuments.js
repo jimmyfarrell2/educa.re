@@ -37,4 +37,10 @@ app.controller('UserDocsController', function($scope, Socket, UserFactory, user,
         });
     };
 
+    $scope.deleteDoc = function(docId) {
+        DocumentFactory.deleteDocument(docId).then(function() {
+            $scope.documents = $scope.documents.filter(doc => doc._id !== docId);
+        });
+    };
+
 });
