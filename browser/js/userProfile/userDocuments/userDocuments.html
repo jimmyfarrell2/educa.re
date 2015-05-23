@@ -2,14 +2,16 @@
 	<div class="containerDoc">
 		<h1 class='title'>My documents</h1>
 
-    <div class='eachDoc' ng-repeat="doc in documents" ui-sref="editor({docId: doc._id})">
-        <h3>Title: {{doc.title}}
+    <div class='eachDoc' ng-repeat="doc in documents">
+        <h3 ui-sref="editor({docId: doc._id})">Title: {{doc.title}}
        <span class="successAlert" ng-show="doc.changedSinceBranch">
             This file has changed on the author's disk
-        </span><button>x</button>
- 	</h3>
+        </span><button ng-show="doc.changedSinceBranch">x</button>
+    </h3>
 </br>
-        <p>Created: {{doc.dateCreated | date}}    Categories: {{doc.categories[0]}}    Likes: {{doc.likes}}</p>
+<p>Created: {{doc.dateCreated | date}}    Categories: {{doc.categories[0]}}    Likes: {{doc.likes}}</p>
+<p class="pull-requests-count">Suggested Edits: {{ doc.pullRequests.length }}</p>
+<p class="clickable delete-document" ng-click="deleteDoc(doc._id)">Delete</p>
     </div>
 </div>
 </div>

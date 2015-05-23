@@ -180,7 +180,19 @@ router.put('/:docId', function(req, res, next){
     }
 });
 
+router.delete('/:docId', function(req, res, next) {
 
+    var doc = req.doc;
+    req.doc.removeAsync()
+        .then(function() {
+            if (doc.branchedFrom) return cp.execAsync('git branch -D ' + req.user._id, {cwd: doc.pathToRepo})
+        })
+        .then(function() {
+            res.sendStatus(200);
+        })
+        .catch(next);
+
+});
 
 //reset to a previous version
 router.put('/:docId/restore/:commitId', function(req, res, next){

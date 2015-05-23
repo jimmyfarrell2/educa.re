@@ -25,7 +25,7 @@ app.config(function($stateProvider) {
 
 app.controller('EditorController', function($scope, DocumentFactory, $state, document, user, commits, $window, $stateParams, Socket) {
 
-
+    $scope.branch = $stateParams.pullReq;
 
    $scope.categories = [
         'health',
@@ -99,7 +99,7 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
     if (document.currentVersion === "") {
         $scope.contentToHtml = "<p>Begin writing here...</p>";
     }
-    else if ($stateParams.pullReq) {
+    else if ($stateParams.pullReq && $stateParams.pullReq !== 'branch') {
         DocumentFactory.mergeDocument(document, document.pullRequests[$stateParams.pullReq]).then(function(diff){
             diff = diff.replace(/>#/g, ">\n#");
             $scope.contentToHtml = converter.render(diff);
@@ -165,7 +165,8 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
         });
         DocumentFactory.branchOtherDocument($scope.docInfo.document).then(function(doc) {
             $state.go('editor', {
-                docId: doc._id
+                docId: doc._id,
+                pullReq: 'branch'
             });
         });
     };
@@ -189,7 +190,7 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
         $window.$(".popover.top.fade.in").removeClass('in');
         $window.$(".saveMessage").val("");
         if($stateParams.pullReq) {
-            docInfo.merge = $stateParams.pullReq;
+            docInfo.merge = true;
             $scope.numPullRequests--;
         }
         docInfo.document.currentVersion = sanitize(docInfo.document.currentVersion);
@@ -257,5 +258,20 @@ app.controller('PopoverDemoCtrl', function ($scope) {
     content: 'Write your message!',
     templateUrl: 'myPopoverTemplate.html',
     title: 'Title'
+  };
+});
+
+app.controller('BranchAlertCtrl', function ($scope) {
+  $scope.alerts = [
+    { type: 'danger', msg: 'Oh snap! Change a few things up and try submitting again.' },
+    { type: 'success', msg: 'Well done! This is now your version of the author\'s document.' }
+  ];
+
+  $scope.addAlert = function() {
+    $scope.alerts.push({msg: 'Another alert!'});
+  };
+
+  $scope.closeAlert = function(index) {
+    $scope.alerts.splice(index, 1);
   };
 });

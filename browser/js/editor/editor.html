@@ -1,13 +1,13 @@
 <div class="buttonWrapper">
     <div ng-if="!isNotUser || canEdit" class="edit-buttons">
-        <p> Likes: {{docInfo.document.likes}}</p>
+        <p class="likesCount"> Likes: {{docInfo.document.likes}}</p>
         <button title="Document Info" class="btn info-btn" ng-click="toggle()"><i class="fa fa-info fa-fw"></i></button>
         <a  title="Download PDF" class="btn pdf-btn" href="/api/documents/{{document._id}}/export" target="_blank"><i class="fa fa-file-pdf-o fa-fw"></i></a>
         <button title="Suggest Changes to Original Author" class="btn suggest-btn" ng-click="makePullRequest()" ng-show="isBranched"><i class="fa fa-share fa-fw"></i></button>
     </div>
     <div ng-if="isNotUser && !canEdit" class="view-buttons">
         <p>By <a ui-sref="userProfile({userId: document.author._id})">{{document.author.username}}</a></p>
-        <p> Likes: {{docInfo.document.likes}}</p>
+        <p class="likesCount"> Likes: {{docInfo.document.likes}}</p>
         <button title="Favorite" class="btn like-btn" ng-class="{'hasLiked': hasLiked}" ng-click="likeDoc()"><i class="fa fa-heart-o fa-fw"></i></button>
         <button title="Add to Reading List" ng-show="isNotUser" class="btn" ng-click="addToBookmarks()" ng-class="{'hasAdded': hasAdded}"><i class="fa fa-bookmark-o fa-fw"></i></button>
         <a  title="Download PDF" class="btn pdf-btn" href="/api/documents/{{document._id}}/export" target="_blank"><i class="fa fa-file-pdf-o fa-fw"></i></a>
@@ -30,13 +30,15 @@
         </ul>
     </div>
 </div>
-<div id="click" ng-click=""></div>
+<div id="branch-alert" ng-show="branch === 'branch'" ng-controller="BranchAlertCtrl">
+  <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+</div>
 
 
-
+<pre>{{ docInfo.merge }}</pre>
 <div class="container editorWrapper">
     <div contentEditable="true" id="document-title" ng-model="docInfo.document.title">{{ docInfo.document.title }}</div>
-    <div ng-if="canEdit" medium-editor add-or-delete="contentToHtml" class="editor" ng-model="contentToHtml"  options='{"buttons": ["bold", "italic", "underline", "anchor", "header1", "header2", "quote", "orderedlist", "unorderedlist"], "firstHeader": "h1", "secondHeader": "h2"}' bind-options="markdownOptions">
+    <div ng-if="canEdit" medium-editor add-or-delete="contentToHtml" class="editor" ng-model="contentToHtml"  options='{"buttons": ["bold", "italic", "anchor", "header1", "header2", "quote", "orderedlist", "unorderedlist"], "firstHeader": "h1", "secondHeader": "h2"}' bind-options="markdownOptions">
     </div>
     <div ng-if="!canEdit" medium-editor add-or-delete="contentToHtml" class="editor" ng-model="contentToHtml"  options='{"buttons": ["bold", "italic", "underline", "anchor", "header1", "header2", "quote", "orderedlist", "unorderedlist"], "disableEditing": true, "disableToolbar": true}' bind-options="markdownOptions">
     </div>
@@ -55,12 +57,12 @@
 
 
 <div ng-controller="PopoverDemoCtrl">
-     <button class="btn btn-default" popover-template="dynamicPopover.templateUrl" ng-show="isUser || canEdit"><i class="fa fa-floppy-o fa-fw"></i></button>
+     <button class="save-btn" popover-template="dynamicPopover.templateUrl" ng-show="isUser || canEdit"><i class="fa fa-floppy-o fa-fw"></i></button>
     <script type="text/ng-template" id="myPopoverTemplate.html">
         <div class="writeYourMessage">{{dynamicPopover.content}}</div>
         <div class="form-group">
           <input type="text" ng-model="docInfo.message" class="form-control saveMessage">
-          <p title="Save Document" class="btn save-btn" ng-click="changeMade(docInfo) && saveUserDocument(docInfo)" ng-show="isUser || canEdit">Save</p>
+          <p title="Save Document" class="btn" ng-click="changeMade(docInfo) && saveUserDocument(docInfo)" ng-show="isUser || canEdit">Save</p>
         </div>
     </script>
 </div>

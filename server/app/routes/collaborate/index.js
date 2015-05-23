@@ -81,7 +81,7 @@ router.put('/merge', function(req, res, next){
 
     repo.checkoutAsync(req.user._id)
         .then(function(){
-            var markdownDiff = diff.diffLines(req.body.document.currentVersion, req.body.pullRequest.proposedVersion);
+            var markdownDiff = diff.diffWords(req.body.document.currentVersion, req.body.pullRequest.proposedVersion);
             var xmlFormatted = diff.convertChangesToXML(markdownDiff);
             res.json(xmlFormatted);
         });

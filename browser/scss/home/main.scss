@@ -3,6 +3,10 @@
   font-weight: 100;
 }
 
+.clickable {
+    cursor: pointer;
+}
+
 #home {
   fullstack-logo {
     padding-top: 30px;
@@ -150,7 +154,7 @@ body {
 .sectionsOnBar {
   p{
     font-size: 30px;
-  } 
+  }
 }
 
 #createAccount {

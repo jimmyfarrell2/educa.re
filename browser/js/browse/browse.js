@@ -5,6 +5,9 @@ app.config(function($stateProvider) {
         url: '/browse',
         templateUrl: 'js/browse/browse.html',
         controller: 'BrowseController',
+        onEnter: function($anchorScroll) {
+            $anchorScroll();
+        }
     });
 
 });

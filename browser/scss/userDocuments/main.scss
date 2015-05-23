@@ -1,3 +1,23 @@
 .successAlert {
   color: green;
 }
+
+.pull-requests-count {
+    color: #757575;
+    font-weight: bold;
+}
+
+a {
+    text-decoration: none;
+}
+
+.userDocuments {
+    h3 {
+        cursor: pointer;
+    }
+    .delete-document {
+        border: 1px dotted #eee;
+        padding: 2px 2px 2px 8px;
+        width: 80px;
+    }
+}

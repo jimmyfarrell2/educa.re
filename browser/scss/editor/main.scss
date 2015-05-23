@@ -23,6 +23,31 @@
     }
 }
 
+.save-btn {
+    border: 1px solid;
+    border-radius: 100%;
+    background-color: transparent;
+    border-color: #bdbdbd;
+    height: 44px;
+    width: 44px;
+    outline: none;
+    color: #bdbdbd;
+
+    &:focus {
+        outline: none;
+    }
+    &:hover {
+        color: #bdbdbd;
+    }
+}
+
+.likesCount {
+    margin-left: 5px;
+}
+
+#branch-alert {
+    text-align: center;
+}
 
 .popover {
   p {
@@ -44,7 +69,8 @@
   }
 }
 
-.btn-default {
+
+.btn-default, .save-btn {
         border-radius: 100%;
         background-color: transparent;
         border-color: #bdbdbd;
@@ -59,6 +85,7 @@
          top: 200px;
 
     }
+
 
 .fa.fa-file-pdf-o{
   text-align: center;
@@ -80,7 +107,7 @@
     height: auto;
     font-size: 50px;
     font-weight: 900;
-    font-family: 'Lora', serif;
+    font-family: 'Roboto';
     color: #333;
     border: none;
     box-shadow: none;
@@ -106,11 +133,11 @@
     margin-top: 200px;
 
 
-.tt-dropdown-menu, .tt-menu {
+/*.tt-dropdown-menu, .tt-menu {*/
 
-  background-color: #eee;
-  margin-top: 15px;
-}
+  /*background-color: #eee;*/
+  /*margin-top: 15px;*/
+/*}*/
 
 
 	animation-name: slideRight;
@@ -260,8 +287,8 @@ select.btn.btn-default.category-select {
     .editor {
         outline: none;
         padding: 0 50px 10px 50px;
-        h1, h2, p, span {
-            font-family: 'Lora', serif;
+        * {
+            font-family: 'Roboto';
             text-align: justify;
             line-height: 150%;
         }
@@ -285,6 +312,7 @@ select.btn.btn-default.category-select {
     }
     .category-select {
     margin-right: 80%;
+
 }
 
 }
@@ -292,6 +320,7 @@ select.btn.btn-default.category-select {
     ins {
         background-color: #c5e1a5;
         text-decoration: none;
+        cursor: default;
     }
 
     .clearIns {
@@ -301,6 +330,7 @@ select.btn.btn-default.category-select {
     del {
         background-color: #ffcdd2;
         text-decoration: none;
+        cursor: default;
     }
 
    button {
