@@ -19,14 +19,14 @@
           <tab heading="Suggested Edits ({{document.pullRequests.length }}) ">
               <div class="tabInfo">
              <ul>
-                <li ng-repeat="pullRequest in document.pullRequests" ng-click="open('lg', document, $index, pullRequest)">Name: {{pullRequest.author.name.first}} {{pullRequest.author.name.last}}, Message: {{pullRequest.message}}</li>
+                <li ng-repeat="pullRequest in document.pullRequests" ng-click="showPullReqs('lg', document, $index, pullRequest)">Name: {{pullRequest.author.name.first}} {{pullRequest.author.name.last}}, Message: {{pullRequest.message}}</li>
              </ul>
               </div>
           </tab>
        </tabset>
     </div>
 
-<script type="text/ng-template" id="myModalContent.html">
+<script type="text/ng-template" id="pullReqModal">
     <div class="modal-body">
         <div ng-bind-html="content"></div>
     </div>
@@ -37,13 +37,13 @@
     </div>
 </script>
 
-<script type="text/ng-template" id="versionModalContent.html">
+<script type="text/ng-template" id="versionModal">
     <div class="modal-body">
         <div ng-bind-html="versionContent"></div>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary" ng-click="ok()">OK</button>
-        <button class="btn btn-primary" ng-click="restoreVersion()" ng-show="differentContent">Restore</button>
-        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        <button class="btn" ng-click="ok()">OK</button>
+        <button class="btn" ng-click="restoreVersion()" ng-show="differentContent">Restore</button>
+        <button class="btn" ng-click="cancel()">Cancel</button>
     </div>
 </script>
