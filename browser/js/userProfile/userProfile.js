@@ -26,7 +26,6 @@ app.controller('UserProfileController', function($scope, user, Socket, UserFacto
     function userLikes(docs){
         var sum = 0;
         docs.forEach(function(doc){
-            console.log(doc.likes)
             sum += doc.likes;
         })
         $scope.likes = sum;
@@ -36,7 +35,6 @@ app.controller('UserProfileController', function($scope, user, Socket, UserFacto
     UserFactory.getUserDocuments(user._id).then(function(docs){
         userLikes(docs);
         $scope.documents = docs.splice(docs.length - 3, 3);
-        console.log(docs);
     });
 
     $scope.user = user;
