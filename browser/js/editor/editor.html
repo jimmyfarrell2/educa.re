@@ -35,7 +35,6 @@
 </div>
 
 
-<pre>{{ docInfo.merge }}</pre>
 <div class="container editorWrapper">
     <div contentEditable="true" id="document-title" ng-model="docInfo.document.title">{{ docInfo.document.title }}</div>
     <div ng-if="canEdit" medium-editor add-or-delete="contentToHtml" class="editor" ng-model="contentToHtml"  options='{"buttons": ["bold", "italic", "anchor", "header1", "header2", "quote", "orderedlist", "unorderedlist"], "firstHeader": "h1", "secondHeader": "h2"}' bind-options="markdownOptions">
@@ -45,7 +44,6 @@
     <div ng-show="isUser">
         <div class="btn-group categoriesButton" dropdown ng-show="isUser">
             <select type="button" class="btn btn-default category-select" ng-model="docInfo.document.category" ng-options="category for category in categories">
-                <!--<option value>Category</option>-->
                 <option ng-repeat="category in categories" value="{{category}}">{{category}}
                 </option>
             </select>

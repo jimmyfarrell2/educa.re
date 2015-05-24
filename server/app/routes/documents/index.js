@@ -97,8 +97,6 @@ router.put('/:docId/likes', function(req, res, next){
         req.user.likedDocuments = req.user.likedDocuments.filter(function(doc){
             return doc.toString() !== req.doc._id.toString();
         })
-
-        console.log(req.user.likedDocuments);
     }
 
     var tasks = [req.doc.saveAsync(), req.user.saveAsync()];
@@ -140,7 +138,6 @@ router.use(':/docId', function(req, res, next){
 
 //update a user's file and commit
 router.put('/:docId', function(req, res, next){
-    console.log(req.body);
     var doc;
     var io = require('../../../io')();
 

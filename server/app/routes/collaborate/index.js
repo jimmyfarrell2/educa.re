@@ -101,7 +101,6 @@ router.put('/:docId', function(req, res, next){
 
 router.put('/:docId/collaborator', function(req, res, next) {
 
-    console.log('in collaborator route', req.body.collaborator)
     Document.findByIdAsync(req.params.docId)
         .then(function(doc) {
 

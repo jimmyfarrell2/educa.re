@@ -47,7 +47,6 @@ router.get('/', function(req, res, next) {
             })
             .then(function(documents) {
                 results = results.concat(documents);
-                console.log('results', results)
                 res.json(results);
             })
             .catch(next);

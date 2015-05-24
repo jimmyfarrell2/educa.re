@@ -3,7 +3,6 @@ var app = angular.module('Educare', [
     'ui.router',
     'fsaPreBuilt',
     'angular-medium-editor',
-    'pageslide-directive',
     'ui.bootstrap',
     'ngFileUpload',
     'ngTagsInput'

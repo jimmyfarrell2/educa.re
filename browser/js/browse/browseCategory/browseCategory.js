@@ -57,7 +57,6 @@ app.controller('BrowseCategoryController', function($scope, documents, user, $st
     }).on('typeahead:selected', function (obj, datum) {
         if (datum.title) $state.go('editor', {docId: datum._id});
         else $state.go('userProfile', {userId: datum._id})
-        console.log("datum", datum);
     });
 
 });
