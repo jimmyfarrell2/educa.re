@@ -65,8 +65,6 @@ function createRepo(request) {
     var doc;
     var docPath = '';
 
-    console.log("request dataDoc", request.docData);
-
     return Document.createAsync({})
         .then(function(_doc) {
             doc = _doc;

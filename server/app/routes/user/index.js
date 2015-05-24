@@ -102,7 +102,6 @@ router.put('/:userId/removeBookmark/:bookmarkId', function(req, res, next){
             user.saveAsync();
         })
         .then(function(){
-            console.log(user);
             res.json(user);
         })
         .catch(function(err){
