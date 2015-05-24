@@ -124,6 +124,21 @@ navbar {
       font-family: 'Megrim', cursive;
     }
 
+    .login-button {
+      margin-top: 23px;
+      float: right;
+      border: none;
+      background-color: transparent;
+      font-size: 3em;
+      margin-right: 8px;
+      transition: margin 0.2s;
+      color:#FFF;
+      &:focus,
+      &:active {
+        outline: none;
+      }
+    }
+
     a {
       color: white;
     }
