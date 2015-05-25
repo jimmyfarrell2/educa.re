@@ -3,7 +3,7 @@
         <p class="likesCount"> Likes: {{docInfo.document.likes}}</p>
         <button title="Document Info" class="btn info-btn" ng-click="toggle()"><i class="fa fa-info fa-fw"></i></button>
         <a  title="Download PDF" class="btn pdf-btn" href="/api/documents/{{document._id}}/export" target="_blank"><i class="fa fa-file-pdf-o fa-fw"></i></a>
-        <button title="Suggest Changes to Original Author" class="btn suggest-btn" ng-click="makePullRequest()" ng-show="isBranched"><i class="fa fa-share fa-fw"></i></button>
+        <!-- <button title="Suggest Changes to Original Author" class="btn suggest-btn" ng-click="makePullRequest()" ng-show="isBranched"><i class="fa fa-share fa-fw"></i></button> -->
     </div>
     <div ng-if="isNotUser && !canEdit" class="view-buttons">
         <p>By <a ui-sref="userProfile({userId: document.author._id})">{{document.author.username}}</a></p>
@@ -64,3 +64,17 @@
         </div>
     </script>
 </div>
+
+
+<div ng-controller="PullReqMessageCtrl">
+     <button class="suggest-btn" popover-template="dynamicPopover.templateUrl" ng-show="isUser || canEdit" ng-show="isBranched"><i class="fa fa-share fa-fw"></i></button>
+    <script class="somethingHere" type="text/ng-template" id="pullReq.html">
+        <div class="writeYourMessage">{{dynamicPopover.content}}</div>
+        <div class="form-group">
+          <input type="text" ng-model="pullRequestMessage.mes" class="form-control savePullReqMessage">
+          <p title="Save Message" class="btn" ng-click="makePullRequest() && getridOfPopup()" ng-show="isUser || canEdit">Save</p>
+        </div>
+    </script>
+</div>
+
+
