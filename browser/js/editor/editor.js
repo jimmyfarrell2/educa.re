@@ -129,7 +129,6 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
         merge: false
     };
 
-
     $scope.seeDashboard = function() {
         $state.go("documentDashboard", {
             docId: document._id
@@ -145,9 +144,10 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
     $scope.isUser = !$scope.isNotUser;
     $scope.isBranched = document.branchedFrom;
 
-
-    //refactor so that user's can actually input a message
-    $scope.message = 'a message';
+   
+    $scope.pullRequestMessage = {
+        mes: $scope.mes
+    }
     $scope.pullRequests = document.pullRequests;
     $scope.commits = commits;
     $scope.document = document;
@@ -181,11 +181,12 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
     };
 
     $scope.makePullRequest = function() {
-        DocumentFactory.makePullRequest(document, 'this is a message!').then(function(doc) {
+        DocumentFactory.makePullRequest(document, $scope.pullRequestMessage.mes).then(function(doc) {
             console.log(doc);
         });
     };
 
+ 
     $scope.saveUserDocument = function(docInfo) {
         $window.$(".popover.top.fade.in").removeClass('in');
         $window.$(".saveMessage").val("");
@@ -199,6 +200,11 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
         });
         DocumentFactory.saveDocument(docInfo).then(function(document) {
         });
+    };
+
+    $scope.getridOfPopup = function(){
+        $window.$(".popover.top.fade.in").removeClass('in').addClass('out');
+        $window.$(".savePullReqMessage").val("");
     };
 
     $scope.goToUserProfile = function(){
@@ -260,6 +266,15 @@ app.controller('PopoverDemoCtrl', function ($scope) {
     title: 'Title'
   };
 });
+
+app.controller('PullReqMessageCtrl', function ($scope) {
+  $scope.dynamicPopover = {
+    content: 'Write your message!',
+    templateUrl: 'pullReq.html',
+    title: 'Title'
+  };
+});
+
 
 app.controller('BranchAlertCtrl', function ($scope) {
   $scope.alerts = [

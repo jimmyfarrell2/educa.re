@@ -1,6 +1,7 @@
 $blue-color: #23D2F2;
 $red-color: #FE4641;
 
+
 .search-button {
   float: right;
   &:active, &:focus{
@@ -110,7 +111,11 @@ navbar {
     }
   }
 
+
+
+
   &.nav-top-level {
+
     border-bottom: none;
     background: transparent;
 
