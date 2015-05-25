@@ -67,12 +67,12 @@
 
 
 <div ng-controller="PullReqMessageCtrl">
-     <button class="suggest-btn" popover-template="dynamicPopover.templateUrl" ng-show="isUser || canEdit" ng-show="isBranched"><i class="fa fa-share fa-fw"></i></button>
-    <script class="somethingHere" type="text/ng-template" id="pullReq.html">
+     <button class="suggest-btn" popover-template="dynamicPopover.templateUrl" ng-if="!isNotUser || canEdit" ng-show="isBranched"><i class="fa fa-share fa-fw"></i></button>
+    <script type="text/ng-template" id="pullReq.html">
         <div class="writeYourMessage">{{dynamicPopover.content}}</div>
         <div class="form-group">
           <input type="text" ng-model="pullRequestMessage.mes" class="form-control savePullReqMessage">
-          <p title="Save Message" class="btn" ng-click="makePullRequest() && getridOfPopup()" ng-show="isUser || canEdit">Save</p>
+          <p title="Save Message" class="btn" ng-click="makePullRequest(); getridOfPopup()">Save</p>
         </div>
     </script>
 </div>

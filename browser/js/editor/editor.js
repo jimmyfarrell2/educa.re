@@ -186,11 +186,7 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
         });
     };
 
-    // $scope.getridOfPopup = function(){
-    //     $window.$(".popover.top.fade.in").removeClass('in');
-    //     $window.$(".savePullReqMessage").val("");
-    // };
-
+ 
     $scope.saveUserDocument = function(docInfo) {
         $window.$(".popover.top.fade.in").removeClass('in');
         $window.$(".saveMessage").val("");
@@ -204,6 +200,11 @@ app.controller('EditorController', function($scope, DocumentFactory, $state, doc
         });
         DocumentFactory.saveDocument(docInfo).then(function(document) {
         });
+    };
+
+    $scope.getridOfPopup = function(){
+        $window.$(".popover.top.fade.in").removeClass('in').addClass('out');
+        $window.$(".savePullReqMessage").val("");
     };
 
     $scope.goToUserProfile = function(){
