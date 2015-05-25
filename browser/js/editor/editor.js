@@ -269,7 +269,7 @@ app.controller('PopoverDemoCtrl', function ($scope) {
 
 app.controller('PullReqMessageCtrl', function ($scope) {
   $scope.dynamicPopover = {
-    content: 'Write your message!',
+    content: 'Suggest your changes!',
     templateUrl: 'pullReq.html',
     title: 'Title'
   };
@@ -283,7 +283,7 @@ app.controller('BranchAlertCtrl', function ($scope) {
   ];
 
   $scope.addAlert = function() {
-    $scope.alerts.push({msg: 'Another alert!'});
+    $scope.alerts.push({msg: 'Great! You just successfully saggested changes to the author!'});
   };
 
   $scope.closeAlert = function(index) {
