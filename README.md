@@ -1,6 +1,6 @@
 # Educare
 
-<img src="http://i.imgur.com/K74586n.png">
+<img src="http://i.imgur.com/K74586n.png" border="5">
 
 [Demo Video](https://vimeo.com/129333742)
 
